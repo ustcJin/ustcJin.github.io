@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/14/valentinesOf2017/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/15/Xgboost-2/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ustcJin">
@@ -280,8 +280,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/14/valentinesOf2017/" itemprop="url">
-                  valentinesOf2017
+                <a class="post-title-link" href="/2017/02/15/Xgboost-2/" itemprop="url">
+                  Xgboost源码阅读
                 </a>
               
             
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-14T17:04:46+08:00">
-                2017-02-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T14:25:57+08:00">
+                2017-02-15
               </time>
             
 
@@ -335,128 +335,13 @@
       
         
           
-            <p>写在今天的情人节，上班，生活似乎很让人窘迫，忙忙碌碌，男人不该如此心境，家要养，女人要养，不能有半刻的歇息。互联网的大潮下，看似自由的IT民工实际上被套上了最牢的枷锁，拼命的进步，不停的学习，玩一次游戏，浪费一点时间都会懊恼不已，今天的情人节，疲惫而又焦虑。</p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。</p>
+<h2 id="带着问题走"><a href="#带着问题走" class="headerlink" title="带着问题走"></a>带着问题走</h2><p>由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pair wise、list wise算法，但是听到同事的介绍还是产生了兴趣，我本人介入机器学习领域时间较短，开始在听完xgboost的介绍时，就迫切的想了解两个东西: </p>
+<ul>
+<li>xgboost如何并行化？</li>
+<li>xgboost是如何控制复杂度的？<br>这两个问题是我继续了解的动力，另外后面的阅读和学习中，又知道了关于xgboost的最优化split、最优化Gain等详细知识，另外还有各种objective 灵活设置，非常方便。</li>
+</ul>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/14/valentines-Of-2017/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/14/valentines-Of-2017/" itemprop="url">
-                  valentines Of 2017
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-14T17:03:47+08:00">
-                2017-02-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
           
         
       
@@ -779,7 +664,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -964,6 +849,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
