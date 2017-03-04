@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="it,ml," />
 
 
 
@@ -87,19 +87,19 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
+带着问题走由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/02/13/hello-world/index.html">
+<meta property="og:title" content="Xgboost源码阅读">
+<meta property="og:url" content="http://yoursite.com/2017/02/15/Xgboost/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2017-02-13T11:08:11.000Z">
+<meta property="og:description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
+带着问题走由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pa">
+<meta property="og:updated_time" content="2017-03-04T02:20:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="Xgboost源码阅读">
+<meta name="twitter:description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
+带着问题走由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pa">
 
 
 
@@ -127,13 +127,13 @@ Quick">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/13/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/02/15/Xgboost/"/>
 
 
 
 
 
-  <title> Hello World | Hexo </title>
+  <title> Xgboost源码阅读 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +260,7 @@ Quick">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/13/hello-world/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/15/Xgboost/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ustcJin">
@@ -284,7 +284,7 @@ Quick">
             
             
               
-                Hello World
+                Xgboost源码阅读
               
             
           </h1>
@@ -299,8 +299,8 @@ Quick">
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T19:08:11+08:00">
-                2017-02-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T14:25:57+08:00">
+                2017-02-15
               </time>
             
 
@@ -335,15 +335,15 @@ Quick">
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。</p>
+<h1 id="带着问题走"><a href="#带着问题走" class="headerlink" title="带着问题走"></a>带着问题走</h1><p>由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pair wise、list wise算法，但是听到同事的介绍还是产生了兴趣，我本人介入机器学习领域时间较短，开始在听完xgboost的介绍时，就迫切的想了解两个东西: </p>
+<ul>
+<li>xgboost如何并行化？</li>
+<li>xgboost是如何控制复杂度的?  </li>
+<li>xgboost如何选择最优分裂?</li>
+</ul>
+<p>这三个问题是我继续了解的动力，另外后面的阅读和学习中，又知道了关于xgboost的最优化split、最优化Gain等详细知识，另外还有各种objective 灵活设置，非常方便。有些材料仅供参考:<br><code>*</code> xgboost<a href="xgboost.readthedocs.io/en/latest/">官网</a>，<a href="https://github.com/dmlc/xgboost" target="_blank" rel="external">github</a><br><code>*</code> 某乎较好的<a href="https://www.zhihu.com/question/41354392" target="_blank" rel="external">帖子</a><br><code>*</code> blog<a href="http://blog.csdn.net/chedan541300521/article/details/54895880" target="_blank" rel="external">地址</a><br><code>*</code> 陈天奇<a href="http://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="external">slides</a><br><code>*</code> 陈天奇<a href="https://arxiv.org/abs/1603.02754" target="_blank" rel="external">paper</a></p>
+<h1 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h1><p>基本的概念如tree, mart, residual等就不介绍了，直接进入主题，xgboost的目标函数:<br>$Obj(\theta) = L(\theta) + \Omega(\theta)$<br>$\theta$是我们要求的最优解，可以对应<code>xgboost</code>上各个<code>tree</code>上最有<code>split</code>和最有<code>leaf value</code>，$L$是残差，即模型预测值和实际训练样本的差值，当然是越小越好，$\Omega$是模型复杂度，这个也很重要，防止过拟合以及严重的抖动，一般模型需要做<code>bias</code>和<code>varience</code>的校验，一个对应$L$，一个对应$\Omega$。<code>xgboost</code>是<code>mart</code>，预测值是所有的<code>tree</code>的加权相加:<br>$\hat{y_i}=\sum_{i=1}^{K}f_k(x_i),f_k \in{\mathcal{F}}$</p>
 
       
     </div>
@@ -365,27 +365,19 @@ Quick">
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/it/" rel="tag"># it</a>
+          
+            <a href="/tags/ml/" rel="tag"># ml</a>
+          
+        </div>
+      
 
       
         
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/13/My-New-Post/" rel="prev" title="My New Post">
-                My New Post <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -452,7 +444,7 @@ Quick">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -463,7 +455,7 @@ Quick">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -498,7 +490,7 @@ Quick">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#带着问题走"><span class="nav-number">2.</span> <span class="nav-text">带着问题走</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理介绍"><span class="nav-number">3.</span> <span class="nav-text">原理介绍</span></a></li></ol></div>
             
 
           </div>
@@ -650,6 +642,26 @@ Quick">
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
