@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="it,ml," />
 
 
 
@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
 带着问题走由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pa">
-<meta property="og:updated_time" content="2017-02-15T06:38:48.000Z">
+<meta property="og:updated_time" content="2017-03-04T02:20:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xgboost源码阅读">
 <meta name="twitter:description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
@@ -107,7 +107,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -336,11 +336,14 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。</p>
-<h2 id="带着问题走"><a href="#带着问题走" class="headerlink" title="带着问题走"></a>带着问题走</h2><p>由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pair wise、list wise算法，但是听到同事的介绍还是产生了兴趣，我本人介入机器学习领域时间较短，开始在听完xgboost的介绍时，就迫切的想了解两个东西: </p>
+<h1 id="带着问题走"><a href="#带着问题走" class="headerlink" title="带着问题走"></a>带着问题走</h1><p>由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pair wise、list wise算法，但是听到同事的介绍还是产生了兴趣，我本人介入机器学习领域时间较短，开始在听完xgboost的介绍时，就迫切的想了解两个东西: </p>
 <ul>
 <li>xgboost如何并行化？</li>
-<li>xgboost是如何控制复杂度的？<br>这两个问题是我继续了解的动力，另外后面的阅读和学习中，又知道了关于xgboost的最优化split、最优化Gain等详细知识，另外还有各种objective 灵活设置，非常方便。</li>
+<li>xgboost是如何控制复杂度的?  </li>
+<li>xgboost如何选择最优分裂?</li>
 </ul>
+<p>这三个问题是我继续了解的动力，另外后面的阅读和学习中，又知道了关于xgboost的最优化split、最优化Gain等详细知识，另外还有各种objective 灵活设置，非常方便。有些材料仅供参考:<br><code>*</code> xgboost<a href="xgboost.readthedocs.io/en/latest/">官网</a>，<a href="https://github.com/dmlc/xgboost" target="_blank" rel="external">github</a><br><code>*</code> 某乎较好的<a href="https://www.zhihu.com/question/41354392" target="_blank" rel="external">帖子</a><br><code>*</code> blog<a href="http://blog.csdn.net/chedan541300521/article/details/54895880" target="_blank" rel="external">地址</a><br><code>*</code> 陈天奇<a href="http://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="external">slides</a><br><code>*</code> 陈天奇<a href="https://arxiv.org/abs/1603.02754" target="_blank" rel="external">paper</a></p>
+<h1 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h1><p>基本的概念如tree, mart, residual等就不介绍了，直接进入主题，xgboost的目标函数:<br>$Obj(\theta) = L(\theta) + \Omega(\theta)$<br>$\theta$是我们要求的最优解，可以对应<code>xgboost</code>上各个<code>tree</code>上最有<code>split</code>和最有<code>leaf value</code>，$L$是残差，即模型预测值和实际训练样本的差值，当然是越小越好，$\Omega$是模型复杂度，这个也很重要，防止过拟合以及严重的抖动，一般模型需要做<code>bias</code>和<code>varience</code>的校验，一个对应$L$，一个对应$\Omega$。<code>xgboost</code>是<code>mart</code>，预测值是所有的<code>tree</code>的加权相加:<br>$\hat{y_i}=\sum_{i=1}^{K}f_k(x_i),f_k \in{\mathcal{F}}$</p>
 
       
     </div>
@@ -361,6 +364,14 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/it/" rel="tag"># it</a>
+          
+            <a href="/tags/ml/" rel="tag"># ml</a>
+          
+        </div>
       
 
       
@@ -460,7 +471,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -495,7 +506,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#带着问题走"><span class="nav-number">1.1.</span> <span class="nav-text">带着问题走</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#带着问题走"><span class="nav-number">2.</span> <span class="nav-text">带着问题走</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理介绍"><span class="nav-number">3.</span> <span class="nav-text">原理介绍</span></a></li></ol></div>
             
 
           </div>
@@ -531,7 +542,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -598,13 +609,6 @@
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
