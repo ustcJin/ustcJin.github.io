@@ -255,6 +255,144 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/08/qa-cnn/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ustcJin">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/heart_scale.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Hexo">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/08/qa-cnn/" itemprop="url">
+                  CNN在问题答案领域识别中应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-08T18:51:28+08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>短文本question-answer匹配度识别问题，论文(Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks.pdf), github<a href="https://github.com/aseveryn/deep-qa" target="_blank" rel="external">实现</a>。github的作者基本上实现了文章里的算法，计算的精度也差不多，不过使用theano实现的，我准备使用tensorflow实现，并解决大规模预料训练太慢的问题。当然本文要开始从分析git的实现开始讲起，会穿插theano的一些语法，实现等，我自己也是从零学起的，且当给自己留个笔记吧。</p>
+<h1 id="架构？"><a href="#架构？" class="headerlink" title="架构？"></a>架构？</h1><p>不能不提到的论文中经典的架构图。<br><img src="/images/deep_qa.jpg" alt=""><br>网络用文字梳理的结果如下:</p>
+<ol>
+<li>question answer并行处理成词向量</li>
+<li>词向量与卷积核做运算得到n个dim维的向量</li>
+<li>对2中得到的向量做Activation和Pooling处理，得到1维数组，大小为n</li>
+<li>问题和答案抽出的1维数组分别与相似度矩阵M做乘积预算，得到相似度，即$A*M*Q=sim$</li>
+<li>计算answer和question中的相同部分F，将A,sim,Q,F拼接成新的向量</li>
+<li>将5中得到的向量做线性变化，即$\alpha(W*X+b)$</li>
+<li>最后使用Softmax对6中得到的linear之后的向量做分类</li>
+</ol>
+<h2 id="使用theano的实现"><a href="#使用theano的实现" class="headerlink" title="使用theano的实现"></a>使用theano的实现</h2><p>作者的实现有一些改动，如第5步骤中计算得到的交叉部分F，这部分可以是交叉词的词向量，也可以是交叉词的idf，比重等，显然idf和比重更容易让人信服，不过这个值不好处理，作者并没有用，而是直接使用的交叉词的词向量直接拼到qustion和answer的词向量中，即将这部分直接放到开头做了。</p>
+<h2 id="数据预处理-embedding"><a href="#数据预处理-embedding" class="headerlink" title="数据预处理(embedding)"></a>数据预处理(embedding)</h2><p>这部分主要是将question-answer对分词(英文就是空格直接分词), 然后根据word2vec，将问题和答案分解成word2vec的词向量，并收集全集词表，word2vec缺失的词使用默认值填充。难点在于训练集合的选取，这是有监督的学习，对于中文的海量语法来说，需要的训练集合的规模也是非常大的。</p>
+<h2 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h2><p>主要load的数据有train, dev, test三类，train是训练参数使用，dev是验证参数，test是实测使用，其实dev和test可以归为一类，每类数据分为question, answer, overlap。</p>
+<h2 id="词向量转化"><a href="#词向量转化" class="headerlink" title="词向量转化"></a>词向量转化</h2><p>LookupTableFast将question, answer, overlap转化为词向量。这里会讲pad部分(即卷积的宽度补上)，最呕输出的是[batch_size, 1, 2 * (q_size + q_filter_widths - 1), ndim], ndim是词向量的宽度(word2vec生成的词向量的size)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class LookupTableFastStatic(Layer):</div><div class="line">	def __init__(self, W=None, pad=None):</div><div class="line">		super(LookupTableFastStatic, self).__init__()</div><div class="line">		self.pad = pad</div><div class="line">		self.W = theano.shared(value=W, name=&apos;W_emb&apos;, borrow=True)</div><div class="line"></div><div class="line">		def output_func(self, input):</div><div class="line">			out = self.W[input.flatten()].reshape((input.shape[0], 1, input.shape[1], self.W.shape[1]))</div><div class="line">			if self.pad:</div><div class="line">				pad_matrix = T.zeros((out.shape[0], out.shape[1], self.pad, out.shape[3]))</div><div class="line">	  			out = T.concatenate([pad_matrix, out, pad_matrix], axis=2)</div><div class="line">	  		return out</div><div class="line"></div><div class="line">	  def __repr__(self):</div><div class="line">		  return &quot;&#123;&#125;: &#123;&#125;&quot;.format(self.__class__.__name__, self.W.shape.eval())</div></pre></td></tr></table></figure></p>
+<h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>定义Conv2dLayer来做卷积类使用，卷积的初始化如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def __init__(self, rng, filter_shape, input_shape=None, W=None):</div><div class="line"># @rng: 初始化种子</div><div class="line"># @filter_shape: 卷积核的样式，filter_shape = (nkernels, num_input_channels, filter_width, ndim), nkernels = 100, num_input_channels = 1, 可见与question长度无关。</div><div class="line"># @input_shape: 同上一层词向量层的输出</div><div class="line"># @self.W 也和filter_shape具有相同的shape，随机化一些数字</div></pre></td></tr></table></figure></p>
+<p>卷积使用库函数，调用如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def output_func(self, input):</div><div class="line">	return conv.conv2d(input, self.W, border_mode=&apos;valid&apos;,</div><div class="line">			filter_shape=self.filter_shape,</div><div class="line">			image_shape=self.input_shape)</div></pre></td></tr></table></figure></p>
+<p><strong>何为卷积？如何卷积?</strong><br>input_shape细化为单个qa，即为如下格式(加上filter_width)<br>$$<br>S =<br>\begin{vmatrix}<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>filter &amp; w_1 &amp; … &amp; w_{|s|} &amp; filter \\<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>\end{vmatrix}<br>$$<br>S.shape = [ndim, 2 <em> (filter - 1) + len(s)]，卷积核为[dim, m]维度，卷积公式如下:<br>$c_i=S \cdot f=S^T_{[i-m+1]} \cdot f=\sum_{k=i}^{i+m-1} s_kf_k$<br>注意是S的转置矩阵与f的相乘, 最后得到的是[2 </em> filter + |s|]的宽度数组，即为卷积结果。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/15/Xgboost/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -442,7 +580,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
