@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="背景短文本question-answer匹配度识别问题，论文(Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks.pdf), github实现。github的作者基本上实现了文章里的算法，计算的精度也差不多，不过使用theano实现的，我准备使用tensorflow实现，并解决大规模预料训练太慢的问题。">
 <meta property="og:image" content="http://yoursite.com/images/deep_qa.jpg">
-<meta property="og:updated_time" content="2017-03-10T03:48:33.000Z">
+<meta property="og:updated_time" content="2017-03-16T10:11:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN在问答领域识别中应用">
 <meta name="twitter:description" content="背景短文本question-answer匹配度识别问题，论文(Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks.pdf), github实现。github的作者基本上实现了文章里的算法，计算的精度也差不多，不过使用theano实现的，我准备使用tensorflow实现，并解决大规模预料训练太慢的问题。">
@@ -345,7 +345,7 @@
 <li>将5中得到的向量做线性变化，即$\alpha(W*X+b)$</li>
 <li>最后使用Softmax对6中得到的linear之后的向量做分类</li>
 </ol>
-<h2 id="使用theano的实现"><a href="#使用theano的实现" class="headerlink" title="使用theano的实现"></a>使用theano的实现</h2><p>作者的实现有一些改动，如第5步骤中计算得到的交叉部分F，这部分可以是交叉词的词向量，也可以是交叉词的idf，比重等，显然idf和比重更容易让人信服，不过这个值不好处理，作者并没有用，而是直接使用的交叉词的词向量直接拼到qustion和answer的词向量中，即将这部分直接放到开头做了。</p>
+<h2 id="使用theano的实现"><a href="#使用theano的实现" class="headerlink" title="使用theano的实现"></a>使用theano的实现</h2><p>作者的实现有一些改动，如第5步骤中计算得到的交叉部分F，这部分可以是交叉词的词向量，也可以是交叉词的idf，比重等，显然idf和比重更容易让人信服，不过这个值不好处理，作者并没有用，而是直接使用的交叉词的词向量直接拼到question和answer的词向量中，即将这部分直接放到开头做了。</p>
 <h2 id="数据预处理-embedding"><a href="#数据预处理-embedding" class="headerlink" title="数据预处理(embedding)"></a>数据预处理(embedding)</h2><p>这部分主要是将question-answer对分词(英文就是空格直接分词), 然后根据word2vec，将问题和答案分解成word2vec的词向量，并收集全集词表，word2vec缺失的词使用默认值填充。难点在于训练集合的选取，这是有监督的学习，对于中文的海量语法来说，需要的训练集合的规模也是非常大的。</p>
 <h2 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h2><p>主要load的数据有train, dev, test三类，train是训练参数使用，dev是验证参数，test是实测使用，其实dev和test可以归为一类，每类数据分为question, answer, overlap。</p>
 <h2 id="词向量转化"><a href="#词向量转化" class="headerlink" title="词向量转化"></a>词向量转化</h2><p>LookupTableFast将question, answer, overlap转化为词向量。这里会讲pad部分(即卷积的宽度补上)，最呕输出的是[batch_size, 1, 2 * (q_size + q_filter_widths - 1), ndim], ndim是词向量的宽度(word2vec生成的词向量的size)，后面ndim的长度会拓展为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># sentence长度 + 交叉长度</div><div class="line">ndim = vocab_emb.shape[1] + vocab_emb_overlap.shape[1]</div></pre></td></tr></table></figure></p>
@@ -353,7 +353,12 @@
 <h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>定义Conv2dLayer来做卷积类使用，卷积的初始化如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def __init__(self, rng, filter_shape, input_shape=None, W=None):</div><div class="line"># @rng: 初始化种子</div><div class="line"># @filter_shape: 卷积核的样式，filter_shape = (nkernels, num_input_channels, filter_width, ndim), nkernels = 100, num_input_channels = 1, 可见与question长度无关。</div><div class="line"># @input_shape: 同上一层词向量层的输出</div><div class="line"># @self.W 也和filter_shape具有相同的shape，随机化一些数字</div></pre></td></tr></table></figure></p>
 <p>卷积使用库函数，调用如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def output_func(self, input):</div><div class="line">	return conv.conv2d(input, self.W, border_mode=&apos;valid&apos;,</div><div class="line">			filter_shape=self.filter_shape,</div><div class="line">			image_shape=self.input_shape)</div></pre></td></tr></table></figure></p>
 <p>看看<code>conv2d</code>函数的返回, 看到output的是$[batch_size, filter_size, sentence_size, ndim]$<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Parameters:	</div><div class="line">input (dmatrix of dtensor3) – Symbolic variable for images to be filtered.</div><div class="line">filters (dmatrix of dtensor3) – Symbolic variable containing filter values.</div><div class="line">border_mode (&#123;&apos;valid&apos;, &apos;full&apos;&#125;) – See scipy.signal.convolve2d.</div><div class="line">subsample – Factor by which to subsample output.</div><div class="line">image_shape (tuple of length 2 or 3) – ([number images,] image height, image width).</div><div class="line">filter_shape (tuple of length 2 or 3) – ([number filters,] filter height, filter width).</div><div class="line">kwargs – See theano.tensor.nnet.conv.conv2d.</div><div class="line">Returns:	</div><div class="line">Tensor of filtered images, with shape ([number images,] [number filters,] image height, image width)</div></pre></td></tr></table></figure></p>
-<p><strong>何为卷积？如何卷积?</strong><br>卷积为分时加权，在词向量上表现为分段计算作为权重，粒度更细了，input_shape细化为单个qa，即为如下格式(加上filter_width)。<br>$$<br>S =<br>\begin{vmatrix}<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>filter &amp; w_1 &amp; … &amp; w_{|s|} &amp; filter \\<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>\end{vmatrix}<br>$$<br>$S.shape = [ndim, 2 \cdot (filter - 1) + len(s)]$<br>卷积核为[dim, m]维度，卷积公式如下:<br>$c_i=S \cdot f=S^T_{[i-m+1]} \cdot f=\sum_{k=i}^{i+m-1} s_kf_k$<br>注意是S的转置矩阵与f的相乘, 最后得到的是$[2 \cdot filter + |s|]$的宽度数组，即为卷积结果。增加filter_width是为了让S的每个word享受到相同的卷积效果。</p>
+<p><strong>何为卷积？如何卷积?</strong><br>卷积为分时加权，在词向量上表现为分段计算作为权重，粒度更细了，input_shape细化为单个qa，即为如下格式(加上filter_width)。引用某乎上对卷积的解释:</p>
+<blockquote>
+<p>cnn的核心在于卷积核，其实关于卷积核还有另一个名字叫做滤波器，从信号处理的角度而言，滤波器是对信号做频率筛选，这里主要是空间-频率的转换，cnn的训练就是找到最好的滤波器使得滤波后的信号更容易分类，还可以从模版匹配的角度看卷积，每个卷积核都可以看成一个特征模版，训练就是为了找到最适合分类的特征模板。</p>
+</blockquote>
+<p>卷积核最后是作为最终的feature，每个卷积核作为一个特征，与question、answer等都无关了，所以卷积核的特征采集是非常重要的。</p>
+<p>$$<br>S =<br>\begin{vmatrix}<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>filter &amp; w_1 &amp; … &amp; w_{|s|} &amp; filter \\<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>\end{vmatrix}<br>$$<br>$S.shape = [ndim, 2 \cdot (filter - 1) + len(s)]$<br>卷积核为[dim, m]维度，卷积公式如下:<br>$c_i=S \cdot f=S^T_{[i:i+m-1]} \cdot f=\sum_{k=i}^{i+m-1} s_kf_k$<br>注意是S的转置矩阵与f的相乘, 最后得到的是$[2 \cdot filter + |s|]$的宽度数组，即为卷积结果。增加filter_width是为了让S的每个word享受到相同的卷积效果。</p>
 <h2 id="Activation-tanh"><a href="#Activation-tanh" class="headerlink" title="Activation (tanh)"></a>Activation (tanh)</h2><p>使用nn_layers.NonLinearityLayer作为主类，初始化以及output函数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NonLinearityLayer(b_size=filter_shape[0], activation=activation)</div><div class="line"></div><div class="line">def output_func(self, input):</div><div class="line">	return self.activation(input + self.b.dimshuffle(&apos;x&apos;, 0, &apos;x&apos;, &apos;x&apos;))</div></pre></td></tr></table></figure></p>
 <p>dimshuffle是将b拓展到4维，正好与卷积的output匹配相加。这里有一个问题，卷积出的第四维度是ndim，和公式算的$c_i$没有该维度，该维度上直接相加了。</p>
 <h1 id="Pooling"><a href="#Pooling" class="headerlink" title="Pooling"></a>Pooling</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在第二维度上，即image height，也就是sentence</div><div class="line">def max_pooling(input):</div><div class="line">  return T.max(input, axis=2)</div></pre></td></tr></table></figure>
@@ -413,6 +418,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/base-dt/" rel="prev" title="base_dt">
+                base_dt <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -482,7 +491,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

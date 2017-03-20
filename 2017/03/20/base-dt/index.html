@@ -1,0 +1,670 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="it," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="基本的决策树算法总结这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
+ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="base_dt">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/base-dt/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基本的决策树算法总结这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
+ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定">
+<meta property="og:image" content="http://yoursite.com/images/gini.jpg">
+<meta property="og:updated_time" content="2017-03-20T14:58:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="base_dt">
+<meta name="twitter:description" content="基本的决策树算法总结这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
+ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定">
+<meta name="twitter:image" content="http://yoursite.com/images/gini.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/20/base-dt/"/>
+
+
+
+
+
+  <title> base_dt | Hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Hexo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/base-dt/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ustcJin">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/heart_scale.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Hexo">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                base_dt
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T19:34:43+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="基本的决策树算法总结"><a href="#基本的决策树算法总结" class="headerlink" title="基本的决策树算法总结"></a>基本的决策树算法总结</h1><p>这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有<code>ID3</code>、<code>C4.5</code>、<code>CART</code>、<code>SLIQ</code>、<code>SPRINT</code>，其中<code>CART</code>算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。</p>
+<h2 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h2><p>ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定义:<br>$H(S) = -\sum_{i=1}^{m} P(u_i)logP(u_i)$<br>其中$S$是样例的集合，$P(u_i)=\frac{|u_i|}{|S|}$，一般认为越有序的数据熵比较低，越乱序的则熵比较大，显然我们分类的目的就是有序，减少熵。最后的信息增益为:<br>$Gain(S,A)=Entropy(S) - \sum_{v \in Value(A)}\frac{|S_v|}{|S|}Entropy(S_v)$<br>遍历所有属性即可，这个算法优点就是简单，奥卡姆剃刀原理，缺点也较明显，抗噪音不行，大数据，无剪枝。</p>
+<h2 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h2><p>C4.5是对ID3的改进，因为ID3分裂出的树不是二叉树，而是有多少属性就有多少分叉，所以如果分叉过多，容易导致各个分支上的信息熵为0，但是这种明显不是我们想要的，所以这里提出了信息增益率的概念，公式为:<br>$GainRatio(A) = \frac{Gain(A)}{Entropy(A)}$<br>分母是训练集关于A的分布情况，显然，越多越大，最后的增益率就会下降。</p>
+<h2 id="CART"><a href="#CART" class="headerlink" title="CART"></a>CART</h2><p>CART和C4.5类似，不过是使用gini算法计算收益，gini值越小，效果越好。接下来会讲一下gini算法的实现。</p>
+<h2 id="gini"><a href="#gini" class="headerlink" title="gini"></a>gini</h2><p>基尼指数原来是是衡量贫富悬殊程度的标量。它的定义如下：我们首先收集社会上每一个人的总财富额，把它从少至大排序，计算它的累积函数（cumulative function），然后便可绘出图中的洛仑兹曲线（Lorenz curve）。图中横轴是人口比例的累积分布，竖轴是财富比例的累积分佈。<br><img src="/images/gini.jpg" alt="gini"><br>$A$和$B$是途中两个面积，基尼系数为$\frac{A}{A+B}$<br>越不均匀，比如钱都集中在少数人手里，则$B$趋向于0，gini系数很大，python简单的实现如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">def gini_coef(wealths):</div><div class="line">	cum_wealths = np.cumsum(sorted(np.append(wealths, 0)))</div><div class="line">	sum_wealths = cum_wealths[-1]</div><div class="line">	xarray = np.array(range(0, len(cum_wealths))) / np.float(len(cum_wealths)-1)</div><div class="line">	yarray = cum_wealths / sum_wealths</div><div class="line">	B = np.trapz(yarray, x=xarray)</div><div class="line">	A = 0.5 - B</div><div class="line">	return A / (A+B)</div></pre></td></tr></table></figure></p>
+<p>应用到具体分类的gini定义如下:<br>$gini(S)=1-\sum_{j=1}^{n}p_j^2$<br>$p_j$为类j出现的概率，如果集合分成$S_1$和$S_2$部分，则分割后的gini为<br>$gini_{split}(S)=\frac{n_1}{n}gini(S_1)+\frac{n_2}{n}gini(S_2)$<br>则$GAIN_{gini} = gini(S) - gini_{split}(S)$，越大收益越高。</p>
+<h2 id="如何收益大？"><a href="#如何收益大？" class="headerlink" title="如何收益大？"></a>如何收益大？</h2><p>说到gini系数，其实有点相悖？gini系数中如果财产都在一个人手里，那岂不是显得很”纯”? 其实这种情况的确是比较符合理想分类的情形，因为99%的都是穷人，1%的才是富人，不过这样想就错了，因为负例太负了，负例产生的波动太大了，因为太大了，造成了整体的均值不回太低，所以其它99%的产生的mse也是比较大的，其实可以这么理解，一共100个样本，和就是<code>1</code>，如果均匀分布即大家都是同类人，这样才是分类的最佳情况。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/it/" rel="tag"># it</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/qa-cnn/" rel="next" title="CNN在问答领域识别中应用">
+                <i class="fa fa-chevron-left"></i> CNN在问答领域识别中应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/heart_scale.png"
+               alt="ustcJin" />
+          <p class="site-author-name" itemprop="name">ustcJin</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本的决策树算法总结"><span class="nav-number">1.</span> <span class="nav-text">基本的决策树算法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ID3"><span class="nav-number">1.1.</span> <span class="nav-text">ID3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C4-5"><span class="nav-number">1.2.</span> <span class="nav-text">C4.5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CART"><span class="nav-number">1.3.</span> <span class="nav-text">CART</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gini"><span class="nav-number">1.4.</span> <span class="nav-text">gini</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何收益大？"><span class="nav-number">1.5.</span> <span class="nav-text">如何收益大？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ustcJin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
