@@ -87,20 +87,20 @@
 
 
 
-<meta name="description" content="基本的决策树算法总结这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
-ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定">
+<meta name="description" content="这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
+ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定义:$H(S) =">
 <meta property="og:type" content="article">
-<meta property="og:title" content="base_dt">
+<meta property="og:title" content="基本的决策树算法总结">
 <meta property="og:url" content="http://yoursite.com/2017/03/20/base-dt/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="基本的决策树算法总结这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
-ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定">
+<meta property="og:description" content="这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
+ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定义:$H(S) =">
 <meta property="og:image" content="http://yoursite.com/images/gini.jpg">
-<meta property="og:updated_time" content="2017-03-20T14:58:09.000Z">
+<meta property="og:updated_time" content="2017-03-20T15:18:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="base_dt">
-<meta name="twitter:description" content="基本的决策树算法总结这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
-ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定">
+<meta name="twitter:title" content="基本的决策树算法总结">
+<meta name="twitter:description" content="这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
+ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定义:$H(S) =">
 <meta name="twitter:image" content="http://yoursite.com/images/gini.jpg">
 
 
@@ -135,7 +135,7 @@ ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是�
 
 
 
-  <title> base_dt | Hexo </title>
+  <title> 基本的决策树算法总结 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -286,7 +286,7 @@ ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是�
             
             
               
-                base_dt
+                基本的决策树算法总结
               
             
           </h1>
@@ -337,7 +337,7 @@ ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是�
       
 
       
-        <h1 id="基本的决策树算法总结"><a href="#基本的决策树算法总结" class="headerlink" title="基本的决策树算法总结"></a>基本的决策树算法总结</h1><p>这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有<code>ID3</code>、<code>C4.5</code>、<code>CART</code>、<code>SLIQ</code>、<code>SPRINT</code>，其中<code>CART</code>算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。</p>
+        <p>这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有<code>ID3</code>、<code>C4.5</code>、<code>CART</code>、<code>SLIQ</code>、<code>SPRINT</code>，其中<code>CART</code>算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。</p>
 <h2 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h2><p>ID3是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定义:<br>$H(S) = -\sum_{i=1}^{m} P(u_i)logP(u_i)$<br>其中$S$是样例的集合，$P(u_i)=\frac{|u_i|}{|S|}$，一般认为越有序的数据熵比较低，越乱序的则熵比较大，显然我们分类的目的就是有序，减少熵。最后的信息增益为:<br>$Gain(S,A)=Entropy(S) - \sum_{v \in Value(A)}\frac{|S_v|}{|S|}Entropy(S_v)$<br>遍历所有属性即可，这个算法优点就是简单，奥卡姆剃刀原理，缺点也较明显，抗噪音不行，大数据，无剪枝。</p>
 <h2 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h2><p>C4.5是对ID3的改进，因为ID3分裂出的树不是二叉树，而是有多少属性就有多少分叉，所以如果分叉过多，容易导致各个分支上的信息熵为0，但是这种明显不是我们想要的，所以这里提出了信息增益率的概念，公式为:<br>$GainRatio(A) = \frac{Gain(A)}{Entropy(A)}$<br>分母是训练集关于A的分布情况，显然，越多越大，最后的增益率就会下降。</p>
 <h2 id="CART"><a href="#CART" class="headerlink" title="CART"></a>CART</h2><p>CART和C4.5类似，不过是使用gini算法计算收益，gini值越小，效果越好。接下来会讲一下gini算法的实现。</p>
@@ -504,7 +504,7 @@ ID3ID3是根据信息增益来做的决策，所以如何定义信息增益是�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本的决策树算法总结"><span class="nav-number">1.</span> <span class="nav-text">基本的决策树算法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ID3"><span class="nav-number">1.1.</span> <span class="nav-text">ID3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C4-5"><span class="nav-number">1.2.</span> <span class="nav-text">C4.5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CART"><span class="nav-number">1.3.</span> <span class="nav-text">CART</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gini"><span class="nav-number">1.4.</span> <span class="nav-text">gini</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何收益大？"><span class="nav-number">1.5.</span> <span class="nav-text">如何收益大？</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ID3"><span class="nav-number">1.</span> <span class="nav-text">ID3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C4-5"><span class="nav-number">2.</span> <span class="nav-text">C4.5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CART"><span class="nav-number">3.</span> <span class="nav-text">CART</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gini"><span class="nav-number">4.</span> <span class="nav-text">gini</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何收益大？"><span class="nav-number">5.</span> <span class="nav-text">如何收益大？</span></a></li></ol></div>
             
 
           </div>
