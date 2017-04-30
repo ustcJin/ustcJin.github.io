@@ -96,7 +96,7 @@ ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是�
 <meta property="og:description" content="这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
 ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是根据信">
 <meta property="og:image" content="http://yoursite.com/images/gini.jpg">
-<meta property="og:updated_time" content="2017-03-21T04:31:47.000Z">
+<meta property="og:updated_time" content="2017-03-30T13:14:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基本的决策树算法总结">
 <meta name="twitter:description" content="这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
@@ -348,7 +348,7 @@ ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是�
 <table>
 <thead>
 <tr>
-<th>stats</th>
+<th>stats1</th>
 <th>C1</th>
 <th>C2</th>
 </tr>
@@ -366,11 +366,11 @@ ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是�
 </tr>
 </tbody>
 </table>
-<p>这个是最初的统计，其实实际在遍历中，可以用最大收益代替，并附上最大收益对应的<code>attribute</code>以及<code>split_value</code>, 当然一般的算收益仍然是使用gini算法。</p>
+<p>这个是最初的统计，其实实际在遍历中，可以用最大收益代替，并附上最大收益对应的<code>attribute</code>以及<code>split\_value</code>, 当然一般的算收益仍然是使用gini算法。</p>
 <table>
 <thead>
 <tr>
-<th>bestGain</th>
+<th>stats2</th>
 <th>Gain</th>
 <th>Attr</th>
 <th>Value</th>
@@ -387,7 +387,11 @@ ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是�
 </table>
 <p>每次扫描完毕，这当前所有的叶子节点(active nodes)上的直方图都会更新一次，决定了下一次的分裂, 如上面节点中的最佳分裂的属性是<code>a1</code>, $split_value=6$。优点很直观啊，全局一次排序。</p>
 <h2 id="SPRINT"><a href="#SPRINT" class="headerlink" title="SPRINT"></a>SPRINT</h2><p>scalable parallelizable induction(归纳) of decision trees, sprint算法，强调了并行，是在SLIQ的基础上更进一步, 将类图合并到每个属性表中，单独存入节点中，属性表随着节点的分裂也被分割，所以就不存在BFS了，而是深度优先遍历的方式，每个节点拥有自己单独的属性表(每个属性都需要一张(sorted))，可以单独分裂，这个可以加快并行，当然存储最佳分类的还是要使用直方图，这个算法的缺点就是每次分裂，需要设计到非分割属性表的元素分裂，需要通过rowid(hash?)对应上，分割相对复杂。</p>
-<h2 id="直方图如何对应xgboost"><a href="#直方图如何对应xgboost" class="headerlink" title="直方图如何对应xgboost?"></a>直方图如何对应xgboost?</h2>
+<h2 id="直方图如何对应xgboost"><a href="#直方图如何对应xgboost" class="headerlink" title="直方图如何对应xgboost?"></a>直方图如何对应xgboost?</h2><p>分布式加权直方图算法,这是xgboost里带的，为了解决数据无法一次载入内存或者在分布式情况下算法，</p>
+<blockquote>
+<p>可并行的近似直方图算法。树节点在进行分裂时，我们需要计算每个特征的每个分割点对应的增益，即用贪心法枚举所有可能的分割点。当数据无法一次载入内存或者在分布式情况下，贪心算法效率就会变得很低，所以xgboost还提出了一种可并行的近似直方图算法，用于高效地生成候选的分割点。<br><strong>直方图补充</strong><br>微软新出的LightGBM算法也是用到了直方图，的确，这个直方图和SLIQ以及SPRINT的直方图并无区别，直方图直接在gbdt中使用，的确起到了比较好的效果，不过相对于level-wise，每个节点都需要维护自己的数据，各个feature上sort的数据，比较麻烦，不过这样的好处就是deep-wise，脱离了深度的限制，另外，LightGBM中使用了bin value作为划分根据，即将feature value专为bin value，一般一个字节，即最多256种划分，这样的好处就是存储压力变小，另外不必扫描所有的feature value，只需扫描256次即可，还有一个就是数据分割时较快速，因为内存占用少，共享索引表，直接划分，还有做差的方式，即处理好一个分裂节点，另一个节点直接通过与父节点作差即可得到，速度又得到了提高。</p>
+</blockquote>
+
       
     </div>
 
@@ -432,6 +436,10 @@ ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/30/rotate-array-search/" rel="prev" title="rotate array search">
+                rotate array search <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -501,7 +509,7 @@ ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -512,7 +520,7 @@ ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
