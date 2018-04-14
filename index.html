@@ -255,6 +255,183 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/dqn/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ustcJin">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/heart_scale.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Hexo">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/03/08/dqn/" itemprop="url">
+                  深度增强学习实现实例(atari)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T18:51:28+08:00">
+                2018-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要是纪录近期实现的一个增强学习的实例，一直再说增强学习，原理大家也都理解，可是受制于图形学、算法等，直观的增强学习的效果还是很难看到的，多亏了ale，结合opencv可以直观的看到增强学习的效果，下面将详细介绍DQN实现atari在mac上的实现。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<p>当然是参考经典的论文Playing Atari with Deep Reinforcement Learning<br>基本实现github:<a href="https://github.com/gliese581gg/DQN_tensorflow" target="_blank" rel="external">https://github.com/gliese581gg/DQN_tensorflow</a></p>
+</blockquote>
+<h1 id="ALE环境介绍"><a href="#ALE环境介绍" class="headerlink" title="ALE环境介绍"></a>ALE环境介绍</h1><p>小时候都玩过射击、乒乓球等简单小游戏，其实就是atari小游戏，就是控制左右上下等来躲避怪物，具体的可以参考<a href="http://www.arcadelearningenvironment.org/，现在比较好的就是这个平台开源了，可以在电脑上来模拟这些小游戏，可以通过api的方式输入action来控制，输出下一帧的图片以及reward和是否结束等，reward可以灵活设置，比如没有terminal就是1，terminal了就是0。" target="_blank" rel="external">http://www.arcadelearningenvironment.org/，现在比较好的就是这个平台开源了，可以在电脑上来模拟这些小游戏，可以通过api的方式输入action来控制，输出下一帧的图片以及reward和是否结束等，reward可以灵活设置，比如没有terminal就是1，terminal了就是0。</a></p>
+<h1 id="如何安装"><a href="#如何安装" class="headerlink" title="如何安装"></a>如何安装</h1><blockquote>
+<p>git clone <a href="https://github.com/mgbellemare/Arcade-Learning-Environment" target="_blank" rel="external">https://github.com/mgbellemare/Arcade-Learning-Environment</a><br>mkdir build &amp;&amp; cd build; cmake -DUSE_SDL=OFF -DUSE_RLGLUE=OFF -DBUILD_EXAMPLES=ON ..;make -j4<br>sudo python setup.py<br>这样就安装了ALE的python版本。</p>
+</blockquote>
+<h1 id="如何使用ALE？"><a href="#如何使用ALE？" class="headerlink" title="如何使用ALE？"></a>如何使用ALE？</h1><p>需要安装cv2,并且下载一个游戏的rom文件，这里用breakout来做实验。大概的实现如下代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">from ale_python_interface import ALEInterface</div><div class="line">import cv2</div><div class="line">ale = ALEInterface()</div><div class="line">ale.loadROM(&apos;roms/breakout.bin&apos;)</div><div class="line">screen_width, screen_height = ale.getScreenDims()</div><div class="line">numpy_surface = np.zeros(screen_height*screen_width*3, dtype=np.uint8)</div><div class="line">ale.getScreenRGB(numpy_surface)  #这样就获得了开始的游戏图片界面</div><div class="line">legal_actions = ale.getMinimalActionSet() #获取该游戏合法的操作输入，比如 0=&gt;left, 1=&gt;right</div><div class="line">cv2.startWindowThread() #开启图形渲染线程</div><div class="line">cv2.namedWindow(&apos;breakout&apos;) #图形框名字</div><div class="line">ale.act(action_indx) # 输入操作指令，下次getScreenRGB就会获得该至指令下的下一帧图片</div><div class="line">cv2.imshow(&apos;breakout&apos;,numpy_surface) </div><div class="line">cv2.waitKey(25) #图形窗口展示，25ms刷新一次</div></pre></td></tr></table></figure></p>
+<h1 id="论文结构"><a href="#论文结构" class="headerlink" title="论文结构"></a>论文结构</h1><h2 id="qlearning"><a href="#qlearning" class="headerlink" title="qlearning"></a>qlearning</h2><p>强化学习中有状态(state)、动作(action)、奖赏(reward)这三个要素。训练的主体需要根据当前状态来采取动作，获得相应的奖赏之后，再去改进这些动作，使得下次再到相同状态时，智能体能做出更优的动作。这个过程就是qlearning，这其中的核心就是q表的训练，q表就是状态、动作和奖赏的映射表，处在某个状态中，该选择哪个action，直接查表即可，当然这时候的q表已经非常准确了。m个状态，n个action，对应的reward表可以表示如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>s/a</th>
+<th>A1</th>
+<th>A2</th>
+<th>…</th>
+<th>An</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>R11</td>
+<td>R12</td>
+<td>…</td>
+<td>R1n</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>R21</td>
+<td>R22</td>
+<td>…</td>
+<td>R2n</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Sm</td>
+<td>Rm1</td>
+<td>Rm2</td>
+<td>…</td>
+<td>Rmn</td>
+</tr>
+</tbody>
+</table>
+<p>一般例子里用小孩学习还是看电视，最后做推理，那个里面看电视和学习就是两个action，状态就是有限的几个状态。flappybird里的action就是上下，状态可以用小鸟距离前一个下桶，上桶的距离以及地面的距离这三个值来作为状态衡量，而atari里action显然就是玩游戏的那几个手柄键(最多18个action)，状态是什么呢？状态就是原始的图片，所以这是个非常庞大和复杂的Q表，通过输入状态(原始图片信息)和action查到Q值，所以这是个训练函数的过程，可以通过svm等线性模型实现，这里我们使用深度神经网络来模拟这个函数，就是论文中提到的dqn。</p>
+<h2 id="loss与learning"><a href="#loss与learning" class="headerlink" title="loss与learning"></a>loss与learning</h2><p>Q表里的是q值，即收益值，该值与当前的直接reward以及下一个状态最大值有直接关系，reward表示当前状态下的收益，游戏里可以就表示两种状态，生存或者死亡，0和1即可。表示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">self.discount = tf.constant(self.params[&apos;discount&apos;])</div><div class="line">self.yj = tf.add(self.rewards, tf.multiply(1.0-self.terminals, tf.multiply(self.discount, self.q_t)))</div></pre></td></tr></table></figure></p>
+<p>qlearning中的Q值可用函数表示成</p>
+<p>$ Q(s,a) = \max \limits_{a} {r + \gamma maxQ(s’,a’)|s,a} $</p>
+<p>结合代码来看，下个状态的最大值通过replay来获取，即上一个参数下(老的theta), 该状态下的最大值q_t，这样就得到了相当于supervised里的label Q(s,a)，与旧的函数里算的Q值做差值即产生了loss, 其实可以看到状态的reward再不断的学习进来，并且未来的前途也会考量，但是最终都是由本地的reward这个实实在在的东西得来的，不死即是目标。</p>
+<h2 id="replay"><a href="#replay" class="headerlink" title="replay"></a>replay</h2><p>一般的增强学习里都是需要replay，棋类游戏的自我对弈也是获取replay的方式，简单的游戏里状态的确是有限的，比如象棋，但是像围棋这种状态很多，大概$2^{19*19}$，action又较多361，象棋要少很多，这种情况下，罗列状态做成map映射是不可能的，可以采用深度神经网络的方式来处理原始状态的情况，但是label比较难获取，如何自我训练获取label?<br>这里就用到replay机制，将Q(S,a)分解成当前的可看到的reward以及下一个状态最大的Q值(可以用旧的网络直接计算)，下一个状态如何获取？如果遍历当前所有的action显得比较笨重，这样体现replay的用处了，先跑一遍，在回头来一下，所以是off-policy。为何不是on-policy？我的感觉主要是随机，因为当下训练的batch就是随机抽出来的，而非on-policy实时关联的，实时policy会导致问题，”For example, if the maximizing action is to move left then the training samples will be dominated by samples from the left-hand side; if the maximizing action then switches to the right then the training distribution will also switch. It is easy to see how unwanted feedback loops may arise and the parameters could get stuck in a poor local minimum, or even diverge catastrophically”。online通过$\epsilon -greedy$的方式获取较均匀的状态，这里不表。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/job/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -624,7 +801,7 @@
 </tr>
 </tbody>
 </table>
-<p>这个是最初的统计，其实实际在遍历中，可以用最大收益代替，并附上最大收益对应的<code>attribute</code>以及<code>split\_value</code>, 当然一般的算收益仍然是使用gini算法。</p>
+<p>这个是最初的统计，其实实际在遍历中，可以用最大收益代替，并附上最大收益对应的<code>attribute</code>以及<code>split_value</code>, 当然一般的算收益仍然是使用gini算法。</p>
 <table>
 <thead>
 <tr>
@@ -1052,7 +1229,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
