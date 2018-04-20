@@ -97,12 +97,17 @@
 <meta property="og:description" content="前言本文主要是纪录近期实现的一个增强学习的实例，一直再说增强学习，原理大家也都理解，可是受制于图形学、算法等，直观的增强学习的效果还是很难看到的，多亏了ale，结合opencv可以直观的看到增强学习的效果，下面将详细介绍DQN实现atari在mac上的实现。
 参考资料
 当然是参考经典的论文Playing Atari with Deep Reinforcement Learning基本实现githu">
-<meta property="og:updated_time" content="2018-04-14T13:58:31.000Z">
+<meta property="og:image" content="http://yoursite.com/images/dqn_1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/dqn_2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/dqn_3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/dqn_4.jpg">
+<meta property="og:updated_time" content="2018-04-20T16:16:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度增强学习实现实例(atari)">
 <meta name="twitter:description" content="前言本文主要是纪录近期实现的一个增强学习的实例，一直再说增强学习，原理大家也都理解，可是受制于图形学、算法等，直观的增强学习的效果还是很难看到的，多亏了ale，结合opencv可以直观的看到增强学习的效果，下面将详细介绍DQN实现atari在mac上的实现。
 参考资料
 当然是参考经典的论文Playing Atari with Deep Reinforcement Learning基本实现githu">
+<meta name="twitter:image" content="http://yoursite.com/images/dqn_1.jpg">
 
 
 
@@ -395,6 +400,8 @@
 <p>$ Q(s,a) = \max \limits_{a} {r + \gamma maxQ(s’,a’)|s,a} $</p>
 <p>结合代码来看，下个状态的最大值通过replay来获取，即上一个参数下(老的theta), 该状态下的最大值q_t，这样就得到了相当于supervised里的label Q(s,a)，与旧的函数里算的Q值做差值即产生了loss, 其实可以看到状态的reward再不断的学习进来，并且未来的前途也会考量，但是最终都是由本地的reward这个实实在在的东西得来的，不死即是目标。</p>
 <h2 id="replay"><a href="#replay" class="headerlink" title="replay"></a>replay</h2><p>一般的增强学习里都是需要replay，棋类游戏的自我对弈也是获取replay的方式，简单的游戏里状态的确是有限的，比如象棋，但是像围棋这种状态很多，大概$2^{19*19}$，action又较多361，象棋要少很多，这种情况下，罗列状态做成map映射是不可能的，可以采用深度神经网络的方式来处理原始状态的情况，但是label比较难获取，如何自我训练获取label?<br>这里就用到replay机制，将Q(S,a)分解成当前的可看到的reward以及下一个状态最大的Q值(可以用旧的网络直接计算)，下一个状态如何获取？如果遍历当前所有的action显得比较笨重，这样体现replay的用处了，先跑一遍，在回头来一下，所以是off-policy。为何不是on-policy？我的感觉主要是随机，因为当下训练的batch就是随机抽出来的，而非on-policy实时关联的，实时policy会导致问题，”For example, if the maximizing action is to move left then the training samples will be dominated by samples from the left-hand side; if the maximizing action then switches to the right then the training distribution will also switch. It is easy to see how unwanted feedback loops may arise and the parameters could get stuck in a poor local minimum, or even diverge catastrophically”。online通过$\epsilon -greedy$的方式获取较均匀的状态，这里不表。</p>
+<h1 id="DQN架构详解"><a href="#DQN架构详解" class="headerlink" title="DQN架构详解"></a>DQN架构详解</h1><p>DQN的实现是使用tensorflow，输入是当前的图像特征、当前状态的奖励、当前状态是否是终止状态、下一步的action以及action对应的下一个状态的最大收益，最大收益是通过replay的方式可以直接获取的，也就是之前提到的$\theta _{i-1}$。通过tensorboard将基本的构图画了出来，如下所示：<br>整体架构，又输入、卷积层、全连接层、loss、train目标层构成<br><img src="/images/dqn_1.jpg" alt="dqn_all"><br>三个卷积、relu如下所示：<br><img src="/images/dqn_2.jpg" alt="dqn_conv2d"><br>两个全连接层如下：<br><img src="/images/dqn_3.jpg" alt="dqn_fullconnect"><br>loss层如下：<br><img src="/images/dqn_4.jpg" alt="dqn_loss"></p>
+<h1 id="训练效果"><a href="#训练效果" class="headerlink" title="训练效果"></a>训练效果</h1><p>github中给出了一个链接，<code>https://www.youtube.com/watch?v=GACcbfUaHwc</code>，基本上就是这个效果，训练了两天以上后，我自己夜训练了一个版本，不过只训练了一个晚上，效果已经非常不错了，感觉已经超过我的水平了，大体的方向性还是很明显的。</p>
 
       
     </div>
@@ -557,7 +564,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ALE环境介绍"><span class="nav-number">2.</span> <span class="nav-text">ALE环境介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何安装"><span class="nav-number">3.</span> <span class="nav-text">如何安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何使用ALE？"><span class="nav-number">4.</span> <span class="nav-text">如何使用ALE？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文结构"><span class="nav-number">5.</span> <span class="nav-text">论文结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#qlearning"><span class="nav-number">5.1.</span> <span class="nav-text">qlearning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loss与learning"><span class="nav-number">5.2.</span> <span class="nav-text">loss与learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#replay"><span class="nav-number">5.3.</span> <span class="nav-text">replay</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ALE环境介绍"><span class="nav-number">2.</span> <span class="nav-text">ALE环境介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何安装"><span class="nav-number">3.</span> <span class="nav-text">如何安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何使用ALE？"><span class="nav-number">4.</span> <span class="nav-text">如何使用ALE？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文结构"><span class="nav-number">5.</span> <span class="nav-text">论文结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#qlearning"><span class="nav-number">5.1.</span> <span class="nav-text">qlearning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loss与learning"><span class="nav-number">5.2.</span> <span class="nav-text">loss与learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#replay"><span class="nav-number">5.3.</span> <span class="nav-text">replay</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DQN架构详解"><span class="nav-number">6.</span> <span class="nav-text">DQN架构详解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练效果"><span class="nav-number">7.</span> <span class="nav-text">训练效果</span></a></li></ol></div>
             
 
           </div>
