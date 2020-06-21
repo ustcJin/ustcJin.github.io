@@ -255,6 +255,128 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/04/EM/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ustcJin">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/heart_scale.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Hexo">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/11/04/EM/" itemprop="url">
+                  EM算法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-04T20:50:14+08:00">
+                2019-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="EM算法和最大似然的区别"><a href="#EM算法和最大似然的区别" class="headerlink" title="EM算法和最大似然的区别"></a>EM算法和最大似然的区别</h1><p>MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则<br>$$<br>MLE = arg \max_{p} p^{9}(1-p)<br>$$<br>如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些<br>$$<br>log(p^9(1-p)) = 9logp + log(1-p)<br>$$<br>很容易得到p=0.9时，最大似然成立。<br>有时候的问题这么直接求解解不了，还有一个隐含变量，比如男女测身高估计正态分布的参数，或者两个隐蔽测试估计每个硬币的上下的概率，可以看到升高的<br>case里，需要知道是男是女，硬币的case里需要知道选取的哪个硬币，这些隐变量有了才能列出似然函数，然而多一个参数显然就不好解了，这个时候就需要用<br>到EM算法，通过迭代的方法，不断逼近真实的分布。</p>
+<h1 id="原理逼近"><a href="#原理逼近" class="headerlink" title="原理逼近"></a>原理逼近</h1><p>$$<br>\theta = \max_{\theta} L(\theta) = \max_{\theta} log(P(x^{i}|\theta))<br>$$<br>增加了隐变量后$\theta$后，似然函数变为<br>$$<br>\theta, z = \max_{\theta,z} L(\theta, z) = \max_{\theta,z} \sum_{i=1}^{m} log \sum_{z^{(i)}}P(x^{i},z^{i}|\theta)<br>$$<br>引入一个未知的新的分布$Q_i(z^i)$, 即关于隐变量z的分布，则上面的目标变为<br>$$<br>\sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>然后引入凸函数的Jsen不等式，即f(x)满足 f’’(x) &gt;= 0，即为严格凸函数，有不等式如下<br>$$<br>E[f(x)] &gt;= f(E(x))<br>$$<br>则<br>$$<br>L(\theta,z) = \sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)} \\<br>\geq \sum_{i=1}^{m} \sum_{z^{i}} Q_i(z^i) log \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>这样，$L(\theta,z)$就有了一个下界，我们的任务先固定$\theta$来找一个合适的$Q$，整体的思路就是先让下界=L,然后固定Q，在去优化$\theta$让下界最大化。<br>Jsen不等式成立的条件就是f(x)式常数，于是<br>$$<br>\frac{P(x^i,z^i|\theta)}{Q_i(z^i)} = c \\<br>P(x^i,z^i|\theta) = c Q_i(z^i) \\<br>\sum_{z} P(x^i,z^i|\theta) = c \sum_{z} Q_i{z^i} \\<br>\sum_{z} P(x^i,z^i|\theta) = c \\<br>Q_i(z^i) = \frac{P(x^i,z^i|\theta)} {c} = \frac{P(x^i,z^i|\theta)} {\sum_{z} P(x^i,z^i|\theta)} \\<br>= \frac{P(x^i,z^i|\theta)} {P(x^i|\theta)} \\<br>= P(z^i|x^i,\theta)<br>$$<br>即通过将下界=L找的Q就是基于x和$\theta$的分布,这个公式推导就是证明了Q的确定就是通过x和$\theta$的分布来确定的，这个值让下确界等于目标L，然后M步再固定Q取优化这个下确界就行了，当然是可以证明每次迭代都会比上一次更好，这里不赘述了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/boosting-tree/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -298,126 +420,6 @@
                 <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-30T22:55:20+08:00">
-                2019-10-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/source-posts-boosting-tree-md/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/10/30/source-posts-boosting-tree-md/" itemprop="url">
-                  source/_posts/boosting_tree.md
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-30T22:51:50+08:00">
                 2019-10-30
               </time>
             
@@ -576,9 +578,9 @@
         
           
             <p>回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+…+fn(x)，fi(x)即弱分类器，实现上用tree来实现，所以现在的问题就是给你一个训练集，Train=[1…N][x1..n]，如何来训练这么多tree，叶子节点的value代表最后的分数,区别于random forest的bagging，即tree之间的训练没有明显区别，这里是boosting，即提升。既然是tree，如何控制分裂？分裂的最大收益是什么？</p>
-<h2 id="gbdt"><a href="#gbdt" class="headerlink" title="gbdt"></a>gbdt</h2><p>gbdt分裂的标准是”统一、均匀”，拟合label的任务由loss的一阶导数来做，即tree分裂后，落到一起的样本”loss的一阶导数”的均方差最小，则为最佳分裂点。叶子节点上的值也是loss对F(x)<sub>i-1</sub>的求导(注意这里不是对f<sub>i</sub>(x)的求导，每次完事后需要更新). F<sub>i</sub>(x) = F(x)<sub>i-1</sub> + shrink$\cdot$f<sub>i</sub>(x)，当然叶子节点的值没有shrink，loss使用最简单的最小二乘法loss=(y<sub>i</sub>-F<sub>i-1</sub>(x))<sup>2</sup>，可见这个loss是可导的，这个非常重要，对 F(x) 求导得 gradient=-2$\cdot$(-1)(y<sub>i</sub>-F<sub>i-1</sub>(x)), gradient的就是所求的f<sub>i</sub>(x)很简单(你和残差，最后加一起可不就是label了么)，可以通过参数设置树的深度、叶子节点最大个数、均方差满足提前收敛等。缺点是没有设置模型复杂度目标不是么？应该是可以做的， Obj = EM(g<sub>i</sub>-$\overline{g}$)<sup>2</sup>+W<sup>2</sup>(W是分裂点的叶子权重f(x)) + lambda$\cdot$T(T为页节点个数) [这应该就是防止无限分裂以及某些点上出现极值的情况发生], 每次遍历所有的feature的所有value split，得到 min(Obj)，即使最佳分裂点，当然不能比没分离的还挫。</p>
-<h2 id="lambdamart"><a href="#lambdamart" class="headerlink" title="lambdamart"></a>lambdamart</h2><p>肯定会有问题，这个gbdt是否只是point-wise，如果扩展到 pair-wise和list-wise，好像有困难，pair-wise和list-wise的一些标准计算再算loss貌似不可导，如果引入group的概念来解决组内的一些规则的计算呢，比如搜索场景下一个query对应多条结果，算MAP, ERR, NDCG等，把这些搜索指标融入到树的分裂目标？<br>这里就提到了lambda mart，之前先介绍rank-net，引入了pair对比信息，定义了<br>$$<br>Sij=<br>\begin{cases}<br>0 &amp; x_i负例，x_j正例 \\<br>1 &amp; x_j负例，x_i正例<br>\end{cases}<br>$$<br>于是定义了目标<br>$$<br>C=\frac{1}{2}(1-Sij)\delta(s_i-s_j)+log(1+e^{-\delta(s_i-s_j)})<br>$$<br>这样，目标里就简单的将两个文档的比较融入到目标中，比如上面的Sij目标中，x<sub>i</sub>是正例，x<sub>j</sub>是负例，那么拉大s<sub>i</sub>和s<sub>j</sub>的差距成为目标, C对w的求导可以转化为C对s<sub>i</sub>和s<sub>j</sub>的求导！而！！容易得到<br>$$<br>\frac{\partial C}{\partial s_i} = - \frac{\partial C}{\partial s_j}<br>$$<br>这样si即f(xi)的计算可以转化为组内和其不同label的样本的计算，比xi差的为其贡献正梯度，比xi好的为其贡献负梯度，这就是 $\lambda_{ij}$<br>当然这远远不够，这仅仅是rank-net，这里大家看到的好像就是两个pair之间的定制关系，如何引入复杂的目标呢？ 比如NDCG, 很简单，$\lambda_{ij}$*(deltaNDCG)，好了，lambda-mart诞生了，rank-net提供了复杂应用目标的梯度计算方式，mart即多个弱分类器(tree)提供了整体的框架，那就结合吧。最后叶子节点值的结算可以参考论文里的，直接带进去算就可以了，当然要记住，分裂的基础仍然是拿这个f(x)做均方差分裂, 将均匀的样本分到一起。<br>Lambda-mart-gbdt 的实现分裂方式不变，仍然采用均方差最小的方式(暂不提正则)，而叶子节点的计算不再是简单的loss的负梯度，而是转为lambda rank的计算方式，通过group里lambda的方式获得，这里又不仅限于lambda，而是进一步优化，采用牛顿法的思想，一阶梯度不行了，要对Ft-1(x)做二阶导，F(x)=F(x)-F’(x)/F’’(x)，f(x) = F’(x)/F’’(x)</p>
-<h2 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h2><p>xgboost 呢，对目标做了详细规划<br>$$<br>OBJ=L+\Omega \\<br>L = L(yi, Fx-1(x)+fi(x)) \\<br>\Omega = T + \frac{1}{2} * \lambda * W^{2}<br>$$<br>这里 对L做了泰勒二阶展开<br>$$<br>f(x+\Delta x) = f(x) + f’(x) * \Delta x+\frac{1}{2} * f’’(x)+(\Delta x)^2<br>$$<br>算出gi, 和 hi, 通过归并，将训练集归并到T个叶子节点上，通过求最大值，可以得出最小值，这个最小值则是split的参考, gi和hi可以很容易的通过同group里不同label的s算得到。</p>
+<h2 id="gbdt"><a href="#gbdt" class="headerlink" title="gbdt"></a>gbdt</h2><p>gbdt分裂的标准是”统一、均匀”，拟合label的任务由loss的一阶导数来做，即tree分裂后，落到一起的样本”loss的一阶导数”的均方差最小，则为最佳分裂点。叶子节点上的值也是loss对F(x)<sub>i-1</sub>的求导(注意这里不是对f<sub>i</sub>(x)的求导，每次完事后需要更新). F<sub>i</sub>(x) = F(x)<sub>i-1</sub> + shrink$\cdot$f<sub>i</sub>(x)，当然叶子节点的值没有shrink，loss使用最简单的最小二乘法loss=(y<sub>i</sub>-F<sub>i-1</sub>(x))<sup>2</sup>，可见这个loss是可导的，这个非常重要，对 F(x) 求导得 gradient=-2$\cdot$(-1)(y<sub>i</sub>-F<sub>i-1</sub>(x)), gradient的就是所求的f<sub>i</sub>(x)很简单(拟合残差，最后加一起可不就是label了么)，可以通过参数设置树的深度、叶子节点最大个数、均方差满足提前收敛等。缺点是没有设置模型复杂度目标不是么？应该是可以做的， Obj = EM(g<sub>i</sub>-$\overline{g}$)<sup>2</sup>+W<sup>2</sup>(W是分裂点的叶子权重f(x)) + lambda$\cdot$T(T为页节点个数) [这应该就是防止无限分裂以及某些点上出现极值的情况发生], 每次遍历所有的feature的所有value split，得到 min(Obj)，即使最佳分裂点，当然不能比没分离的还挫。</p>
+<h2 id="lambdamart"><a href="#lambdamart" class="headerlink" title="lambdamart"></a>lambdamart</h2><p>肯定会有问题，这个gbdt是否只是point-wise，如果扩展到 pair-wise和list-wise，好像有困难，pair-wise和list-wise的一些标准计算再算loss貌似不可导，如果引入group的概念来解决组内的一些规则的计算呢，比如搜索场景下一个query对应多条结果，算MAP, ERR, NDCG等，把这些搜索指标融入到树的分裂目标？<br>这里就提到了lambda mart，之前先介绍rank-net，引入了pair对比信息，定义了<br>$$<br>Sij=<br>\begin{cases}<br>0 &amp; x_i负例，x_j正例 \\<br>1 &amp; x_j负例，x_i正例<br>\end{cases}<br>$$<br>于是定义了目标<br>$$<br>C=\frac{1}{2}(1-Sij)\delta(s_i-s_j)+log(1+e^{-\delta(s_i-s_j)})<br>$$<br>这样，目标里就简单的将两个文档的比较融入到目标中，比如上面的Sij目标中，x<sub>i</sub>是正例，x<sub>j</sub>是负例，那么拉大s<sub>i</sub>和s<sub>j</sub>的差距成为目标, C对w的求导可以转化为C对s<sub>i</sub>和s<sub>j</sub>的求导！而！！容易得到<br>$$<br>\frac{\partial C}{\partial s_i} = - \frac{\partial C}{\partial s_j}<br>$$<br>这样第i步的迭代即f(xi)的计算可以转化为组内和其不同label的样本的计算，比xi差的为其贡献正梯度，比xi好的为其贡献负梯度，这就是 $\lambda_{ij}$<br>当然这远远不够，这仅仅是rank-net，这里大家看到的好像就是两个pair之间的定制关系，如何引入复杂的目标呢？ 比如NDCG, 很简单，$\lambda_{ij}$*($\Delta$NDCG)，$\Delta$NDCG 这个怎么算？交换i和j后整个NDCG得分的bias。好了，lambda-mart诞生了，rank-net提供了复杂应用目标的梯度计算方式，mart即多个弱分类器(tree)提供了整体的框架，那就结合吧。最后叶子节点值的结算可以参考论文里的，直接带进去算就可以了，当然要记住，分裂的基础仍然是拿这个f(x)做均方差分裂, 将均匀的样本分到一起。<br>Lambda-mart-gbdt 的实现分裂方式不变，仍然采用均方差最小的方式(暂不提正则)，而叶子节点的计算不再是简单的loss的负梯度，而是转为lambda rank的计算方式，通过group里lambda的方式获得，这里又不仅限于lambda，而是进一步优化，采用牛顿法的思想，一阶梯度不行了，要对Ft-1(x)做二阶导，$F(x)=F(x)-F’(x)/F’’(x)，f(x) = F’(x)/F’’(x)$, 二阶导数有利于更快的收敛，这也是优化点之一。</p>
+<h2 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h2><p>xgboost 呢，对目标做了详细规划<br>$$<br>OBJ=L+\Omega \\<br>L = L(yi, Fx-1(x)+fi(x)) \\<br>\Omega = T + \frac{1}{2} * \lambda * W^{2}<br>$$<br>这里 对L做了泰勒二阶展开(万物皆可泰勒)<br>$$<br>f(x+\Delta x) = f(x) + f’(x) * \Delta x+\frac{1}{2} * f’’(x)+(\Delta x)^2<br>$$<br>算出gi, 和 hi, 即Fi-i(x)的一阶导和二阶导，$\Delta x$ 是叶子节点的权重即fi(x)即w。通过归并，将训练集归并到T个叶子节点上，通过求最大值，可以得出最小值，这个最小值则是split的参考, gi和hi可以很容易的通过同group里不同label的s算得到。这里的split和上面的不一样了，这里的split是让L最小的split，即遍历各个split value，根据泰勒展开后满足条件的$\Delta x$，带入求得最小的min$\Sigma$L。由于是二阶泰勒展开，所以也是和牛顿法有相同收敛速度的算法。<br>参考陈天奇的 “Introduction to Boosted Trees” slide</p>
 <h2 id="Light-GBM"><a href="#Light-GBM" class="headerlink" title="Light GBM"></a>Light GBM</h2><p><a href="https://www.hrwhisper.me/machine-learning-lightgbm/" target="_blank" rel="external">https://www.hrwhisper.me/machine-learning-lightgbm/</a>  不错的介绍</p>
 <h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
 <li>直方图:Float feature =&gt; bin 分桶里，len(bin) &lt;&lt;&lt; len(feature)，split点的计算量不再随sample的增加而增加</li>
@@ -1655,7 +1657,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

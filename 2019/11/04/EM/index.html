@@ -87,13 +87,16 @@
 
 
 
+<meta name="description" content="EM算法和最大似然的区别MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则$$MLE = arg \max_{p} p^{9}(1-p)$$如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些$$log(p^9(1-p)) = 9logp + log">
 <meta property="og:type" content="article">
-<meta property="og:title" content="source/_posts/boosting_tree.md">
-<meta property="og:url" content="http://yoursite.com/2019/10/30/source-posts-boosting-tree-md/index.html">
+<meta property="og:title" content="EM算法">
+<meta property="og:url" content="http://yoursite.com/2019/11/04/EM/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:updated_time" content="2019-10-30T14:51:50.000Z">
+<meta property="og:description" content="EM算法和最大似然的区别MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则$$MLE = arg \max_{p} p^{9}(1-p)$$如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些$$log(p^9(1-p)) = 9logp + log">
+<meta property="og:updated_time" content="2019-12-25T15:09:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="source/_posts/boosting_tree.md">
+<meta name="twitter:title" content="EM算法">
+<meta name="twitter:description" content="EM算法和最大似然的区别MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则$$MLE = arg \max_{p} p^{9}(1-p)$$如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些$$log(p^9(1-p)) = 9logp + log">
 
 
 
@@ -121,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/10/30/source-posts-boosting-tree-md/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/04/EM/"/>
 
 
 
 
 
-  <title> source/_posts/boosting_tree.md | Hexo </title>
+  <title> EM算法 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -254,7 +257,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/source-posts-boosting-tree-md/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/04/EM/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ustcJin">
@@ -278,7 +281,7 @@
             
             
               
-                source/_posts/boosting_tree.md
+                EM算法
               
             
           </h1>
@@ -293,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-30T22:51:50+08:00">
-                2019-10-30
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-04T20:50:14+08:00">
+                2019-11-04
               </time>
             
 
@@ -329,7 +332,9 @@
       
 
       
-        
+        <h1 id="EM算法和最大似然的区别"><a href="#EM算法和最大似然的区别" class="headerlink" title="EM算法和最大似然的区别"></a>EM算法和最大似然的区别</h1><p>MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则<br>$$<br>MLE = arg \max_{p} p^{9}(1-p)<br>$$<br>如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些<br>$$<br>log(p^9(1-p)) = 9logp + log(1-p)<br>$$<br>很容易得到p=0.9时，最大似然成立。<br>有时候的问题这么直接求解解不了，还有一个隐含变量，比如男女测身高估计正态分布的参数，或者两个隐蔽测试估计每个硬币的上下的概率，可以看到升高的<br>case里，需要知道是男是女，硬币的case里需要知道选取的哪个硬币，这些隐变量有了才能列出似然函数，然而多一个参数显然就不好解了，这个时候就需要用<br>到EM算法，通过迭代的方法，不断逼近真实的分布。</p>
+<h1 id="原理逼近"><a href="#原理逼近" class="headerlink" title="原理逼近"></a>原理逼近</h1><p>$$<br>\theta = \max_{\theta} L(\theta) = \max_{\theta} log(P(x^{i}|\theta))<br>$$<br>增加了隐变量后$\theta$后，似然函数变为<br>$$<br>\theta, z = \max_{\theta,z} L(\theta, z) = \max_{\theta,z} \sum_{i=1}^{m} log \sum_{z^{(i)}}P(x^{i},z^{i}|\theta)<br>$$<br>引入一个未知的新的分布$Q_i(z^i)$, 即关于隐变量z的分布，则上面的目标变为<br>$$<br>\sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>然后引入凸函数的Jsen不等式，即f(x)满足 f’’(x) &gt;= 0，即为严格凸函数，有不等式如下<br>$$<br>E[f(x)] &gt;= f(E(x))<br>$$<br>则<br>$$<br>L(\theta,z) = \sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)} \\<br>\geq \sum_{i=1}^{m} \sum_{z^{i}} Q_i(z^i) log \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>这样，$L(\theta,z)$就有了一个下界，我们的任务先固定$\theta$来找一个合适的$Q$，整体的思路就是先让下界=L,然后固定Q，在去优化$\theta$让下界最大化。<br>Jsen不等式成立的条件就是f(x)式常数，于是<br>$$<br>\frac{P(x^i,z^i|\theta)}{Q_i(z^i)} = c \\<br>P(x^i,z^i|\theta) = c Q_i(z^i) \\<br>\sum_{z} P(x^i,z^i|\theta) = c \sum_{z} Q_i{z^i} \\<br>\sum_{z} P(x^i,z^i|\theta) = c \\<br>Q_i(z^i) = \frac{P(x^i,z^i|\theta)} {c} = \frac{P(x^i,z^i|\theta)} {\sum_{z} P(x^i,z^i|\theta)} \\<br>= \frac{P(x^i,z^i|\theta)} {P(x^i|\theta)} \\<br>= P(z^i|x^i,\theta)<br>$$<br>即通过将下界=L找的Q就是基于x和$\theta$的分布,这个公式推导就是证明了Q的确定就是通过x和$\theta$的分布来确定的，这个值让下确界等于目标L，然后M步再固定Q取优化这个下确界就行了，当然是可以证明每次迭代都会比上一次更好，这里不赘述了。</p>
+
       
     </div>
 
@@ -359,8 +364,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/15/boosting_tree/" rel="next" title="boosting tree总结">
-                <i class="fa fa-chevron-left"></i> boosting tree总结
+              <a href="/2019/10/30/boosting-tree/" rel="next" title="boosting_tree">
+                <i class="fa fa-chevron-left"></i> boosting_tree
               </a>
             
           </div>
@@ -368,10 +373,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/30/boosting-tree/" rel="prev" title="boosting_tree">
-                boosting_tree <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -418,8 +419,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/heart_scale.png"
@@ -469,6 +479,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EM算法和最大似然的区别"><span class="nav-number">1.</span> <span class="nav-text">EM算法和最大似然的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理逼近"><span class="nav-number">2.</span> <span class="nav-text">原理逼近</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
     </div>
   </aside>
@@ -483,7 +509,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -614,6 +640,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
