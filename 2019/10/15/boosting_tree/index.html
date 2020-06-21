@@ -1,93 +1,27 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
     
-    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="it," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
-
-
-
-
-
-
-<meta name="description" content="回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+">
+    <title>boosting tree总结 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="it">
+    <meta name="description" content="回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+">
 <meta property="og:type" content="article">
 <meta property="og:title" content="boosting tree总结">
 <meta property="og:url" content="http://yoursite.com/2019/10/15/boosting_tree/index.html">
@@ -97,242 +31,170 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="boosting tree总结">
 <meta name="twitter:description" content="回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
+    <!-- custom head -->
+    
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/10/15/boosting_tree/"/>
-
-
-
-
-
-  <title> boosting tree总结 | Hexo </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+    <div id="loading" class="active"></div>
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Hexo</span>
-      <span class="logo-line-after"><i></i></span>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
     </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">ustcJin</h5>
+          <a href="mailto:452697589@qq.com" title="452697589@qq.com" class="mail">452697589@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
-    
-      <p class="site-subtitle"></p>
-    
-</div>
+</aside>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">boosting tree总结</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">boosting tree总结</h1>
+        <h5 class="subtitle">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+                <time datetime="2019-10-15T15:45:43.000Z" itemprop="datePublished" class="page-time">
+  2019-10-15
+</time>
+
+
             
-            标签
-          </a>
-        </li>
-      
+        </h5>
+    </div>
 
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/boosting_tree/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gbdt"><span class="post-toc-number">1.</span> <span class="post-toc-text">gbdt</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lambdamart"><span class="post-toc-number">2.</span> <span class="post-toc-text">lambdamart</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#xgboost"><span class="post-toc-number">3.</span> <span class="post-toc-text">xgboost</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Light-GBM"><span class="post-toc-number">4.</span> <span class="post-toc-text">Light GBM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#特点"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">特点</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                boosting tree总结
-              
-            
-          </h1>
-        
 
+<article id="post-boosting_tree"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">boosting tree总结</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-15T23:45:43+08:00">
-                2019-10-15
-              </time>
-            
+            <time class="post-time" title="2019-10-15 23:45:43" datetime="2019-10-15T15:45:43.000Z"  itemprop="datePublished">2019-10-15</time>
 
             
 
+
             
-          </span>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
 
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+…+fn(x)，fi(x)即弱分类器，实现上用tree来实现，所以现在的问题就是给你一个训练集，Train=[1…N][x1..n]，如何来训练这么多tree，叶子节点的value代表最后的分数,区别于random forest的bagging，即tree之间的训练没有明显区别，这里是boosting，即提升。既然是tree，如何控制分裂？分裂的最大收益是什么？</p>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+…+fn(x)，fi(x)即弱分类器，实现上用tree来实现，所以现在的问题就是给你一个训练集，Train=[1…N][x1..n]，如何来训练这么多tree，叶子节点的value代表最后的分数,区别于random forest的bagging，即tree之间的训练没有明显区别，这里是boosting，即提升。既然是tree，如何控制分裂？分裂的最大收益是什么？</p>
 <h2 id="gbdt"><a href="#gbdt" class="headerlink" title="gbdt"></a>gbdt</h2><p>gbdt分裂的标准是”统一、均匀”，拟合label的任务由loss的一阶导数来做，即tree分裂后，落到一起的样本”loss的一阶导数”的均方差最小，则为最佳分裂点。叶子节点上的值也是loss对F(x)<sub>i-1</sub>的求导(注意这里不是对f<sub>i</sub>(x)的求导，每次完事后需要更新). F<sub>i</sub>(x) = F(x)<sub>i-1</sub> + shrink$\cdot$f<sub>i</sub>(x)，当然叶子节点的值没有shrink，loss使用最简单的最小二乘法loss=(y<sub>i</sub>-F<sub>i-1</sub>(x))<sup>2</sup>，可见这个loss是可导的，这个非常重要，对 F(x) 求导得 gradient=-2$\cdot$(-1)(y<sub>i</sub>-F<sub>i-1</sub>(x)), gradient的就是所求的f<sub>i</sub>(x)很简单(拟合残差，最后加一起可不就是label了么)，可以通过参数设置树的深度、叶子节点最大个数、均方差满足提前收敛等。缺点是没有设置模型复杂度目标不是么？应该是可以做的， Obj = EM(g<sub>i</sub>-$\overline{g}$)<sup>2</sup>+W<sup>2</sup>(W是分裂点的叶子权重f(x)) + lambda$\cdot$T(T为页节点个数) [这应该就是防止无限分裂以及某些点上出现极值的情况发生], 每次遍历所有的feature的所有value split，得到 min(Obj)，即使最佳分裂点，当然不能比没分离的还挫。</p>
 <h2 id="lambdamart"><a href="#lambdamart" class="headerlink" title="lambdamart"></a>lambdamart</h2><p>肯定会有问题，这个gbdt是否只是point-wise，如果扩展到 pair-wise和list-wise，好像有困难，pair-wise和list-wise的一些标准计算再算loss貌似不可导，如果引入group的概念来解决组内的一些规则的计算呢，比如搜索场景下一个query对应多条结果，算MAP, ERR, NDCG等，把这些搜索指标融入到树的分裂目标？<br>这里就提到了lambda mart，之前先介绍rank-net，引入了pair对比信息，定义了<br>$$<br>Sij=<br>\begin{cases}<br>0 &amp; x_i负例，x_j正例 \\<br>1 &amp; x_j负例，x_i正例<br>\end{cases}<br>$$<br>于是定义了目标<br>$$<br>C=\frac{1}{2}(1-Sij)\delta(s_i-s_j)+log(1+e^{-\delta(s_i-s_j)})<br>$$<br>这样，目标里就简单的将两个文档的比较融入到目标中，比如上面的Sij目标中，x<sub>i</sub>是正例，x<sub>j</sub>是负例，那么拉大s<sub>i</sub>和s<sub>j</sub>的差距成为目标, C对w的求导可以转化为C对s<sub>i</sub>和s<sub>j</sub>的求导！而！！容易得到<br>$$<br>\frac{\partial C}{\partial s_i} = - \frac{\partial C}{\partial s_j}<br>$$<br>这样第i步的迭代即f(xi)的计算可以转化为组内和其不同label的样本的计算，比xi差的为其贡献正梯度，比xi好的为其贡献负梯度，这就是 $\lambda_{ij}$<br>当然这远远不够，这仅仅是rank-net，这里大家看到的好像就是两个pair之间的定制关系，如何引入复杂的目标呢？ 比如NDCG, 很简单，$\lambda_{ij}$*($\Delta$NDCG)，$\Delta$NDCG 这个怎么算？交换i和j后整个NDCG得分的bias。好了，lambda-mart诞生了，rank-net提供了复杂应用目标的梯度计算方式，mart即多个弱分类器(tree)提供了整体的框架，那就结合吧。最后叶子节点值的结算可以参考论文里的，直接带进去算就可以了，当然要记住，分裂的基础仍然是拿这个f(x)做均方差分裂, 将均匀的样本分到一起。<br>Lambda-mart-gbdt 的实现分裂方式不变，仍然采用均方差最小的方式(暂不提正则)，而叶子节点的计算不再是简单的loss的负梯度，而是转为lambda rank的计算方式，通过group里lambda的方式获得，这里又不仅限于lambda，而是进一步优化，采用牛顿法的思想，一阶梯度不行了，要对Ft-1(x)做二阶导，$F(x)=F(x)-F’(x)/F’’(x)，f(x) = F’(x)/F’’(x)$, 二阶导数有利于更快的收敛，这也是优化点之一。</p>
 <h2 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h2><p>xgboost 呢，对目标做了详细规划<br>$$<br>OBJ=L+\Omega \\<br>L = L(yi, Fx-1(x)+fi(x)) \\<br>\Omega = T + \frac{1}{2} * \lambda * W^{2}<br>$$<br>这里 对L做了泰勒二阶展开(万物皆可泰勒)<br>$$<br>f(x+\Delta x) = f(x) + f’(x) * \Delta x+\frac{1}{2} * f’’(x)+(\Delta x)^2<br>$$<br>算出gi, 和 hi, 即Fi-i(x)的一阶导和二阶导，$\Delta x$ 是叶子节点的权重即fi(x)即w。通过归并，将训练集归并到T个叶子节点上，通过求最大值，可以得出最小值，这个最小值则是split的参考, gi和hi可以很容易的通过同group里不同label的s算得到。这里的split和上面的不一样了，这里的split是让L最小的split，即遍历各个split value，根据泰勒展开后满足条件的$\Delta x$，带入求得最小的min$\Sigma$L。由于是二阶泰勒展开，所以也是和牛顿法有相同收敛速度的算法。<br>参考陈天奇的 “Introduction to Boosted Trees” slide</p>
@@ -345,329 +207,305 @@
 <li>EFB: exclusive feature bundling，互斥的特征捆绑，降低特征维度，（不采用PCA的原因是PCA是有损的。。。）， EFB可以比较精细的控制，如果完全互斥，则肯定对精度无损，如何获取互斥特征，采用图着色法，相同颜色的节点(特征)则可以绑定</li>
 </ol>
 
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/it/" rel="tag"># it</a>
-          
         </div>
-      
 
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/03/08/dqn/" rel="next" title="深度增强学习实现实例(atari)">
-                <i class="fa fa-chevron-left"></i> 深度增强学习实现实例(atari)
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/30/boosting-tree/" rel="prev" title="boosting_tree">
-                boosting_tree <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-          
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+        <blockquote class="post-copyright">
     
-  </div>
-
-
-        </div>
+    <div class="content">
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+<span class="post-time">
+    Last updated: <time datetime="2019-11-02T00:20:08.000Z" itemprop="dateUpdated">2019-11-02 08:20:08</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/10/15/boosting_tree/" target="_blank" rel="external">http://yoursite.com/2019/10/15/boosting_tree/</a>
+        
     </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/heart_scale.png"
-               alt="ustcJin" />
-          <p class="site-author-name" itemprop="name">ustcJin</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gbdt"><span class="nav-number">1.</span> <span class="nav-text">gbdt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambdamart"><span class="nav-number">2.</span> <span class="nav-text">lambdamart</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost"><span class="nav-number">3.</span> <span class="nav-text">xgboost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Light-GBM"><span class="nav-number">4.</span> <span class="nav-text">Light GBM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">4.1.</span> <span class="nav-text">特点</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ustcJin</span>
-</div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-        
-
-        
-      </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="ustcJin">
+            ustcJin
+        </a>
     </footer>
+</blockquote>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/15/boosting_tree/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting tree总结》 — Hexo&url=http://yoursite.com/2019/10/15/boosting_tree/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/15/boosting_tree/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
     </div>
-  </div>
 
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/10/30/boosting-tree/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">boosting_tree</h4>
+      </a>
+    </div>
   
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/08/dqn/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">深度增强学习实现实例(atari)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>ustcJin &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/15/boosting_tree/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting tree总结》 — Hexo&url=http://yoursite.com/2019/10/15/boosting_tree/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/15/boosting_tree/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNklEQVR42u3aQW7DMAwF0dz/0i7QVYDU0nzKDmpqtDICV+HLghVFvl54Hb/r/fn9k/E7n++Pd/j8/LIlQ4aMxzKO4ToLkT+nIZKf4499ZMiQsQFjZTuSfPk+45/j9HMZMmTICMM6S7IkUBkyZMhYT7i8ikwrza/+35AhQ8YDGTx1jlPktaHfUovLkCHjgYxaY+A7z7f3N2TIkPHvGUe4yHGtdnm3FJUMGTJaM8iFFy9T+SGPBM2v52TIkNGbwYtPPkJRK03TEY1JqpUhQ0Y7Bikaawe7WoOBRyJDhowdGCul48oVP0/x8T4yZMhox0iDWGkeEEA6AiJDhoydGcV7O1zc8jEylIhlyJCxDWOlrCWFLmkJpAAZMmTswOCpcD2I2iVdwJMhQ0ZTBj8OXnsPn05KTApjGTJkbMBIG5DpZVytcA2u4WTIkLEZI02s4+DIVR05Ak5IMmTI2IzBj4m1yY6rwMWjoQwZMh7IiFNbOLxVm4VA4ZJjogwZMhox0k1J6uTjF7yonnyLDBkymjJ4KJzBk3ixDUAqbBkyZLRj8PKVXOjz0rRWQk9qcRkyZLRj1BqTJDhCTdPx5E0ZMmQ0ZdTGudLjYMomY2ST6TYZMmQ0YvB139esNxhkyJCxA4Mn2Vqzkx8Qay0HGTJk7MO49pBXA6ykZhkyZMggafGqwbJ0ZxkyZMioBcGbAbzQnfytDBkyNmDwZsDkiAaoabsUHT1lyJDRmlFrDKQJsfZca6PKkCGjEeMHmGeenFxDCMkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
 </script>
 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
 
 
-  
 
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
 
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-  
-  
-
-  
-  
-
-
-  
-
-  
-
-  
 
 
 </body>

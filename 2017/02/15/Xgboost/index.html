@@ -1,93 +1,27 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
     
-    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="it,ml," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
-
-
-
-
-
-
-<meta name="description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
+    <title>Xgboost源码阅读 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="it,ml">
+    <meta name="description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
 带着问题走由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Xgboost源码阅读">
@@ -102,242 +36,170 @@
 <meta name="twitter:description" content="前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
 带着问题走由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pa">
 <meta name="twitter:image" content="http://yoursite.com/images/xgboost_ndcg.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
+    <!-- custom head -->
+    
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2017/02/15/Xgboost/"/>
-
-
-
-
-
-  <title> Xgboost源码阅读 | Hexo </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+    <div id="loading" class="active"></div>
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Hexo</span>
-      <span class="logo-line-after"><i></i></span>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
     </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">ustcJin</h5>
+          <a href="mailto:452697589@qq.com" title="452697589@qq.com" class="mail">452697589@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
-    
-      <p class="site-subtitle"></p>
-    
-</div>
+</aside>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Xgboost源码阅读</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Xgboost源码阅读</h1>
+        <h5 class="subtitle">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+                <time datetime="2017-02-15T06:25:57.000Z" itemprop="datePublished" class="page-time">
+  2017-02-15
+</time>
+
+
             
-            标签
-          </a>
-        </li>
-      
+        </h5>
+    </div>
 
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/15/Xgboost/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#带着问题走"><span class="post-toc-number">2.</span> <span class="post-toc-text">带着问题走</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原理介绍"><span class="post-toc-number">3.</span> <span class="post-toc-text">原理介绍?</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何并行化？"><span class="post-toc-number">4.</span> <span class="post-toc-text">如何并行化？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#读数据并行"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">读数据并行</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分裂选择并行化"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">分裂选择并行化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#细节1-tree如何维护当前的数据集？"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">细节1: tree如何维护当前的数据集？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#细节2-模型复杂度"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">细节2: 模型复杂度</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Lambda-Object"><span class="post-toc-number">5.</span> <span class="post-toc-text">Lambda Object</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题1-如何做到好的结果按照NDCG更快排上去的"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">问题1:如何做到好的结果按照NDCG更快排上去的?</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题2-好的结果每次都会加权，最后预测值会很大？"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">问题2:好的结果每次都会加权，最后预测值会很大？</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#应用参数"><span class="post-toc-number">6.</span> <span class="post-toc-text">应用参数</span></a></li></ol>
+        </nav>
+    </aside>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Xgboost源码阅读
-              
-            
-          </h1>
-        
 
+<article id="post-Xgboost"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Xgboost源码阅读</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T14:25:57+08:00">
-                2017-02-15
-              </time>
-            
+            <time class="post-time" title="2017-02-15 14:25:57" datetime="2017-02-15T06:25:57.000Z"  itemprop="datePublished">2017-02-15</time>
 
             
 
+
             
-          </span>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
 
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>xgboost</code>是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。<code>xgboost</code>厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。</p>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>xgboost</code>是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。<code>xgboost</code>厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。</p>
 <h1 id="带着问题走"><a href="#带着问题走" class="headerlink" title="带着问题走"></a>带着问题走</h1><p>由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pair wise、list wise算法，但是听到同事的介绍还是产生了兴趣，我本人介入机器学习领域时间较短，开始在听完<code>xgboost</code>的介绍时，就迫切的想了解两个东西: </p>
 <blockquote>
 <p>xgboost如何并行化？<br>xgboost是如何控制复杂度的?<br>xgboost如何选择最优分裂?</p>
@@ -390,347 +252,298 @@
 <p>源码中是使用<a href="https://github.com/dmlc/dmlc-core" target="_blank" rel="external">dmlc-core</a>来做的参数处理，十分方便，我是做搜索排序相关，所以目标使用<code>ndcg, reg_lambda</code>对应上面所说的$\lambda$，<code>min_split_loss</code>是树分裂所达到的最小收益值，即上面公式(3)中的Gain，一阶正则项$\alpha＝0$。<br>不过还是推荐使用python版本，python版本在训练时，可以看到每轮之后test集的准确度(ndcg值)，可以直观的看到效果，主要是param的设置，如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># param</div><div class="line">param = &#123;&apos;eval_metric&apos;: &apos;ndcg@3-&apos;, &apos;base_score&apos;: 0.0, &apos;max_leaves&apos;: 10, &apos;alpha&apos;: 0.0, &apos;tree_method&apos;: &apos;exact&apos;, &apos;bagging&apos;: 3, &apos;silent&apos;: 1, &apos;grow_policy&apos;: &apos;depthwise&apos;, &apos;subsample&apos;: 1.0, &apos;eta&apos;: 0.2, &apos;max_bin&apos;: 256, &apos;objective&apos;: &apos;rank:ndcg&apos;, &apos;max_depth&apos;: 4, &apos;gamma&apos;: 0.2, &apos;lambda&apos;: 2.0&#125;</div><div class="line"></div><div class="line">#设置测试集合的train</div><div class="line">num_round = 200</div><div class="line">dtrain.set_group(numpy.loadtxt(&apos;../../company/ltr/ask.train.group&apos;, dtype=numpy.int32))</div><div class="line">dtest.set_group(numpy.loadtxt(&apos;../../company/ltr/ask.test.group&apos;, dtype=numpy.int32))</div><div class="line">bst = xgb.train(param, dtrain, num_round, [(dtrain, &apos;train&apos;), (dtest, &apos;test&apos;)])</div></pre></td></tr></table></figure></p>
 <p>最后贴一张训练截图<br><img src="/images/xgboost_ndcg.jpg" alt="ndcg"></p>
 
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/it/" rel="tag"># it</a>
-          
-            <a href="/tags/ml/" rel="tag"># ml</a>
-          
         </div>
-      
 
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/08/qa-cnn/" rel="prev" title="CNN在问答领域识别中应用">
-                CNN在问答领域识别中应用 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-          
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+        <blockquote class="post-copyright">
     
-  </div>
-
-
-        </div>
+    <div class="content">
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+<span class="post-time">
+    Last updated: <time datetime="2017-06-14T11:51:06.000Z" itemprop="dateUpdated">2017-06-14 19:51:06</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/02/15/Xgboost/" target="_blank" rel="external">http://yoursite.com/2017/02/15/Xgboost/</a>
+        
     </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/heart_scale.png"
-               alt="ustcJin" />
-          <p class="site-author-name" itemprop="name">ustcJin</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#带着问题走"><span class="nav-number">2.</span> <span class="nav-text">带着问题走</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理介绍"><span class="nav-number">3.</span> <span class="nav-text">原理介绍?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何并行化？"><span class="nav-number">4.</span> <span class="nav-text">如何并行化？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读数据并行"><span class="nav-number">4.1.</span> <span class="nav-text">读数据并行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分裂选择并行化"><span class="nav-number">4.2.</span> <span class="nav-text">分裂选择并行化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#细节1-tree如何维护当前的数据集？"><span class="nav-number">4.3.</span> <span class="nav-text">细节1: tree如何维护当前的数据集？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#细节2-模型复杂度"><span class="nav-number">4.4.</span> <span class="nav-text">细节2: 模型复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lambda-Object"><span class="nav-number">5.</span> <span class="nav-text">Lambda Object</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题1-如何做到好的结果按照NDCG更快排上去的"><span class="nav-number">5.1.</span> <span class="nav-text">问题1:如何做到好的结果按照NDCG更快排上去的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题2-好的结果每次都会加权，最后预测值会很大？"><span class="nav-number">5.2.</span> <span class="nav-text">问题2:好的结果每次都会加权，最后预测值会很大？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用参数"><span class="nav-number">6.</span> <span class="nav-text">应用参数</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ustcJin</span>
-</div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-        
-
-        
-      </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="ustcJin">
+            ustcJin
+        </a>
     </footer>
+</blockquote>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ml/">ml</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/02/15/Xgboost/&title=《Xgboost源码阅读》 — Hexo&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/02/15/Xgboost/&title=《Xgboost源码阅读》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/15/Xgboost/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Xgboost源码阅读》 — Hexo&url=http://yoursite.com/2017/02/15/Xgboost/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/15/Xgboost/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
     </div>
-  </div>
 
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/08/qa-cnn/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">CNN在问答领域识别中应用</h4>
+      </a>
+    </div>
   
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>ustcJin &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/02/15/Xgboost/&title=《Xgboost源码阅读》 — Hexo&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/02/15/Xgboost/&title=《Xgboost源码阅读》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/15/Xgboost/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Xgboost源码阅读》 — Hexo&url=http://yoursite.com/2017/02/15/Xgboost/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/15/Xgboost/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwklEQVR42u3aS4rDMBAFwNz/0hmY1cAQuZ9akh0orUxs5HIWjfrzepXX+3eN7/595v/1+JfFCxcXt819D9cnbv1u+kmfDLi4uOe54+AVbDckVugXNlxc3Idx584hlT1xcXG/l5smOfWEChcX95ncSvKTpkZjxPZcDRcXt8HtBJ1V1xvru7i4uCH3Ha61rZH47bi4uEe49UZIJQWqHGsqydVFmMPFxd3MrYSeFFdvsdQDHC4u7kluJ6ykgxRp4TWo8uLi4i7l1jeqgzotk4uEChcX9yA3bXamBZQ0ifr4Gbi4uMe59aGKfqm0XjyNvxIXF3cpd64hOjeukRZKcHFx7+LOtVc7f0E97Yl7wri4uEu5nYNIMEKBi4v7hdw6ot5Wqd+9aKXg4uJu5qYNlXQgo9KaTQ9MuLi4u7mVwLHqWNMf18DFxT3JrQ9idsqsc00XXFzcu7g7yqb1Ia1gN1xc3CPcudfUEemwVzroiYuLu4/bT13ipkh5dAMXF/debhqe5p5vJT+4uLiP5Laao40xjld9U1xc3Fu59WNK2pTFxcV9DrfzgjRspaWQyVwNFxe3wZ1rgYxTlPQANFdyxcXF3cD9AXaPi7KaOXEAAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
 </script>
 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
 
 
 
-
-
-  
-
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-  
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
         }
-      });
-    </script>
+    });
+})();
+</script>
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-
-  
-
-  
-
-  
 
 
 </body>

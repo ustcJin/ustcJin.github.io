@@ -1,1817 +1,707 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
     
-    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
-
-
-
-
-
-
-<meta property="og:type" content="website">
+    <title>Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="undefined">
+    <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
+    <!-- custom head -->
+    
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/"/>
-
-
-
-
-
-  <title> Hexo </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+    <div id="loading" class="active"></div>
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Hexo</span>
-      <span class="logo-line-after"><i></i></span>
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
     </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">ustcJin</h5>
+          <a href="mailto:452697589@qq.com" title="452697589@qq.com" class="mail">452697589@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect active">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
-    
-      <p class="site-subtitle"></p>
-    
-</div>
+</aside>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Hexo</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header index-header">
 
-<nav class="site-nav">
+    <div class="container fade-scale">
+        <h1 class="title">Hexo</h1>
+        <h5 class="subtitle">
+            
+                
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+<div class="container body-wrap">
+
+    <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-EM"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-11-04 20:50:14" datetime="2019-11-04T12:50:14.000Z"  itemprop="datePublished">2019-11-04</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/11/04/EM/">EM算法</a>
+    </h3>
   
 
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
 
-      
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        EM算法和最大似然的区别MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则$$MLE = arg \max_{p} p^{9}(1-p)$$如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些$$log(p^9(1-p)) = 9logp + ...
+    
+
+        <a href="/2019/11/04/EM/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-boosting-tree"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-10-30 22:55:20" datetime="2019-10-30T14:55:20.000Z"  itemprop="datePublished">2019-10-30</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/10/30/boosting-tree/">boosting_tree</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+    
+
+        <a href="/2019/10/30/boosting-tree/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-boosting_tree"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-10-15 23:45:43" datetime="2019-10-15T15:45:43.000Z"  itemprop="datePublished">2019-10-15</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/10/15/boosting_tree/">boosting tree总结</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(...
+    
+
+        <a href="/2019/10/15/boosting_tree/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-dqn"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-03-08 18:51:28" datetime="2018-03-08T10:51:28.000Z"  itemprop="datePublished">2018-03-08</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/03/08/dqn/">深度增强学习实现实例(atari)</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言本文主要是纪录近期实现的一个增强学习的实例，一直再说增强学习，原理大家也都理解，可是受制于图形学、算法等，直观的增强学习的效果还是很难看到的，多亏了ale，结合opencv可以直观的看到增强学习的效果，下面将详细介绍DQN实现atari在mac上的实现。
+参考资料
+当然是参考经典的论文Playing Atari with Deep Reinforcement Learning基本实现gi...
+    
+
+        <a href="/2018/03/08/dqn/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ml/">ml</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-job"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-06-27 21:59:24" datetime="2017-06-27T13:59:24.000Z"  itemprop="datePublished">2017-06-27</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/06/27/job/">换工作小结</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        背景北漂快五年了，什么都没有，房、车、户口，甚至连工作居住证都懒得办，这么懒、这么挫的后果就是在北京待不下去了，毕业后就一直在360这家公司，说实话，学到的东西不多，在外面看机会悲剧的多，当然也与我自己方向捏不清楚有关，截止到现在可以说是较团圆的结局，如愿的拿到了杭州阿里的工作机会，北京这边也有几个机会，接下来我会分享这一个多月的历程，充满了辛酸和苦辣，不到最后一个心都放不下来的感觉。
+准备...
+    
+
+        <a href="/2017/06/27/job/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/life/">life</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-rotate-array-search"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-04-30 10:07:18" datetime="2017-04-30T02:07:18.000Z"  itemprop="datePublished">2017-04-30</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/04/30/rotate-array-search/">rotate array search</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        leetcode上遇到了一个问题，就是如果把一个sorted数组旋转一下，如[0,1,2,3,4,5,6,7] =&gt; [4,5,6,7,0,1,2,3]，这样二分查找还将如何进行？,当然是用O(log(n))的方法。
+问题定义应该是如下的场景，12int search(vector&lt;int&gt; nums, int target) &#123;&#125;
+不重复的情况这里会有...
+    
+
+        <a href="/2017/04/30/rotate-array-search/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-base-dt"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-03-20 19:34:43" datetime="2017-03-20T11:34:43.000Z"  itemprop="datePublished">2017-03-20</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/03/20/base-dt/">基本的决策树算法总结</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有ID3、C4.5、CART、SLIQ、SPRINT，其中CART算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。
+ID3ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是...
+    
+
+        <a href="/2017/03/20/base-dt/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-qa-cnn"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-03-08 18:51:28" datetime="2017-03-08T10:51:28.000Z"  itemprop="datePublished">2017-03-08</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/03/08/qa-cnn/">CNN在问答领域识别中应用</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        背景短文本question-answer匹配度识别问题，论文(Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks.pdf), github实现。github的作者基本上实现了文章里的算法，计算的精度也差不多，不过使用theano实现的，我准备使用tensorflow实现，并解决大规模预料训练太慢的...
+    
+
+        <a href="/2017/03/08/qa-cnn/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ml/">ml</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Xgboost"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-02-15 14:25:57" datetime="2017-02-15T06:25:57.000Z"  itemprop="datePublished">2017-02-15</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/02/15/Xgboost/">Xgboost源码阅读</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        前言xgboost是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。xgboost厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。
+带着问题走由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各...
+    
+
+        <a href="/2017/02/15/Xgboost/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ml/">ml</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
     </ul>
-  
 
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts-expand">
     
-      
 
-  
+</div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/04/EM/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/11/04/EM/" itemprop="url">
-                  EM算法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-04T20:50:14+08:00">
-                2019-11-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="EM算法和最大似然的区别"><a href="#EM算法和最大似然的区别" class="headerlink" title="EM算法和最大似然的区别"></a>EM算法和最大似然的区别</h1><p>MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则<br>$$<br>MLE = arg \max_{p} p^{9}(1-p)<br>$$<br>如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些<br>$$<br>log(p^9(1-p)) = 9logp + log(1-p)<br>$$<br>很容易得到p=0.9时，最大似然成立。<br>有时候的问题这么直接求解解不了，还有一个隐含变量，比如男女测身高估计正态分布的参数，或者两个隐蔽测试估计每个硬币的上下的概率，可以看到升高的<br>case里，需要知道是男是女，硬币的case里需要知道选取的哪个硬币，这些隐变量有了才能列出似然函数，然而多一个参数显然就不好解了，这个时候就需要用<br>到EM算法，通过迭代的方法，不断逼近真实的分布。</p>
-<h1 id="原理逼近"><a href="#原理逼近" class="headerlink" title="原理逼近"></a>原理逼近</h1><p>$$<br>\theta = \max_{\theta} L(\theta) = \max_{\theta} log(P(x^{i}|\theta))<br>$$<br>增加了隐变量后$\theta$后，似然函数变为<br>$$<br>\theta, z = \max_{\theta,z} L(\theta, z) = \max_{\theta,z} \sum_{i=1}^{m} log \sum_{z^{(i)}}P(x^{i},z^{i}|\theta)<br>$$<br>引入一个未知的新的分布$Q_i(z^i)$, 即关于隐变量z的分布，则上面的目标变为<br>$$<br>\sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>然后引入凸函数的Jsen不等式，即f(x)满足 f’’(x) &gt;= 0，即为严格凸函数，有不等式如下<br>$$<br>E[f(x)] &gt;= f(E(x))<br>$$<br>则<br>$$<br>L(\theta,z) = \sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)} \\<br>\geq \sum_{i=1}^{m} \sum_{z^{i}} Q_i(z^i) log \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>这样，$L(\theta,z)$就有了一个下界，我们的任务先固定$\theta$来找一个合适的$Q$，整体的思路就是先让下界=L,然后固定Q，在去优化$\theta$让下界最大化。<br>Jsen不等式成立的条件就是f(x)式常数，于是<br>$$<br>\frac{P(x^i,z^i|\theta)}{Q_i(z^i)} = c \\<br>P(x^i,z^i|\theta) = c Q_i(z^i) \\<br>\sum_{z} P(x^i,z^i|\theta) = c \sum_{z} Q_i{z^i} \\<br>\sum_{z} P(x^i,z^i|\theta) = c \\<br>Q_i(z^i) = \frac{P(x^i,z^i|\theta)} {c} = \frac{P(x^i,z^i|\theta)} {\sum_{z} P(x^i,z^i|\theta)} \\<br>= \frac{P(x^i,z^i|\theta)} {P(x^i|\theta)} \\<br>= P(z^i|x^i,\theta)<br>$$<br>即通过将下界=L找的Q就是基于x和$\theta$的分布,这个公式推导就是证明了Q的确定就是通过x和$\theta$的分布来确定的，这个值让下确界等于目标L，然后M步再固定Q取优化这个下确界就行了，当然是可以证明每次迭代都会比上一次更好，这里不赘述了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/boosting-tree/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
-  </span>
+</p>
 
-    
-      <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <p>
             
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-              
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>ustcJin &copy; 2015 - 2020</span>
+            <span>
                 
-                <a class="post-title-link" href="/2019/10/30/boosting-tree/" itemprop="url">
-                  boosting_tree
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-30T22:55:20+08:00">
-                2019-10-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
     </div>
+</footer>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/boosting_tree/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/10/15/boosting_tree/" itemprop="url">
-                  boosting tree总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-15T23:45:43+08:00">
-                2019-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+…+fn(x)，fi(x)即弱分类器，实现上用tree来实现，所以现在的问题就是给你一个训练集，Train=[1…N][x1..n]，如何来训练这么多tree，叶子节点的value代表最后的分数,区别于random forest的bagging，即tree之间的训练没有明显区别，这里是boosting，即提升。既然是tree，如何控制分裂？分裂的最大收益是什么？</p>
-<h2 id="gbdt"><a href="#gbdt" class="headerlink" title="gbdt"></a>gbdt</h2><p>gbdt分裂的标准是”统一、均匀”，拟合label的任务由loss的一阶导数来做，即tree分裂后，落到一起的样本”loss的一阶导数”的均方差最小，则为最佳分裂点。叶子节点上的值也是loss对F(x)<sub>i-1</sub>的求导(注意这里不是对f<sub>i</sub>(x)的求导，每次完事后需要更新). F<sub>i</sub>(x) = F(x)<sub>i-1</sub> + shrink$\cdot$f<sub>i</sub>(x)，当然叶子节点的值没有shrink，loss使用最简单的最小二乘法loss=(y<sub>i</sub>-F<sub>i-1</sub>(x))<sup>2</sup>，可见这个loss是可导的，这个非常重要，对 F(x) 求导得 gradient=-2$\cdot$(-1)(y<sub>i</sub>-F<sub>i-1</sub>(x)), gradient的就是所求的f<sub>i</sub>(x)很简单(拟合残差，最后加一起可不就是label了么)，可以通过参数设置树的深度、叶子节点最大个数、均方差满足提前收敛等。缺点是没有设置模型复杂度目标不是么？应该是可以做的， Obj = EM(g<sub>i</sub>-$\overline{g}$)<sup>2</sup>+W<sup>2</sup>(W是分裂点的叶子权重f(x)) + lambda$\cdot$T(T为页节点个数) [这应该就是防止无限分裂以及某些点上出现极值的情况发生], 每次遍历所有的feature的所有value split，得到 min(Obj)，即使最佳分裂点，当然不能比没分离的还挫。</p>
-<h2 id="lambdamart"><a href="#lambdamart" class="headerlink" title="lambdamart"></a>lambdamart</h2><p>肯定会有问题，这个gbdt是否只是point-wise，如果扩展到 pair-wise和list-wise，好像有困难，pair-wise和list-wise的一些标准计算再算loss貌似不可导，如果引入group的概念来解决组内的一些规则的计算呢，比如搜索场景下一个query对应多条结果，算MAP, ERR, NDCG等，把这些搜索指标融入到树的分裂目标？<br>这里就提到了lambda mart，之前先介绍rank-net，引入了pair对比信息，定义了<br>$$<br>Sij=<br>\begin{cases}<br>0 &amp; x_i负例，x_j正例 \\<br>1 &amp; x_j负例，x_i正例<br>\end{cases}<br>$$<br>于是定义了目标<br>$$<br>C=\frac{1}{2}(1-Sij)\delta(s_i-s_j)+log(1+e^{-\delta(s_i-s_j)})<br>$$<br>这样，目标里就简单的将两个文档的比较融入到目标中，比如上面的Sij目标中，x<sub>i</sub>是正例，x<sub>j</sub>是负例，那么拉大s<sub>i</sub>和s<sub>j</sub>的差距成为目标, C对w的求导可以转化为C对s<sub>i</sub>和s<sub>j</sub>的求导！而！！容易得到<br>$$<br>\frac{\partial C}{\partial s_i} = - \frac{\partial C}{\partial s_j}<br>$$<br>这样第i步的迭代即f(xi)的计算可以转化为组内和其不同label的样本的计算，比xi差的为其贡献正梯度，比xi好的为其贡献负梯度，这就是 $\lambda_{ij}$<br>当然这远远不够，这仅仅是rank-net，这里大家看到的好像就是两个pair之间的定制关系，如何引入复杂的目标呢？ 比如NDCG, 很简单，$\lambda_{ij}$*($\Delta$NDCG)，$\Delta$NDCG 这个怎么算？交换i和j后整个NDCG得分的bias。好了，lambda-mart诞生了，rank-net提供了复杂应用目标的梯度计算方式，mart即多个弱分类器(tree)提供了整体的框架，那就结合吧。最后叶子节点值的结算可以参考论文里的，直接带进去算就可以了，当然要记住，分裂的基础仍然是拿这个f(x)做均方差分裂, 将均匀的样本分到一起。<br>Lambda-mart-gbdt 的实现分裂方式不变，仍然采用均方差最小的方式(暂不提正则)，而叶子节点的计算不再是简单的loss的负梯度，而是转为lambda rank的计算方式，通过group里lambda的方式获得，这里又不仅限于lambda，而是进一步优化，采用牛顿法的思想，一阶梯度不行了，要对Ft-1(x)做二阶导，$F(x)=F(x)-F’(x)/F’’(x)，f(x) = F’(x)/F’’(x)$, 二阶导数有利于更快的收敛，这也是优化点之一。</p>
-<h2 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h2><p>xgboost 呢，对目标做了详细规划<br>$$<br>OBJ=L+\Omega \\<br>L = L(yi, Fx-1(x)+fi(x)) \\<br>\Omega = T + \frac{1}{2} * \lambda * W^{2}<br>$$<br>这里 对L做了泰勒二阶展开(万物皆可泰勒)<br>$$<br>f(x+\Delta x) = f(x) + f’(x) * \Delta x+\frac{1}{2} * f’’(x)+(\Delta x)^2<br>$$<br>算出gi, 和 hi, 即Fi-i(x)的一阶导和二阶导，$\Delta x$ 是叶子节点的权重即fi(x)即w。通过归并，将训练集归并到T个叶子节点上，通过求最大值，可以得出最小值，这个最小值则是split的参考, gi和hi可以很容易的通过同group里不同label的s算得到。这里的split和上面的不一样了，这里的split是让L最小的split，即遍历各个split value，根据泰勒展开后满足条件的$\Delta x$，带入求得最小的min$\Sigma$L。由于是二阶泰勒展开，所以也是和牛顿法有相同收敛速度的算法。<br>参考陈天奇的 “Introduction to Boosted Trees” slide</p>
-<h2 id="Light-GBM"><a href="#Light-GBM" class="headerlink" title="Light GBM"></a>Light GBM</h2><p><a href="https://www.hrwhisper.me/machine-learning-lightgbm/" target="_blank" rel="external">https://www.hrwhisper.me/machine-learning-lightgbm/</a>  不错的介绍</p>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>直方图:Float feature =&gt; bin 分桶里，len(bin) &lt;&lt;&lt; len(feature)，split点的计算量不再随sample的增加而增加</li>
-<li>Presort改为pre cal，将每个sample的g,h 计算出来，落到分桶里；计算best split时，可以根据直方图，直接计算，计算量减半，right = all - left，且直方图可以通过简单的减法，在分裂时直接继承</li>
-<li>Leaf wise: 不再限定死宽度，允许深度分裂，较灵活</li>
-<li>GOSS: 单边采样，相对于列采样，效果更好？ada的思想，对拟合不好的样本加大其对应梯度的权重</li>
-<li>EFB: exclusive feature bundling，互斥的特征捆绑，降低特征维度，（不采用PCA的原因是PCA是有损的。。。）， EFB可以比较精细的控制，如果完全互斥，则肯定对精度无损，如何获取互斥特征，采用图着色法，相同颜色的节点(特征)则可以绑定</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/dqn/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/03/08/dqn/" itemprop="url">
-                  深度增强学习实现实例(atari)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T18:51:28+08:00">
-                2018-03-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要是纪录近期实现的一个增强学习的实例，一直再说增强学习，原理大家也都理解，可是受制于图形学、算法等，直观的增强学习的效果还是很难看到的，多亏了ale，结合opencv可以直观的看到增强学习的效果，下面将详细介绍DQN实现atari在mac上的实现。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
-<p>当然是参考经典的论文Playing Atari with Deep Reinforcement Learning<br>基本实现github:<a href="https://github.com/gliese581gg/DQN_tensorflow" target="_blank" rel="external">https://github.com/gliese581gg/DQN_tensorflow</a></p>
-</blockquote>
-<h1 id="ALE环境介绍"><a href="#ALE环境介绍" class="headerlink" title="ALE环境介绍"></a>ALE环境介绍</h1><p>小时候都玩过射击、乒乓球等简单小游戏，其实就是atari小游戏，就是控制左右上下等来躲避怪物，具体的可以参考<a href="http://www.arcadelearningenvironment.org/，现在比较好的就是这个平台开源了，可以在电脑上来模拟这些小游戏，可以通过api的方式输入action来控制，输出下一帧的图片以及reward和是否结束等，reward可以灵活设置，比如没有terminal就是1，terminal了就是0。" target="_blank" rel="external">http://www.arcadelearningenvironment.org/，现在比较好的就是这个平台开源了，可以在电脑上来模拟这些小游戏，可以通过api的方式输入action来控制，输出下一帧的图片以及reward和是否结束等，reward可以灵活设置，比如没有terminal就是1，terminal了就是0。</a></p>
-<h1 id="如何安装"><a href="#如何安装" class="headerlink" title="如何安装"></a>如何安装</h1><blockquote>
-<p>git clone <a href="https://github.com/mgbellemare/Arcade-Learning-Environment" target="_blank" rel="external">https://github.com/mgbellemare/Arcade-Learning-Environment</a><br>mkdir build &amp;&amp; cd build; cmake -DUSE_SDL=OFF -DUSE_RLGLUE=OFF -DBUILD_EXAMPLES=ON ..;make -j4<br>sudo python setup.py<br>这样就安装了ALE的python版本。</p>
-</blockquote>
-<h1 id="如何使用ALE？"><a href="#如何使用ALE？" class="headerlink" title="如何使用ALE？"></a>如何使用ALE？</h1><p>需要安装cv2,并且下载一个游戏的rom文件，这里用breakout来做实验。大概的实现如下代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">from ale_python_interface import ALEInterface</div><div class="line">import cv2</div><div class="line">ale = ALEInterface()</div><div class="line">ale.loadROM(&apos;roms/breakout.bin&apos;)</div><div class="line">screen_width, screen_height = ale.getScreenDims()</div><div class="line">numpy_surface = np.zeros(screen_height*screen_width*3, dtype=np.uint8)</div><div class="line">ale.getScreenRGB(numpy_surface)  #这样就获得了开始的游戏图片界面</div><div class="line">legal_actions = ale.getMinimalActionSet() #获取该游戏合法的操作输入，比如 0=&gt;left, 1=&gt;right</div><div class="line">cv2.startWindowThread() #开启图形渲染线程</div><div class="line">cv2.namedWindow(&apos;breakout&apos;) #图形框名字</div><div class="line">ale.act(action_indx) # 输入操作指令，下次getScreenRGB就会获得该至指令下的下一帧图片</div><div class="line">cv2.imshow(&apos;breakout&apos;,numpy_surface) </div><div class="line">cv2.waitKey(25) #图形窗口展示，25ms刷新一次</div></pre></td></tr></table></figure></p>
-<h1 id="论文结构"><a href="#论文结构" class="headerlink" title="论文结构"></a>论文结构</h1><h2 id="qlearning"><a href="#qlearning" class="headerlink" title="qlearning"></a>qlearning</h2><p>强化学习中有状态(state)、动作(action)、奖赏(reward)这三个要素。训练的主体需要根据当前状态来采取动作，获得相应的奖赏之后，再去改进这些动作，使得下次再到相同状态时，智能体能做出更优的动作。这个过程就是qlearning，这其中的核心就是q表的训练，q表就是状态、动作和奖赏的映射表，处在某个状态中，该选择哪个action，直接查表即可，当然这时候的q表已经非常准确了。m个状态，n个action，对应的reward表可以表示如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>s/a</th>
-<th>A1</th>
-<th>A2</th>
-<th>…</th>
-<th>An</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>S1</td>
-<td>R11</td>
-<td>R12</td>
-<td>…</td>
-<td>R1n</td>
-</tr>
-<tr>
-<td>S2</td>
-<td>R21</td>
-<td>R22</td>
-<td>…</td>
-<td>R2n</td>
-</tr>
-<tr>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-</tr>
-<tr>
-<td>Sm</td>
-<td>Rm1</td>
-<td>Rm2</td>
-<td>…</td>
-<td>Rmn</td>
-</tr>
-</tbody>
-</table>
-<p>一般例子里用小孩学习还是看电视，最后做推理，那个里面看电视和学习就是两个action，状态就是有限的几个状态。flappybird里的action就是上下，状态可以用小鸟距离前一个下桶，上桶的距离以及地面的距离这三个值来作为状态衡量，而atari里action显然就是玩游戏的那几个手柄键(最多18个action)，状态是什么呢？状态就是原始的图片，所以这是个非常庞大和复杂的Q表，通过输入状态(原始图片信息)和action查到Q值，所以这是个训练函数的过程，可以通过svm等线性模型实现，这里我们使用深度神经网络来模拟这个函数，就是论文中提到的dqn。</p>
-<h2 id="loss与learning"><a href="#loss与learning" class="headerlink" title="loss与learning"></a>loss与learning</h2><p>Q表里的是q值，即收益值，该值与当前的直接reward以及下一个状态最大值有直接关系，reward表示当前状态下的收益，游戏里可以就表示两种状态，生存或者死亡，0和1即可。表示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">self.discount = tf.constant(self.params[&apos;discount&apos;])</div><div class="line">self.yj = tf.add(self.rewards, tf.multiply(1.0-self.terminals, tf.multiply(self.discount, self.q_t)))</div></pre></td></tr></table></figure></p>
-<p>qlearning中的Q值可用函数表示成</p>
-<p>$ Q(s,a) = \max \limits_{a} {r + \gamma maxQ(s’,a’)|s,a} $</p>
-<p>结合代码来看，下个状态的最大值通过replay来获取，即上一个参数下(老的theta), 该状态下的最大值q_t，这样就得到了相当于supervised里的label Q(s,a)，与旧的函数里算的Q值做差值即产生了loss, 其实可以看到状态的reward再不断的学习进来，并且未来的前途也会考量，但是最终都是由本地的reward这个实实在在的东西得来的，不死即是目标。</p>
-<h3 id="q-t细究"><a href="#q-t细究" class="headerlink" title="q_t细究"></a>q_t细究</h3><p>q_t是当前状态下一阶段(给定的action到达的下一状态，在online时已经发生的状态，不一定时最有的action)的最大收益值，通过older的网络在online时尝试各种(action)后获得。如下的计算网络Loss(用于更新网络参数)可以看出，yj是label，Q_pred是older网络(当前网络，更新参数前)根据action算出的值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">self.discount = tf.constant(self.params[&apos;discount&apos;])</div><div class="line">self.yj = tf.add(self.rewards, tf.mul(1.0-self.terminals, tf.mul(self.discount, self.q_t)))</div><div class="line">self.Qxa = tf.mul(self.y,self.actions)</div><div class="line">self.Q_pred = tf.reduce_max(self.Qxa, reduction_indices=1)</div><div class="line">self.diff = tf.sub(self.yj, self.Q_pred)</div></pre></td></tr></table></figure></p>
-<h2 id="replay"><a href="#replay" class="headerlink" title="replay"></a>replay</h2><p>一般的增强学习里都是需要replay，棋类游戏的自我对弈也是获取replay的方式，简单的游戏里状态的确是有限的，比如象棋，但是像围棋这种状态很多，大概$2^{19*19}$，action又较多361，象棋要少很多，这种情况下，罗列状态做成map映射是不可能的，可以采用深度神经网络的方式来处理原始状态的情况，但是label比较难获取，如何自我训练获取label?<br>这里就用到replay机制，将Q(S,a)分解成当前的可看到的reward以及下一个状态最大的Q值(可以用旧的网络直接计算)，下一个状态如何获取？如果遍历当前所有的action显得比较笨重，这样体现replay的用处了，先跑一遍，在回头来一下，所以是off-policy。为何不是on-policy？我的感觉主要是随机，因为当下训练的batch就是随机抽出来的，而非on-policy实时关联的，实时policy会导致问题，”For example, if the maximizing action is to move left then the training samples will be dominated by samples from the left-hand side; if the maximizing action then switches to the right then the training distribution will also switch. It is easy to see how unwanted feedback loops may arise and the parameters could get stuck in a poor local minimum, or even diverge catastrophically”。online通过$\epsilon -greedy$的方式获取较均匀的状态，这里不表。</p>
-<h1 id="DQN架构详解"><a href="#DQN架构详解" class="headerlink" title="DQN架构详解"></a>DQN架构详解</h1><p>DQN的实现是使用tensorflow，输入是当前的图像特征、当前状态的奖励、当前状态是否是终止状态、下一步的action以及action对应的下一个状态的最大收益，最大收益是通过replay的方式可以直接获取的，也就是之前提到的$\theta _{i-1}$。通过tensorboard将基本的构图画了出来，如下所示：<br>整体架构，又输入、卷积层、全连接层、loss、train目标层构成<br><img src="/images/dqn_1.jpg" alt="dqn_all"><br>三个卷积、relu如下所示：<br><img src="/images/dqn_2.jpg" alt="dqn_conv2d"><br>两个全连接层如下：<br><img src="/images/dqn_3.jpg" alt="dqn_fullconnect"><br>loss层如下：<br><img src="/images/dqn_4.jpg" alt="dqn_loss"></p>
-<h1 id="训练效果"><a href="#训练效果" class="headerlink" title="训练效果"></a>训练效果</h1><p>github中给出了一个链接，<a href="https://www.youtube.com/watch?v=GACcbfUaHwc，基本上就是这个效果，训练了两天以上后，我自己也训练了一个版本，不过只训练了一个晚上，效果已经非常不错了，感觉已经超过我的水平了，大体的方向性还是很明显的。" target="_blank" rel="external">https://www.youtube.com/watch?v=GACcbfUaHwc，基本上就是这个效果，训练了两天以上后，我自己也训练了一个版本，不过只训练了一个晚上，效果已经非常不错了，感觉已经超过我的水平了，大体的方向性还是很明显的。</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/job/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/27/job/" itemprop="url">
-                  换工作小结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-27T21:59:24+08:00">
-                2017-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>北漂快五年了，什么都没有，房、车、户口，甚至连工作居住证都懒得办，这么懒、这么挫的后果就是在北京待不下去了，毕业后就一直在360这家公司，说实话，学到的东西不多，在外面看机会悲剧的多，当然也与我自己方向捏不清楚有关，截止到现在可以说是较团圆的结局，如愿的拿到了杭州阿里的工作机会，北京这边也有几个机会，接下来我会分享这一个多月的历程，充满了辛酸和苦辣，不到最后一个心都放不下来的感觉。</p>
-<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>知道了17年4月份可能会找工作，所以肯定会提前准备的，刷了一些leetcode的题目，在平时的项目中特别留意了便算法的地方，比如ltr的系统学习，通过ranking组的一些项目，wiki以及主要算法的paper等，实践方面在问答引擎的ranking上使用ltr算法。不过还是有些滞后，准备的不太充分吧，直到5月初才开始正式找工作吧，找了一个猎头，内推的内推。总结一下5月份之前的准别:</p>
-<ul>
-<li>leetcode review了100道题，覆盖了树、排序、dp等面</li>
-<li>问答项目使用ltr，算是有了算法类项目</li>
-<li>简历cover了两个新项目，除了问答ltr还有通用引擎</li>
-<li>算法总结:svm, lr, 决策树, ranklib, ltr, gbdt, xgboost等</li>
-<li>xgboost源码阅读</li>
-<li>深度学习算法，实现了一个CNN网络模型</li>
-<li>tensorflow学习</li>
-</ul>
-<h1 id="出师不利"><a href="#出师不利" class="headerlink" title="出师不利"></a>出师不利</h1><p>开始让波波桑帮忙投了头条，没想到会这么快，头条算是看的比较重的一个机会，去年就栽在上面了，这次又是第一个面的，感觉不太安全，果真，第一面还比较顺利，问了下项目，主要是问答的ltr项目，主要就是标注集，特征，效果等，还让我说了gbdt算法的原理，答得不是很好，回答了分裂方式，以及叶子节点值，我记得当时我是说了叶子值是二阶导数，这个是扯淡了，一定是看混了。然后还提到了微软的lightGBM，这哥们说效果一般，后面又考了一道算法题，问一个二叉树是否是另一个二叉树的子集，这个问题回答的较顺利，后面基本上就进入二面了。第二面是真正的克星，最怕这样的面试官，开始就问问答ltr的一些痛点，主要是问点击特征，如果有偏差，积累效应怎么办？我当时是有些慌，因为之前组内分享的一个关于rank实验的东西我就没好好理解，我以为是通过这个来将，结果就各种乱，思路也很差，让面试官很不满意，后面就随意出了一道题，n个分布，各种feature在一个矩阵中，然后用贝叶斯公式求一个概率，这个写起来是没有问题，但是最后又让我实际编程求出具体的平均值和方差，写就写呗，较长，最后是成功写出了，感觉应该是一个加分项，可是这时候面试官其实心理早有定论，只是在走过场了，问了我如何在不求平均值的情况下求方差？至今没有答案，后面草草的问了下正态分布的公式？？黑人问号，我写了后面的那一串，前面的系数忘了，然后就没了，让我问问题，我天真的以为自己答的还不错，还期待加入他们，晕，丢人。后面漫长的等待，我似乎很有信心，在简历的背面详细的记录这本次的心的，信心满满的等待接下来一轮的面试，结果结果，等了20分钟，二面的人又回来了，说出了我最不想听的话，真是很很失望，本来答应和女朋友去周边逛逛的我毫无兴致，一句“一面面试官还是很欣赏你的”在我脑海里挥之不去，走之前见了下波波桑，和他大概说了下本次过程，头条真是个不错的机会，待遇也不错，可是我仍然栽了跟头，打击真是太大了，悻悻的回去了，跟失了魂一样。<strong><em>5月7日周日的下午。</em></strong></p>
-<h1 id="外企"><a href="#外企" class="headerlink" title="外企"></a>外企</h1><p>这个是猎头推荐的，其实开始我是想去知乎的，但是知乎不招人，简历直接就刷了，人家只招leader，还说这简历上的人发展不到我们的要求，，晕。。。然后这个猎头就推了与他们合作较多的freewheel，一家做视频广告投放的公司，HR很热情，5.8日周一就加了我微信，下午就通了电话，问了我现在的情况，没有聊薪资，我不想说，因为offer都没呢说这个有啥用，后面就安排了面试时间，先是一个电话面试，安排在周四的上午十点半，记得当日真的是很紧张，我是先到公司然后回的家做的电面，因为需要线上coding，回家的路上骑着车痘痕紧张，哈哈，开始了，是个女面试官，首先让我讲一个项目，看出来她是之前没咋看我简历的，无所谓了，就挑了热点挖掘的那个项目讲了一下，电话里，我滔滔不绝(之前准备过，所以比较顺畅)，大概7-8分钟，但是电话那边毫无反应，我有点蒙比，说完之后很明显的感觉到对方是什么也没听懂，服了，然后直接就进入下一个环节，让我编程，是组合硬币到一个目标的程序，说实话，这道题是leetcode题库里的，有非常简洁trick的解法，就是push-pop组合，非常巧妙，我就使用了这个算法，大概用了3-4分钟吧，写出来之后女面试官彻底爆发了，非要说我的是错的，我一解释，发现完全不是一个频道，本身递归这个在电话里不太好一层一层让她看明白，最后我真是急了，真是举例一层一层把递归剥出来希望她能明白，最后她好想也觉得这个算法是对的，然后看了一会，问了几种情况，我接着解释，最后她觉得可能我是对的，但是仍然不确定，所以就差不多得了，我是比较郁闷了，希望能把代码保留下来，让她回去好好看一下，她急忙说不用不用，本来这个题不光考算法，也是考察思路，意思就是我虽然算法对，但是思路不清，说不明白，黑人问号。。然后后面就来了一个english talk，好吧，虽然口语比较次，但是只管说呗，磕磕绊绊，终于讲完了，电面算是结束了。一直等到了第二天才通知我说面试通过，不过HR又给我打了一个电话，聊一下昨天电面的情况，我只好说电话面试的缺点啦，不太好沟通，其实我是对的，我更想说女面试官水平很低，但是我敢吗。。。后面又安排了面试，周三下午，5月17号。不错这次有了冲突，因为我上午约的是美团平台部，内推的，不过我请这个机会一般吧，随便面面，没想到会发生后面的事情，放在后面说，这次就是下午没面成，改成5月23日下午，让我预留一整个下午，整的挺吓人的，公司本部是在亮马桥的一个写字楼，打车过去的，还是比较紧张的，到了之后沙发上深呼吸一下，接下里面试了，一面一个虎头虎脑的码农，先让我介绍项目，我讲了哪个项目忘了，然后又说了他们现在的一些问题场景，就是多个字符串kv查找问题，我让他们使用高效的数据结果，比如darts等，问了下他们每天的hadoop任务，感觉比360的还要低端，更新的也是很慢，可能他没说清楚或者我没有get到，然后考了我一个pthread的一个函数，这个我就黑洞了，多线程c++这块没咋弄过，然后做了一道算法题，链表的k长度反转，这个我答的真是不好，虽然大体写出来了，但是感觉写的时间太长了，思路应该是没有问题的，然后进入下一面，是一个圆脑袋的码农，一进来就是问一个场景，也是用矩阵表达，多标签的问题，各种边界条件，我建议使用位图表示标签，遍历的方式统计，然后各个边界是要考察的点？最后都快成数学证明题了，我感觉没啥应用场景吧，哪个问题会抽象成这样，然后这哥们说他们是有这种场景，我觉他们是跑偏了，我是没有说了，就是跟着他的思路吧。后面又问了一个多进程刷文件的问题，怎么加锁，同步等，应该答得还可以，然后就结束了，我感觉答得还可以，应该下一面没问题，不过这个部门太偏工程了，真没啥兴趣，不过我还是希望能走远点，等了20多分钟，为什么每次都这么久？结果结果等来了HR，我知道不妙了，因为一般面试都得5轮才能见到HR，我知道我悲剧了，情绪很低落，不知道说什么好，没啥说的吧，最后走了，之后和猎头确认的确是下一面的leader不在，不过我感觉没啥机会了，因该真是不合适，这个外企号称待遇好上天，就这样吧，没了就没了，不过我还没有offer，很是着急。 <strong><em>5月23日周三的下午。</em></strong></p>
-<h1 id="美团"><a href="#美团" class="headerlink" title="美团"></a>美团</h1><p>好吧，终于到美团了，今年的幸运符号，美团可以说是开始最不看重的，但是过程和结果却是出乎意料的顺利，满意，非常感激，真是不敢想没有美团的鼓励，我能否坚持下来。美团是一个快要离职的朋友内推的，推到了平台部，我一看以为是纯工程的，反正去走个过场吧，也是和上面的那个freewheel安排在了一天，上午随便搞搞吗，到了之后hr把我领到了美团的楼上，一面的码农瘦瘦的，还不错，人挺好的，让我说了一个项目，我说的是通用平台，我觉得和他们做的应该有关吧，然后讨论了较多倒排索引的事情，我比较亲怪，平台部也搞搜索引擎？最后问了下 才知道原来这个平台部就是美团的搜索部门，这不巧了么？这块我熟悉所以应该面的挺好的，最后考了算法题，是把有序数组的一段逆序，这个也是leetcode的题，我还专门研究过有相同元素的解法，整个过程非常愉快，顺利到了下一面，一看时间已经11:45了，我感觉太慢了，二面的对机器学习比较感兴趣，问了ltr的一些算法，最重要的是让我推到了xgboost的目标函数，我之前也是较细的研读过陈天奇的slides，所以能够大体写出来，算是还可以吧，太细的就不行了，然后还打听到我用过深度学习做过问答的项目，我就把私下里搞的那个qa的CNN模型跟他说了一下，应该还挺满意的，然后就是算法，是一个整数比大小的最小整数，二进制里0和1的数量保持一致，开始我的思路差点对了，不过还有问题，最后他提点我一下，然后就让我写出完整代码，很顺利，写的没问题，这个面完已经12点半左右了吧，我有点慌了，这次肯定能过，但是下午1:30我还要面外企呢？过了一会来一个应该级别比较高的人，很nice，铭哥，后面还有很多交集，他先带我去吃了饭，我以为是免费的，就狂拿菜，结果一个人拿了28元。。有点惭愧，还就吃了一点点，我是一有事情就吃不下去饭的主，然后这个leader就找我聊了，大概1:00开始聊的吧，哎，这个过程的真的非常nice，这个leader问的东西几乎都是我平时工作时会关注的问题，对集群部署，abtest，ranking等，也诱导我说了很多工作中的想法，感觉非常过瘾，事后也得知这个反馈很好，但是我向他说我下午还有事情，然后就走了，非常的依依不舍，哈哈，然后说后面会联系我，我之前经历过一些面试，一般说后面联系的大多不联系了，但是这次感觉是真的，我也是觉得面试面的不错嘛，所以我坚信这个offer我已经拿了大半了，回去后也没赶上外企的面试，但是这毕竟是一次成功的面试，对我的鼓励作用非常大。铭哥说是明天或者后天联系我，也就是5.18号或者是5.19号，结果到了18号，无任何音信，我有点慌了，感觉不好的兆头又来了，坐不住了，就疯狂的联系美团的hr(给我发面试邀请的)，邮件短信电话都弄了，结果没有任何回音，电话竟然直接挂我的，我服了，难道善良的我再一次被欺骗了？哀莫大于心死，最后我放弃了，算了吧，结结果，第二天突然接到铭哥的电话，我真是激动啊，他说当时面完的当天晚上打篮球他腿就伤了，第二天没上班，所以就没有联系我，哈哈，原来是这样，这真是一道曙光，然后告诉我后面会约我面试，交叉面，定级别的，我好开心，真的是没有骗我，定的是下周二下午，但是那个下午是外企的面试，所以就换个时间换到了周三了，周三下午打个车就过去了，我的水笔在出租车上丢了，我还害怕了一阵，这个笔感觉有点幸运，丢了不会是什么不好的兆头吧，一瘸一拐的铭哥接我上了楼，给我打了简历，后面就是等，那个交叉面试官在开会，我大概等了50分钟，晕，还好终于等到了，那哥们是外卖搜索的nlp负责人，当然主要是考算法，让我挑一个项目给他讲讲，然后就挑了热点挖掘的那个，刚说到模糊化，这哥们就让我说一下怎么模糊化，这个还比较擅长，几乎说全了考虑的因素，最后说到使用什么模型的时候出问题了，我说是使用随机森林，然后就问我为啥使用随机森林，我说这种分类问题比较简单，所以使用随机森林，然后就炸了，何为简单？何为复杂？难道回归是复杂，分类就是简单？我晕，得确我这随口一说真是太不严谨了，然后又说到如何进行多分类，我只看过softMax这种每种分类训练一组参数，实在是想不出一种可以直接分类的算法，还好这哥们是交叉面试官而已，又是校友，他的一个同学还在360搜索，哈哈，有了解到我的算法知识都是自学的，还可以吧，马马虎虎过关，不过因该不是很理想，本来级别能够定的更高点的吧，这个就面了30左右吧，然后我就等最后的老大面吧，等了好久，铭哥告诉我老大还是没有时间，只有先回去了，没事就先回去吧，我信铭哥的，回去后有hr给我联系了，还让我后面接着面试(就是没有赶上的那个老大面)，但是当时快端午节了，各种拖，我也跟她说自己有工作机会，希望流程快一点，最后的最后他们说不用面了，可以谈offer了，应该级别不是很高吧，终于拿到了offer，具体薪水细节不提了，后面由于神马的offer，最终还是放弃了，铭哥对我很好，我也非常感谢他对我的认可，后面聊了许多，以后我们还是朋友吧，我也多了一个职业发展路上的挚友。</p>
-<h1 id="转岗"><a href="#转岗" class="headerlink" title="转岗"></a>转岗</h1><p>除了在外面看机会，我还在公司内部看了机会，因为是想转纯算法的方向，垂直领域做了这么多年还是以工程为导向的，没有什么积累，于个人发展非常不利，公司内部的商业化团队无疑是吸引力比较强的，偏广告方向，不过各种算法和模型使用比较多，如果能够去那里，那也是一次非常好的机会，所以5月初也是向那边的hr投递了简历，希望可以安排与那边老大约的机会。5月9号有了回音，让周四下午五点去和老大聊聊，这个是广告平台投放部门，见到老大，人还是比较nice的，开始问了为何转岗？然后问了问答ltr的项目，然后让我说下gdbt和xgboost的区别，那个时候还比较早，对gbdt和xgboost的了解真的是非常有限吧，这个真的是在找工作的时候深有体会，说到的仅仅是xgboost的数据预处理、正则项等等，现在感觉好浅，然后基本上就是问问题吧，但是当时基本上没啥准备，记得的一个问题就是他们那是否用深度学习，记得说了只用到了NN，然后就匆匆的结束了，其实我应该多准备关于广告的问题的，太匆忙了，负责人也觉得我太草率了吧，后来的后来就是HR来通知我被通过了，其实我觉得和老大聊的真的是很差，通过的原因应该与我在公司的简历相关，我在公司这么久，还算比较出色吧，所以招我风险肯定不大，HR告诉我这个消息时，我还是比较高兴的，憧憬着在新的部分重新开始，贪婪的吸收和享受着广告这个领域的知识和成长，并大展拳脚。当然转岗的流程，周期都是需要考虑的，得到通知的时间是5月24日，HR很热情的和我沟通着后面的流程和注意事项，口头应允的我隐隐的觉得这个机会可能最终会被放弃，由此而来的一个月的拉锯战非常痛苦，的确这个时候处于看机会的高峰期，但是又不能直说，因为之前沟通的时候是说优先优先考虑360，有360的机会肯定不会走的，可是这并非我真实想法，我的终极目标仍然是杭州。最后的拒绝很难开口，一个多月的敷衍终于走到了终点。</p>
-<h1 id="阿里神马"><a href="#阿里神马" class="headerlink" title="阿里神马"></a>阿里神马</h1>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/30/rotate-array-search/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/30/rotate-array-search/" itemprop="url">
-                  rotate array search
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-30T10:07:18+08:00">
-                2017-04-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>leetcode上遇到了一个问题，就是如果把一个sorted数组旋转一下，如[0,1,2,3,4,5,6,7] =&gt; [4,5,6,7,0,1,2,3]，这样二分查找还将如何进行？,当然是用O(log(n))的方法。</p>
-<h1 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h1><p>应该是如下的场景，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int search(vector&lt;int&gt; nums, int target) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="不重复的情况"><a href="#不重复的情况" class="headerlink" title="不重复的情况"></a>不重复的情况</h1><p>这里会有一个问题场景的问题，即数组中是否允许存在重复的元素? 如果不允许，则找到旋转的那个点，如例子中是在value=0处，即idx＝4，找到了这个点的方法有些多，可以使用寻找最小值的方法，也可以直接二分查找，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">int findMinIdx(vector&lt;int&gt; nums) &#123;</div><div class="line">	int lo = 0, hi = nums.size() - 1;</div><div class="line">	while(lo &lt; hi) &#123;</div><div class="line">		int mid = lo + (hi - lo) / 2;</div><div class="line">		if(nums[mid] &gt; nums[hi]) &#123;</div><div class="line">			lo = mid + 1;</div><div class="line">		&#125;</div><div class="line">		else &#123;</div><div class="line">			hi = mid - 1;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	// lo==hi is the index of the smallest value and also the number of places rotated.</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>也可以直接二分的算法查找，只不过原来的方法要稍微变动下，这种方法比较高效，不够思路有些不太清晰。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">int search(vector&lt;int&gt; nums, int target) &#123;</div><div class="line">	int start = 0, end = nums.end() - 1;</div><div class="line">	while(start &lt; end) &#123;</div><div class="line">		int mid = start + (end - start) / 2;</div><div class="line">		if(nums[mid] == target) &#123;</div><div class="line">			return mid;</div><div class="line">		&#125;</div><div class="line">		else if(nums[mid] &gt; nums[start]) &#123;</div><div class="line">			if(target &lt; nums[mid] &amp;&amp; target &gt;= nums[start]) &#123;</div><div class="line">				end = mid - 1;</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				start = mid + 1;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		else if(nums[mid] &lt; nums[start])&#123;</div><div class="line">			if(target &gt;= nums[start] || target &lt; nums[mid]) &#123;</div><div class="line">				end = mid - 1;</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				start = mid + 1;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		else &#123;</div><div class="line">			start++;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="重复场景如何？"><a href="#重复场景如何？" class="headerlink" title="重复场景如何？"></a>重复场景如何？</h1><p>这个没有争议，关键点在于如果数组中允许存在相同的元素，这个算法该怎么写，可以肯定的是上面的算法都将失效，比如[4,4,4,4,0,1,2,4]找不到最小的地方的，还有[4,6,4,4,4,4,4,4]如何找到rotated place是2，很难，经过验证，无法在log(n)的时间内找到翻转的位置，不过可以找到最小的值是多少，至于在哪个位置就不确定了，即最多找出一个最小值的idx。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">int findMinValue(vector&lt;int&gt; nums, int start, int end) &#123;</div><div class="line">	if(start &gt; end) &#123;</div><div class="line">		return -1;</div><div class="line">	&#125;</div><div class="line">	int mid = start + (end - start) / 2;</div><div class="line">	while(start &lt; end) &#123;</div><div class="line">		if(nums[mid] &gt; nums[start]) &#123; </div><div class="line">			int pos = findMinValue(nums, mid + 1, end);</div><div class="line">			if(pos == -1) &#123;</div><div class="line">				return start;</div><div class="line">			&#125;</div><div class="line">			return nums[start] &lt; nums[pos] ? start : pos;</div><div class="line">		&#125;</div><div class="line">		else if(nums[mid] &lt; nums[start]) &#123;</div><div class="line">			int pos = findMinValue(nums, start, mid - 1);</div><div class="line">			if(pos == -1) &#123;</div><div class="line">				return mid;</div><div class="line">			&#125;</div><div class="line">			return nums[pos] &lt; nums[mid] ? pos : mid;</div><div class="line">		&#125;</div><div class="line">		else &#123; //相等的情况较为复杂, 两边都要考虑</div><div class="line">			int pos = mid;</div><div class="line">			int pos1 = findMinValue(nums, start, mid - 1);</div><div class="line">			if(pos1 != -1) &#123;</div><div class="line">				pos = nums[pos] &lt; nums[pos1] ? pos : pos1;</div><div class="line">			&#125;</div><div class="line">			int pos2 = findMinValue(nums, mid + 1, end);</div><div class="line">			if(pos2 != -1) &#123;</div><div class="line">				pos = nums[pos] &lt; nums[pos2] ? pos :pos2;</div><div class="line">			&#125;</div><div class="line">			return pos;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/base-dt/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/20/base-dt/" itemprop="url">
-                  基本的决策树算法总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T19:34:43+08:00">
-                2017-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这篇文章仅仅是简单的回顾一下决策树开始的一些经典算法，虽然较旧了，用的人少了，但是一些思想和算法，值得了解。下面主要介绍的算法有<code>ID3</code>、<code>C4.5</code>、<code>CART</code>、<code>SLIQ</code>、<code>SPRINT</code>，其中<code>CART</code>算法一笔带过吧，有些需要深究的部分，我也没有太理清，就把我现在理解的东西权当是记录一下把。</p>
-<h2 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h2><p>ID3(Iterative Dichotomiser 3), 迭代的二分法分离模型version 3，是根据信息增益来做的决策，所以如何定义信息增益是个主要的问题？首先来看一下信息熵的定义:<br>$H(S) = -\sum_{i=1}^{m} P(u_i)logP(u_i)$<br>其中$S$是样例的集合，$P(u_i)=\frac{|u_i|}{|S|}$，一般认为越有序的数据熵比较低，越乱序的则熵比较大，显然我们分类的目的就是有序，减少熵。最后的信息增益为:<br>$Gain(S,A)=Entropy(S) - \sum_{v \in Value(A)}\frac{|S_v|}{|S|}Entropy(S_v)$<br>遍历所有属性即可，这个算法优点就是简单，奥卡姆剃刀原理，缺点也较明显，抗噪音不行，大数据，无剪枝。</p>
-<h2 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h2><p>C4.5是对ID3的改进，因为ID3分裂出的树不是二叉树，而是有多少属性就有多少分叉，所以如果分叉过多，容易导致各个分支上的信息熵为0，但是这种明显不是我们想要的，所以这里提出了信息增益率的概念，公式为:<br>$GainRatio(A) = \frac{Gain(A)}{Entropy(A)}$<br>分母是训练集关于A的分布情况，显然，越多越大，最后的增益率就会下降。</p>
-<h2 id="CART"><a href="#CART" class="headerlink" title="CART"></a>CART</h2><p>CART和C4.5类似，不过是使用gini算法计算收益，gini值越小，效果越好。接下来会讲一下gini算法的实现。</p>
-<h2 id="gini"><a href="#gini" class="headerlink" title="gini"></a>gini</h2><p>基尼指数原来是是衡量贫富悬殊程度的标量。它的定义如下：我们首先收集社会上每一个人的总财富额，把它从少至大排序，计算它的累积函数（cumulative function），然后便可绘出图中的洛仑兹曲线（Lorenz curve）。图中横轴是人口比例的累积分布，竖轴是财富比例的累积分佈。<br><img src="/images/gini.jpg" alt="gini"><br>$A$和$B$是途中两个面积，基尼系数为$\frac{A}{A+B}$<br>越不均匀，比如钱都集中在少数人手里，则$B$趋向于0，gini系数很大，python简单的实现如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">def gini_coef(wealths):</div><div class="line">	cum_wealths = np.cumsum(sorted(np.append(wealths, 0)))</div><div class="line">	sum_wealths = cum_wealths[-1]</div><div class="line">	xarray = np.array(range(0, len(cum_wealths))) / np.float(len(cum_wealths)-1)</div><div class="line">	yarray = cum_wealths / sum_wealths</div><div class="line">	B = np.trapz(yarray, x=xarray)</div><div class="line">	A = 0.5 - B</div><div class="line">	return A / (A+B)</div></pre></td></tr></table></figure></p>
-<p>应用到具体分类的gini定义如下:<br>$gini(S)=1-\sum_{j=1}^{n}p_j^2$<br>$p_j$为类j出现的概率，如果集合分成$S_1$和$S_2$部分，则分割后的gini为<br>$gini_{split}(S)=\frac{n_1}{n}gini(S_1)+\frac{n_2}{n}gini(S_2)$<br>则$GAIN_{gini} = gini(S) - gini_{split}(S)$，越大收益越高。</p>
-<h2 id="如何收益大？"><a href="#如何收益大？" class="headerlink" title="如何收益大？"></a>如何收益大？</h2><p>说到gini系数，其实有点相悖？gini系数中如果财产都在一个人手里，那岂不是显得很”纯”? 其实这种情况的确是比较符合理想分类的情形，因为99%的都是穷人，1%的才是富人，不过这样想就错了，因为负例太负了，负例产生的波动太大了，因为太大了，造成了整体的均值不回太低，所以其它99%的产生的mse也是比较大的，其实可以这么理解，一共100个样本，和就是<code>1</code>，如果均匀分布即大家都是同类人，这样才是分类的最佳情况。</p>
-<h2 id="SLIQ"><a href="#SLIQ" class="headerlink" title="SLIQ"></a>SLIQ</h2><p>super-vised learning in quest, 这个名字的确挺蛋疼的，应该叫<code>一种可伸缩的分类器</code>，这个算法有什么特点呢？如下总结<br>| BFS<br>| 直方图<br>| 属性表<br>| 类表<br>每个树节点都拥有了直方图(local)，属性表(global), 类表(global), 这样也才能使用BFS，特别每个树节点都拥有自己的直方图，可以统一扫一下属性表，然后整体更新树节点上的直方图，直方图如下表所示，假设只有两个分类<code>C1,C2</code>：<br>参数|描述</p>
-<table>
-<thead>
-<tr>
-<th>stats1</th>
-<th>C1</th>
-<th>C2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>left</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>right</td>
-<td>3</td>
-<td>4</td>
-</tr>
-</tbody>
-</table>
-<p>这个是最初的统计，其实实际在遍历中，可以用最大收益代替，并附上最大收益对应的<code>attribute</code>以及<code>split_value</code>, 当然一般的算收益仍然是使用gini算法。</p>
-<table>
-<thead>
-<tr>
-<th>stats2</th>
-<th>Gain</th>
-<th>Attr</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>stats</td>
-<td>2.5</td>
-<td>a1</td>
-<td>6</td>
-</tr>
-</tbody>
-</table>
-<p>每次扫描完毕，这当前所有的叶子节点(active nodes)上的直方图都会更新一次，决定了下一次的分裂, 如上面节点中的最佳分裂的属性是<code>a1</code>, $split_value=6$。优点很直观啊，全局一次排序。</p>
-<h2 id="SPRINT"><a href="#SPRINT" class="headerlink" title="SPRINT"></a>SPRINT</h2><p>scalable parallelizable induction(归纳) of decision trees, sprint算法，强调了并行，是在SLIQ的基础上更进一步, 将类图合并到每个属性表中，单独存入节点中，属性表随着节点的分裂也被分割，所以就不存在BFS了，而是深度优先遍历的方式，每个节点拥有自己单独的属性表(每个属性都需要一张(sorted))，可以单独分裂，这个可以加快并行，当然存储最佳分类的还是要使用直方图，这个算法的缺点就是每次分裂，需要设计到非分割属性表的元素分裂，需要通过rowid(hash?)对应上，分割相对复杂。</p>
-<h2 id="直方图如何对应xgboost"><a href="#直方图如何对应xgboost" class="headerlink" title="直方图如何对应xgboost?"></a>直方图如何对应xgboost?</h2><p>分布式加权直方图算法,这是xgboost里带的，为了解决数据无法一次载入内存或者在分布式情况下算法，</p>
-<blockquote>
-<p>可并行的近似直方图算法。树节点在进行分裂时，我们需要计算每个特征的每个分割点对应的增益，即用贪心法枚举所有可能的分割点。当数据无法一次载入内存或者在分布式情况下，贪心算法效率就会变得很低，所以xgboost还提出了一种可并行的近似直方图算法，用于高效地生成候选的分割点。<br><strong>直方图补充</strong><br>微软新出的LightGBM算法也是用到了直方图，的确，这个直方图和SLIQ以及SPRINT的直方图并无区别，直方图直接在gbdt中使用，的确起到了比较好的效果，不过相对于level-wise，每个节点都需要维护自己的数据，各个feature上sort的数据，比较麻烦，不过这样的好处就是deep-wise，脱离了深度的限制，另外，LightGBM中使用了bin value作为划分根据，即将feature value专为bin value，一般一个字节，即最多256种划分，这样的好处就是存储压力变小，另外不必扫描所有的feature value，只需扫描256次即可，还有一个就是数据分割时较快速，因为内存占用少，共享索引表，直接划分，还有做差的方式，即处理好一个分裂节点，另一个节点直接通过与父节点作差即可得到，速度又得到了提高。</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/08/qa-cnn/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/08/qa-cnn/" itemprop="url">
-                  CNN在问答领域识别中应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-08T18:51:28+08:00">
-                2017-03-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>短文本question-answer匹配度识别问题，论文(Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks.pdf), github<a href="https://github.com/aseveryn/deep-qa" target="_blank" rel="external">实现</a>。github的作者基本上实现了文章里的算法，计算的精度也差不多，不过使用theano实现的，我准备使用tensorflow实现，并解决大规模预料训练太慢的问题。当然本文要开始从分析git的实现开始讲起，会穿插theano的一些语法，实现等，我自己也是从零学起的，且当给自己留个笔记吧。</p>
-<h1 id="架构？"><a href="#架构？" class="headerlink" title="架构？"></a>架构？</h1><p>不能不提到的论文中经典的架构图。<br><img src="/images/deep_qa.jpg" alt=""><br>网络用文字梳理的结果如下:</p>
-<ol>
-<li>question answer并行处理成词向量</li>
-<li>词向量与卷积核做运算得到n个len(q or a)维的向量</li>
-<li>对2中得到的向量做Activation和Pooling处理，得到1维数组，大小为n</li>
-<li>问题和答案抽出的1维数组分别与相似度矩阵M做乘积预算，得到相似度，即 $A*M*Q=sim$</li>
-<li>计算answer和question中的相同部分F，将A,sim,Q,F拼接成新的向量</li>
-<li>将5中得到的向量做线性变化，即 $\alpha(W*X+b)$</li>
-<li>最后使用Softmax对6中得到的linear之后的向量做分类</li>
-</ol>
-<h2 id="使用theano的实现"><a href="#使用theano的实现" class="headerlink" title="使用theano的实现"></a>使用theano的实现</h2><p>作者的实现有一些改动，如第5步骤中计算得到的交叉部分F，这部分可以是交叉词的词向量，也可以是交叉词的idf，比重等，显然idf和比重更容易让人信服，不过这个值不好处理，作者并没有用，而是直接使用的交叉词的词向量拼到question和answer的词向量中，即将这部分直接放到开头做了。</p>
-<h2 id="数据预处理-embedding"><a href="#数据预处理-embedding" class="headerlink" title="数据预处理(embedding)"></a>数据预处理(embedding)</h2><p>这部分主要是将question-answer对分词(英文就是空格直接分词), 然后根据word2vec，将问题和答案分解成word2vec的词向量，并收集全集词表，word2vec缺失的词使用默认值填充。难点在于训练集合的选取，这是有监督的学习，对于中文的海量语法来说，需要的训练集合的规模也是非常大的。</p>
-<h2 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h2><p>主要load的数据有train, dev, test三类，train是训练参数使用，dev是验证参数，test是实测使用，其实dev和test可以归为一类，每类数据分为question, answer, overlap。</p>
-<h2 id="词向量转化"><a href="#词向量转化" class="headerlink" title="词向量转化"></a>词向量转化</h2><p>LookupTableFast将question, answer, overlap转化为词向量。这里会讲pad部分(即卷积的宽度补上)，最后输出的是 [batch_size, 1, 2 * (q_size + q_filter_widths - 1), ndim], ndim是词向量的宽度(word2vec生成的词向量的size)，后面ndim的长度会拓展为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># sentence长度 + 交叉长度</div><div class="line">ndim = vocab_emb.shape[1] + vocab_emb_overlap.shape[1]</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class LookupTableFastStatic(Layer):</div><div class="line">	def __init__(self, W=None, pad=None):</div><div class="line">		super(LookupTableFastStatic, self).__init__()</div><div class="line">		self.pad = pad</div><div class="line">		self.W = theano.shared(value=W, name=&apos;W_emb&apos;, borrow=True)</div><div class="line"></div><div class="line">		def output_func(self, input):</div><div class="line">			out = self.W[input.flatten()].reshape((input.shape[0], 1, input.shape[1], self.W.shape[1]))</div><div class="line">			if self.pad:</div><div class="line">				pad_matrix = T.zeros((out.shape[0], out.shape[1], self.pad, out.shape[3]))</div><div class="line">	  			out = T.concatenate([pad_matrix, out, pad_matrix], axis=2)</div><div class="line">	  		return out</div><div class="line"></div><div class="line">	  def __repr__(self):</div><div class="line">		  return &quot;&#123;&#125;: &#123;&#125;&quot;.format(self.__class__.__name__, self.W.shape.eval())</div></pre></td></tr></table></figure>
-<h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>定义Conv2dLayer来做卷积类使用，卷积的初始化如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def __init__(self, rng, filter_shape, input_shape=None, W=None):</div><div class="line"># @rng: 初始化种子</div><div class="line"># @filter_shape: 卷积核的样式，filter_shape = (nkernels, num_input_channels, filter_width, ndim), nkernels = 100, num_input_channels = 1, 可见与question长度无关。</div><div class="line"># @input_shape: 同上一层词向量层的输出</div><div class="line"># @self.W 也和filter_shape具有相同的shape，随机化一些数字</div></pre></td></tr></table></figure></p>
-<p>卷积使用库函数，调用如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def output_func(self, input):</div><div class="line">	return conv.conv2d(input, self.W, border_mode=&apos;valid&apos;,</div><div class="line">			filter_shape=self.filter_shape,</div><div class="line">			image_shape=self.input_shape)</div></pre></td></tr></table></figure></p>
-<p>看看<code>conv2d</code>函数的返回, 看到output的是 [batch_size, filter_size, sentence_size, ndim]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Parameters:	</div><div class="line">input (dmatrix of dtensor3) – Symbolic variable for images to be filtered.</div><div class="line">filters (dmatrix of dtensor3) – Symbolic variable containing filter values.</div><div class="line">border_mode (&#123;&apos;valid&apos;, &apos;full&apos;&#125;) – See scipy.signal.convolve2d.</div><div class="line">subsample – Factor by which to subsample output.</div><div class="line">image_shape (tuple of length 2 or 3) – ([number images,] image height, image width).</div><div class="line">filter_shape (tuple of length 2 or 3) – ([number filters,] filter height, filter width).</div><div class="line">kwargs – See theano.tensor.nnet.conv.conv2d.</div><div class="line">Returns:	</div><div class="line">Tensor of filtered images, with shape ([number images,] [number filters,] image height, image width)</div></pre></td></tr></table></figure></p>
-<p><strong>何为卷积？如何卷积?</strong><br>卷积为分时加权，在词向量上表现为分段计算作为权重，粒度更细了，input_shape细化为单个qa，即为如下格式(加上filter_width)。引用某乎上对卷积的解释:</p>
-<blockquote>
-<p>cnn的核心在于卷积核，其实关于卷积核还有另一个名字叫做滤波器，从信号处理的角度而言，滤波器是对信号做频率筛选，这里主要是空间-频率的转换，cnn的训练就是找到最好的滤波器使得滤波后的信号更容易分类，还可以从模版匹配的角度看卷积，每个卷积核都可以看成一个特征模版，训练就是为了找到最适合分类的特征模板。</p>
-</blockquote>
-<p>卷积核最后是作为最终的feature，每个卷积核作为一个特征，与question、answer等都无关了，所以卷积核的特征采集是非常重要的。</p>
-<p>$$<br>S =<br>\begin{vmatrix}<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>filter &amp; w_1 &amp; … &amp; w_{|s|} &amp; filter \\<br>|    &amp; |    &amp;    …    &amp; | &amp; | \\<br>\end{vmatrix}<br>$$<br>$S.shape = [ndim, 2 \cdot (filter - 1) + len(s)]$<br>卷积核为[dim, m]维度，卷积公式如下:<br>$c_i=S \cdot f=S^T_{[i:i+m-1]} \cdot f=\sum_{k=i}^{i+m-1} s_kf_k$<br>注意是S的转置矩阵与f的相乘, 最后得到的是$[2 \cdot filter + |s|]$的宽度数组，即为卷积结果。增加filter_width是为了让S的每个word享受到相同的卷积效果。</p>
-<h2 id="Activation-tanh"><a href="#Activation-tanh" class="headerlink" title="Activation (tanh)"></a>Activation (tanh)</h2><p>使用nn_layers.NonLinearityLayer作为主类，初始化以及output函数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NonLinearityLayer(b_size=filter_shape[0], activation=activation)</div><div class="line"></div><div class="line">def output_func(self, input):</div><div class="line">	return self.activation(input + self.b.dimshuffle(&apos;x&apos;, 0, &apos;x&apos;, &apos;x&apos;))</div></pre></td></tr></table></figure></p>
-<p>dimshuffle是将b拓展到4维，正好与卷积的output匹配相加。这里有一个问题，卷积出的第四维度是ndim，和公式算的$c_i$没有该维度，该维度上直接相加了。</p>
-<h1 id="Pooling"><a href="#Pooling" class="headerlink" title="Pooling"></a>Pooling</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在第二维度上，即image height，也就是sentence</div><div class="line">def max_pooling(input):</div><div class="line">  return T.max(input, axis=2)</div></pre></td></tr></table></figure>
-<h1 id="PairwiseNoFeatsLayer"><a href="#PairwiseNoFeatsLayer" class="headerlink" title="PairwiseNoFeatsLayer"></a>PairwiseNoFeatsLayer</h1><p>这个是将q和a经过上面一系列的层产生的结果(最后是经过Pooling处理得到的[batch_size, n])做乘积，求q和a的相似性sim，最后将q,a,sim拼接。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 注意这里的参数W矩阵是(n * n)的</div><div class="line">def output_func(self, input):</div><div class="line">	# P(Y|X) = softmax(W.X + b)</div><div class="line">	q, a = input[0], input[1]</div><div class="line">	# dot = T.batched_dot(q, T.batched_dot(a, self.W))</div><div class="line">	dot = T.batched_dot(q, T.dot(a, self.W.T))</div><div class="line">	out = T.concatenate([dot.dimshuffle(0, &apos;x&apos;), q, a], axis=1)</div><div class="line">	return out</div></pre></td></tr></table></figure></p>
-<p>out的长度为<code>q_logistic_n_in + a_logistic_n_in + 1</code></p>
-<h1 id="LinearLayer"><a href="#LinearLayer" class="headerlink" title="LinearLayer"></a>LinearLayer</h1><p>线性变换，这里的输入是长度为<code>q_logistic_n_in + a_logistic_n_in + 1</code>的特征数组，需要经过线性变化，LinearLayer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># W是(q_logistic_n_in + a_logistic_n_in + 1) * (q_logistic_n_in + a_logistic_n_in + 1)</div><div class="line">def output_func(self, input):</div><div class="line">    return self.activation(T.dot(input, self.W) + self.b)</div></pre></td></tr></table></figure></p>
-<h1 id="LogisticRegression"><a href="#LogisticRegression" class="headerlink" title="LogisticRegression"></a>LogisticRegression</h1><p>最后一步，上面的输入仍然是<code>q_logistic_n_in  + a_logistic_n_in + 1</code>, 使用<code>softmax</code>输出求解，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def output_func(self, input):</div><div class="line">	# P(Y|X) = softmax(W.X + b)</div><div class="line">	self.p_y_given_x = T.nnet.softmax(self._dot(input, self.W) + self.b)</div><div class="line">	self.y_pred = T.argmax(self.p_y_given_x, axis=1)</div><div class="line">	return self.y_pred</div></pre></td></tr></table></figure></p>
-<p>注意<code>T.argmax</code>是获取下标，所以这里的输出是直接分类(本问题中是0,1), p_y_given_x是给的具体的概率值。</p>
-<h1 id="训练网络"><a href="#训练网络" class="headerlink" title="训练网络"></a>训练网络</h1><p>前面的整个网络已经布局完毕，是计算<code>loss</code>的时候了，cost=negative_log_likelihood(y)=-T.mean(T.log(self.p_y_given_x)[T.arange(y.shape[0]), y]), 使用adadelta训练参数，这个cost如何理解呢？找到了解释，我自己是没有跑通，囧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># y.shape[0] is (symbolically) the number of rows in y, i.e.,</div><div class="line"># number of examples (call it n) in the minibatch</div><div class="line"># T.arange(y.shape[0]) is a symbolic vector which will contain</div><div class="line"># [0,1,2,... n-1] T.log(self.p_y_given_x) is a matrix of</div><div class="line"># Log-Probabilities (call it LP) with one row per example and</div><div class="line"># one column per class LP[T.arange(y.shape[0]),y] is a vector</div><div class="line"># v containing [LP[0,y[0]], LP[1,y[1]], LP[2,y[2]], ...,</div><div class="line"># LP[n-1,y[n-1]]] and T.mean(LP[T.arange(y.shape[0]),y]) is</div><div class="line"># the mean (across minibatch examples) of the elements in v,</div><div class="line"># i.e., the mean log-likelihood across the minibatch.</div><div class="line">return -T.mean(T.log(self.p_y_given_x)[T.arange(y.shape[0]), y])</div></pre></td></tr></table></figure></p>
-<p>如何更新参数呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">updates = sgd_trainer.get_adadelta_updates(cost, params, rho=0.95, eps=1e-6, max_norm=max_norm, word_vec_name=&apos;W_emb&apos;)</div></pre></td></tr></table></figure></p>
-<p>作者实现的adadelta算法如下所示, 加上了我自己的理解和注释，我感觉这块的实现有些问题，因为adadelta是前t次的迭代，而这里的和显然是从开始到结束，有点像adagrad。后面贴的链接是几种求参迭代的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">def get_adadelta_updates(cost, params, rho=0.95, eps=1e-6, max_norm=9, word_vec_name=&apos;W_emb&apos;):</div><div class="line">	print &quot;Generating adadelta updates&quot;</div><div class="line">	updates = OrderedDict(&#123;&#125;)</div><div class="line">	exp_sqr_grads = OrderedDict(&#123;&#125;)</div><div class="line">	exp_sqr_ups = OrderedDict(&#123;&#125;)</div><div class="line">	gparams = []</div><div class="line">	# 这里设置了三个变量, for every param：</div><div class="line">	# exp_sqr_grads init zeros</div><div class="line">	# exp_sqr_ups zeros</div><div class="line">	# gparams [] list append gp(grad)</div><div class="line">	for param in params:</div><div class="line">		exp_sqr_grads[param] = build_shared_zeros(param.shape.eval(), name=&quot;exp_grad_%s&quot; % param.name)</div><div class="line">		print &apos;cost &apos;, cost</div><div class="line">		print &apos;param.shape.eval&apos;, param.shape.eval()</div><div class="line">		gp = T.grad(cost, param)</div><div class="line">		print &apos;gp&apos;, gp</div><div class="line">		exp_sqr_ups[param] = build_shared_zeros(param.shape.eval(), name=&quot;exp_grad_%s&quot; % param.name)</div><div class="line">		print &apos;exp_sqr_ups&apos;, exp_sqr_ups[param].shape</div><div class="line">		gparams.append(gp)</div><div class="line">		print param, gp</div><div class="line">	#真正的计算, for every param</div><div class="line">	# exp_sg 之前的 sum(sqr(gp) 1...t-1) for now param</div><div class="line">	# exp_su 之前的 sum(step 1...t-1) for now param</div><div class="line">	# up_exp_sg = rho * exp_sg + (1 - rho) * T.sqr(gp); 加上现在的gp平方</div><div class="line">	# updates[exp_sg] = up_exp_sg 换上</div><div class="line">	# step =  -(T.sqrt(exp_su + eps) / T.sqrt(up_exp_sg + eps)) * gp,该次更新的param step,</div><div class="line">	  注意这里分母的gp是1..t，而分子的sum(step)是 1...t-1</div><div class="line">	#updates[exp_su] = rho * exp_su + (1 - rho) * T.sqr(step); 更新本次</div><div class="line">	#stepped_param = param + step;最后目标</div><div class="line">	for param, gp in zip(params, gparams):</div><div class="line">		exp_sg = exp_sqr_grads[param]</div><div class="line">		exp_su = exp_sqr_ups[param]</div><div class="line">	 	up_exp_sg = rho * exp_sg + (1 - rho) * T.sqr(gp)</div><div class="line">	 	updates[exp_sg] = up_exp_sg</div><div class="line">		step =  -(T.sqrt(exp_su + eps) / T.sqrt(up_exp_sg + eps)) * gp</div><div class="line">	 	updates[exp_su] = rho * exp_su + (1 - rho) * T.sqr(step)</div><div class="line">	 	stepped_param = param + step</div><div class="line">		# if (param.get_value(borrow=True).ndim == 2) and (param.name != word_vec_name):</div><div class="line">	 	if max_norm and param.name != word_vec_name:</div><div class="line">			col_norms = T.sqrt(T.sum(T.sqr(stepped_param), axis=0))</div><div class="line">			desired_norms = T.clip(col_norms, 0, T.sqrt(max_norm))</div><div class="line">			scale = desired_norms / (1e-7 + col_norms)</div><div class="line">			updates[param] = stepped_param * scale</div><div class="line">		else:</div><div class="line">			updates[param] = stepped_param</div><div class="line">	return updates</div></pre></td></tr></table></figure></p>
-<p>参考资料:<br><a href="http://blog.csdn.net/luo123n/article/details/48239963" target="_blank" rel="external">http://blog.csdn.net/luo123n/article/details/48239963</a><br><a href="http://sebastianruder.com/optimizing-gradient-descent/index.html#gradientdescentvariants" target="_blank" rel="external">http://sebastianruder.com/optimizing-gradient-descent/index.html#gradientdescentvariants</a><br><a href="http://www.cnblogs.com/neopenx/p/4768388.html" target="_blank" rel="external">http://www.cnblogs.com/neopenx/p/4768388.html</a><br><a href="http://deeplearning.net/tutorial/code/lstm.py" target="_blank" rel="external">http://deeplearning.net/tutorial/code/lstm.py</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/15/Xgboost/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ustcJin">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/heart_scale.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Hexo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/15/Xgboost/" itemprop="url">
-                  Xgboost源码阅读
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T14:25:57+08:00">
-                2017-02-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>xgboost</code>是有监督学习的利器，相较于与决策树、随机森林、gbdt等都有着明显优势，也许是各个算法有自己适用的领域吧。<code>xgboost</code>厉害之处在于同时控制了残差和复杂度，在迭代优化过程中，会同时考量这两个因素，本文会按照我自己的学习时的思路来介绍该算法，包括陈天奇(天才少年)的C++源码解读。</p>
-<h1 id="带着问题走"><a href="#带着问题走" class="headerlink" title="带着问题走"></a>带着问题走</h1><p>由于之前也是使用了挺多的算法，包括dtree, random forest, 还有各种pair wise、list wise算法，但是听到同事的介绍还是产生了兴趣，我本人介入机器学习领域时间较短，开始在听完<code>xgboost</code>的介绍时，就迫切的想了解两个东西: </p>
-<blockquote>
-<p>xgboost如何并行化？<br>xgboost是如何控制复杂度的?<br>xgboost如何选择最优分裂?</p>
-</blockquote>
-<p>这三个问题是我继续了解的动力，另外后面的阅读和学习中，又知道了关于<code>xgboost</code>的最优化split、最优化Gain等详细知识，另外还有各种objective 灵活设置，非常方便。有些材料仅供参考:</p>
-<blockquote>
-<p>xgboost<a href="xgboost.readthedocs.io/en/latest/">官网</a>，<a href="https://github.com/dmlc/xgboost" target="_blank" rel="external">github</a><br>某乎较好的<a href="https://www.zhihu.com/question/41354392" target="_blank" rel="external">帖子</a><br>blog<a href="http://blog.csdn.net/chedan541300521/article/details/54895880" target="_blank" rel="external">地址</a><br>陈天奇<a href="http://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="external">slides</a><br>陈天奇<a href="https://arxiv.org/abs/1603.02754" target="_blank" rel="external">paper</a></p>
-</blockquote>
-<h1 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍?"></a>原理介绍?</h1><p>基本的概念如tree, mart, residual等就不介绍了，直接进入主题，<code>xgboost</code>的目标函数:<br>                             $Obj(\theta) = L(\theta) + \Omega(\theta)$<br>$\theta$是我们要求的最优解，可以对应<code>xgboost</code>上各个<code>tree</code>上最有<code>split</code>和最有<code>leaf value</code>，$L$是残差，即模型预测值和实际训练样本的差值，当然是越小越好，$\Omega$是模型复杂度，这个也很重要，防止过拟合以及严重的抖动，一般模型需要做<code>bias</code>和<code>varience</code>的校验，一个对应$L$，一个对应$\Omega$。<code>xgboost</code>是<code>mart</code>，预测值是所有的<code>tree</code>的加权相加:<br>$\hat{y_i}=\sum_{i=1}^{K}f_k(x_i),f_k \in{\mathcal{F}}$<br>以上是mart建立之后如何预测，tree建立在分裂时，会有目标，<code>Objective</code>细化为<br>$Obj=\sum_{i=1}^{n} l(y_i, \hat{y_i})+\sum_{k=1}^{K} \Omega(f_i)<br>=\sum_{i=1}^{n}l(y_i, \hat y_i^{t-1} + f_t(x_i)) + \Omega(f_t) + constant $<br>$f_t$是第t轮迭代，即第t颗树，由于t轮之前的参数已经确定，所以最后归结为<code>constant</code>，目标也是寻找最优的$f_t$，让<code>Obj</code>最小。<br>使用二阶泰勒展开的方式<br>$f(x+\Delta{x}) \approx f(x) + f’(x)\Delta{x} + \frac{1}{2}f’’(x)\Delta{x^2}$<br>做一下转化:</p>
-<blockquote>
-<p>$l(y_i, \hat y_i^{t-1} + f_t(x_i)) =&gt; f(x+\Delta{x}) $<br>$g_i=\delta_{\hat y_i^{t-1}}{l(y_i, \hat{y}^{(t-1)})}$<br>$h_i=\delta_{\hat y_i^{t-1}}^2 {l(y_i, \hat{y}^{(t-1)})}$</p>
-</blockquote>
-<p>则<code>Obj</code>在t轮迭代的目标为<br>$Obj=\sum_{i=1}^{n}l(y_i, \hat y_i^{t-1} + f_t(x_i)) + \Omega(f_t) + constant<br>=\sum_{i=1}^{n}[l(y_i, \hat y_i^{t-1}) + g_if_t(x_i) + \frac{1}{2}h_if_t^2(x_i)] + \Omega(f_t) + constant$<br>模型复杂度$\Omega(f_t)$的定义：<br>$\Omega(f_t)=\gamma{T} + \frac{1}{2}\lambda\sum_{j=1}^{T}w_j{^2}$<br>$T$是叶子节点的个数，$w_j$是叶子节点对叶的<code>leaf_score</code>,进一步化简$Obj(f_t)$:<br>$Obj=\sum_{i=1}^{n}[g_if_t(x_i) + \frac{1}{2}h_if_t^2(x_i)] + \Omega(f_t)<br>=\sum_{i=1}^{n}[g_iw_{q(x_i)} + \frac{1}{2}h_iw^2_{q(x_i)}] + \gamma{T} + \frac{1}{2}\lambda\sum_{j=1}^{T}w_j{^2}$<br>$=\sum_{j=1}^{T}[(\sum_{i \in I_j}g_i)w_j + \frac{1}{2}(\sum_{i \in I_j}h_i + \lambda)w^2_j] + \gamma T$</p>
-<p>这样终于看出GBDT计算收益的最终公式了：<br>$(1) w_j = - \frac{G_j}{H_j+\lambda}$<br>$(2) Obj =- \frac{1}{2}\sum_{j=1}^{T}\frac{G^2_j}{H_j + \lambda} + \gamma T$<br>$(3) Gain = \frac{1}{2}[\frac{G^2_L}{H_L+\lambda} + \frac{G^2_R}{H_R+\lambda} - \frac{(G_L + G_R)^2}{H_L + H_R + \lambda}] - \gamma$</p>
-<p>$\gamma$就是<del>传说中的一阶正则项</del>，$\gamma$是后面提到的参数<code>min_split_loss</code>，剪枝使用，太小的收益不必分裂。树节点分裂的收益达到某个值后再分裂，而二阶正则项$\lambda$主要是为了防止过拟合, 增强模型的稳定性。</p>
-<h1 id="如何并行化？"><a href="#如何并行化？" class="headerlink" title="如何并行化？"></a>如何并行化？</h1><p>xgboost相对于gbdt是有一个并行的优势，怎么并行的呢，下面会读数据并行化和树分裂时的并行化分两部分介绍</p>
-<h2 id="读数据并行"><a href="#读数据并行" class="headerlink" title="读数据并行"></a>读数据并行</h2><p>开始的输入数据是libsvm格式，形如”1 1:1.2 2:2.1 3:3.5 …”一行一行的数据，训练集合可能会非常大，大家都知道xgboost会枚举所有的特征值，选用最佳分割，所以开始是需要按列把各个feature排序好，这一步在xgboost里是并行做的。。。xgboost使用DMatrix存储训练数据，每次训练前会调用InitColAccess()将行训练数据支持按列取的数据，这里是通过MakeOneBatch多线程来实现的，这么多列属性的排序被n个线程平分，最后将数据转化成 key,value的方式，key是列id，value是rowid, val的pair，rowid是该列所对应的行编号，用于拿出整行训练数据的信息，val是该行该列下的具体数字，这个信息最后会存入DMatrix的SparsePage中，可知道最后是存了feature_num个实际train_set，用于训练阶段方便的取数据，不用做重复的排序工作了。</p>
-<h2 id="分裂选择并行化"><a href="#分裂选择并行化" class="headerlink" title="分裂选择并行化"></a>分裂选择并行化</h2><p>tree进行分裂的时候会考量每个feature的每个value，如果串行计算，肯定会比较慢，xgboost使用了并行化，多个线程综合考虑每个列的情况，主要在FindSplit()里做的<br>● this-&gt;UpdateSolution(iter-&gt;Value(), gpair, *p_fmat); 主函数，枚举每一个feature，的每一个value，尝试收益<br>● this-&gt;SyncBestSolution(qexpand); 多线程merger，当前node的最好的split<br>● sync solution; 同步成果，给tree建node，左右儿子等<br>每个线程会枚举自己的feature的各个split value，将最佳分裂保存到当前线程的结构中，最后所有的线程会根据各自的best split做merge，从而找到当前tree的最佳分裂，这里也用到了并行化，共享了读数据阶段产生的SparsePage</p>
-<p>这些并行化和共享让xgboost的训练速度非常快。以上基本上解决了我开始的三个疑问，下面说一些xgboost的细节。</p>
-<h2 id="细节1-tree如何维护当前的数据集？"><a href="#细节1-tree如何维护当前的数据集？" class="headerlink" title="细节1: tree如何维护当前的数据集？"></a>细节1: tree如何维护当前的数据集？</h2><p>这个是通过postion这个vector来实现的，vector是训练机的大小，每个值代表当前训练样本属于的树节点编号，开始都是0，即开始所有的样本都是在根节点上。expand这个vector保存当前叶子节点，即即将开始下一轮分裂的叶子节点编号，当然开始也是初始化为0，postion里的所有值都是取自于expand</p>
-<h2 id="细节2-模型复杂度"><a href="#细节2-模型复杂度" class="headerlink" title="细节2: 模型复杂度"></a>细节2: 模型复杂度</h2><p>主要说下$\gamma,\alpha, \lambda$这三个，这三个控制这模型复杂度。</p>
-<ul>
-<li>$\gamma$是<code>min_split_loss</code>，控制树的分裂深度，收益必须大于该值才分裂。</li>
-<li><p>$\alpha$是一阶正则项，也是控制复杂度的，不过比较弱，一般训练设置为0，控制这Grad(一阶梯度)不至于过大或者过小</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if (p.reg_alpha == 0.0f) &#123;</div><div class="line">	return Sqr(sum_grad) / (sum_hess + p.reg_lambda);</div><div class="line">&#125; else &#123;</div><div class="line">	return Sqr(ThresholdL1(sum_grad, p.reg_alpha)) /</div><div class="line">		(sum_hess + p.reg_lambda);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>$\lambda$是二阶正则项，具体使用上面的推到也已经明了了</p>
-</li>
-</ul>
-<h1 id="Lambda-Object"><a href="#Lambda-Object" class="headerlink" title="Lambda Object"></a>Lambda Object</h1><p>非常重要的应用，相对于<code>gbdt</code>，或许这个才算是最重要的区别，即可以自定义目标函数(loss)，传统的<code>Objective loss</code>即预测值和标签值的差异，在实际工程中的应用显然是不够的，很多指标有实际的公式，如果表示成残差，梯度，这个活就交给<code>lambda</code>来做了，如下要素:<br>● 组的概念<br>● 选择两个组内两个标签不同的一对<br>● $P_{ij} = \frac{1}{1+e^{-\sigma(s_i-s_j)}}$<br>● $C = -\bar P_{ij} log P_{ij} - (1 - \bar P_{ij})log(1 - P_{ij})$<br>● $C=log(1+e^{-\sigma(s_i-s_j)})$<br>● $\delta{w_k} = -\eta\sum_i\lambda_{i}\frac{\partial s_i}{\partial w_k}$<br>● $\lambda_i = \sum_{j:{i, j}\in I} \lambda_{ij} - \sum_{j:{j, i}\in I} \lambda_{ij}$<br>● $\lambda_{ij} = \frac{\partial C(s_i - s_j)}{\partial{s_i}} = \frac{-\sigma}{1+e^{\sigma(s_i-s_j)}} * \Delta$</p>
-<p>这样，成功的讲工程上的知道公式产生的残差计算成功的引入到了梯度中去,$\Delta$可以是<code>NDCG</code>以及<code>MAP</code>等等。如何从<code>pointwise</code>的思路转到<code>pairwise listwise</code>，$\lambda$的应用是关键，其中的转化思路如上面的推理所示，具体代码在<code>src/objective/rank_obj.cc</code>中，定义了基本的类<code>LambdaRankObj</code>，在此基础上实现了<code>PairwiseRankObj</code>和<code>LambdaRankObjNDCG</code>以及<code>LambdaRankObjMAP</code>等。<code>LambdaRankObj</code>主要的函数就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">void GetGradient(const std::vector&lt;bst_float&gt;&amp; preds,</div><div class="line">	const MetaInfo&amp; info,</div><div class="line">	int iter,</div><div class="line">	std::vector&lt;bst_gpair&gt;* out_gpair)</div><div class="line">preds: 当前预测值(fx)</div><div class="line">info: 样本信息</div><div class="line">iter: 当前迭代轮数(随机种子)</div><div class="line">out_gpair: 生成的一阶梯度、二阶梯度存放地</div></pre></td></tr></table></figure></p>
-<p>该函数的流程如下</p>
-<ul>
-<li>遍历group</li>
-<li>组内排序，按预测值放入lst, 按照标签值放入rec</li>
-<li>rec内按照不同的标签组成pairs, 采用uniform_int_distribution的方式组</li>
-<li>调用GetLambdaWeight获取$\Delta$, pairwise的什么也没干，默认是1</li>
-<li>根据预测值和标签，算Sigmod值，然后乘$\Delta$, 算出的g,h分别放入 out_gpair 的 i, j中，i &gt; j, 一个是加，一个是减<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">gpair[pos.rindex].grad += g * w;</div><div class="line">gpair[pos.rindex].hess += 2.0f * w * h;</div><div class="line">gpair[neg.rindex].grad -= g * w;</div><div class="line">gpair[neg.rindex].hess += 2.0f * w * h;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>NDCG的GetLambdaWeight怎么算？这里就引入了计算公式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">void GetLambdaWeight(const std::vector&lt;ListEntry&gt; &amp;sorted_list,</div><div class="line">                     std::vector&lt;LambdaPair&gt; *io_pairs) override</div><div class="line">sorted_list:按照预测值排的序</div><div class="line">io_pairs:抽出的pairs</div></pre></td></tr></table></figure></p>
-<p>计算流程：</p>
-<ul>
-<li>按照labels，算出最大的maxNDCG作为分母</li>
-<li>算original ndcg以及交换之后的ndcg，做差值，处maxNDCG</li>
-</ul>
-<h2 id="问题1-如何做到好的结果按照NDCG更快排上去的"><a href="#问题1-如何做到好的结果按照NDCG更快排上去的" class="headerlink" title="问题1:如何做到好的结果按照NDCG更快排上去的?"></a>问题1:如何做到好的结果按照NDCG更快排上去的?</h2><p>好的结果产生的$\Delta$在NDCG计算时会更大，weight会更高，所以获得加权会更高</p>
-<h2 id="问题2-好的结果每次都会加权，最后预测值会很大？"><a href="#问题2-好的结果每次都会加权，最后预测值会很大？" class="headerlink" title="问题2:好的结果每次都会加权，最后预测值会很大？"></a>问题2:好的结果每次都会加权，最后预测值会很大？</h2><p>不会的, 如果好的记过得到的score很高了，即$s_i$很高，会拉开与其他结果($s_j$)的差距，所以系数$\frac{-\sigma}{1+e^{\sigma(s_i-s_j)}}$会很小，这个系数表示目前模型的好坏，如果很好了即使$\Delta$很大也是没有多少梯度的</p>
-<h1 id="应用参数"><a href="#应用参数" class="headerlink" title="应用参数"></a>应用参数</h1><p>首先推荐官方的API，这个没有更权威的了，如果使用，一定要仔细阅读，我是在python中使用，所以会看<a href="http://xgboost.readthedocs.io/en/latest/python/python_api.html" target="_blank" rel="external">python的API</a>)。首先说一下命令行版本也就是github拉下来之后直接编译出的二进制，直接使用”./xgboost config.ini”的方式即可，注意配置的格式，其实参考”src/cli_main.cc”也可以大概看出需要配置那些参数，我贴一下自己的训练配置和预测配置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">● train.conf</div><div class="line">train_path=/Users/wang/company/ltr/ask.train</div><div class="line">model_out=/Users/wang/company/ltr/module.out.1</div><div class="line">objective=rank:ndcg</div><div class="line">num_round=200</div><div class="line">eval_metric=ndcg@3-</div><div class="line">task=train</div><div class="line">eval_train=true</div><div class="line">max_depth=4</div><div class="line">min_split_loss=0.2</div><div class="line">reg_lambda=2.0</div><div class="line"></div><div class="line">● test.conf</div><div class="line">test_path=feature.ask</div><div class="line">name_pred=pred.txt</div><div class="line">model_in=module.out</div><div class="line">objective=rank:ndcg</div><div class="line">task=pred</div></pre></td></tr></table></figure></p>
-<p>源码中是使用<a href="https://github.com/dmlc/dmlc-core" target="_blank" rel="external">dmlc-core</a>来做的参数处理，十分方便，我是做搜索排序相关，所以目标使用<code>ndcg, reg_lambda</code>对应上面所说的$\lambda$，<code>min_split_loss</code>是树分裂所达到的最小收益值，即上面公式(3)中的Gain，一阶正则项$\alpha＝0$。<br>不过还是推荐使用python版本，python版本在训练时，可以看到每轮之后test集的准确度(ndcg值)，可以直观的看到效果，主要是param的设置，如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># param</div><div class="line">param = &#123;&apos;eval_metric&apos;: &apos;ndcg@3-&apos;, &apos;base_score&apos;: 0.0, &apos;max_leaves&apos;: 10, &apos;alpha&apos;: 0.0, &apos;tree_method&apos;: &apos;exact&apos;, &apos;bagging&apos;: 3, &apos;silent&apos;: 1, &apos;grow_policy&apos;: &apos;depthwise&apos;, &apos;subsample&apos;: 1.0, &apos;eta&apos;: 0.2, &apos;max_bin&apos;: 256, &apos;objective&apos;: &apos;rank:ndcg&apos;, &apos;max_depth&apos;: 4, &apos;gamma&apos;: 0.2, &apos;lambda&apos;: 2.0&#125;</div><div class="line"></div><div class="line">#设置测试集合的train</div><div class="line">num_round = 200</div><div class="line">dtrain.set_group(numpy.loadtxt(&apos;../../company/ltr/ask.train.group&apos;, dtype=numpy.int32))</div><div class="line">dtest.set_group(numpy.loadtxt(&apos;../../company/ltr/ask.test.group&apos;, dtype=numpy.int32))</div><div class="line">bst = xgb.train(param, dtrain, num_round, [(dtrain, &apos;train&apos;), (dtest, &apos;test&apos;)])</div></pre></td></tr></table></figure></p>
-<p>最后贴一张训练截图<br><img src="/images/xgboost_ndcg.jpg" alt="ndcg"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
-
-          
-          </div>
-          
-
-
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/heart_scale.png"
-               alt="ustcJin" />
-          <p class="site-author-name" itemprop="name">ustcJin</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ustcJin</span>
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/&title=Hexo&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/&title=Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Hexo&url=http://yoursite.com/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABW0lEQVR42u3aQQ7DIAxE0dz/0qnUVaUUMjNOF7W/VxVKw8sCMIbjkON8x6r9M/T/PhCwYDVindu4PqO0XNv1vmDBmszaD2y9S/33jQEWLFjC6/QFGBYsWL9muV3CggVrz1KSZmWy0JPvx3J5WLBasCrLbSVRfri+BQvW37JOM9xlOwtYsKax9CLRfhRXtrhGBgELVlPWSpptSvVk+qYvWLBgRUWiynWEL++BBQuW0KUy1BXWsgUWrGEsN2nOQNJRij67wILVlKUUZCvLuVJsks5gYcFqyqqUbt0jE2PqgQVrMMu9fJAdcCqTCCxY01jZQUi2uS2d/MCC1ZpVuXCQlWul1BwWrGGsLOXdd6kv5PVEHBasTqxsUtDTZXcqgQVrMisr/WTbVOkZWLBgyYPcPcMxMgVYsGA9tL1Uik3Lz4AFayQrS5rd1NmYE2DBGsbKrgtkxFI1CxasnqwXXY7FbVPN83MAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
 
 
-        
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
-        
-      </div>
-    </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
 
 
 
-
-
-  
-
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-  
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
         }
-      });
-    </script>
+    });
+})();
+</script>
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-
-  
-
-  
-
-  
 
 
 </body>
