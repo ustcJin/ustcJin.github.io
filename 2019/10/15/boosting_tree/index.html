@@ -14,7 +14,7 @@
     
     
     
-    <title>boosting tree总结 | Hexo</title>
+    <title>boosting tree总结 | 璀璨星河，伴我同行</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -25,14 +25,14 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="boosting tree总结">
 <meta property="og:url" content="http://yoursite.com/2019/10/15/boosting_tree/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="璀璨星河，伴我同行">
 <meta property="og:description" content="回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+">
-<meta property="og:updated_time" content="2019-11-02T00:20:08.000Z">
+<meta property="og:updated_time" content="2020-08-01T01:02:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="boosting tree总结">
 <meta name="twitter:description" content="回顾一下boosting tree的基础知识，主要是gbdt、lambdamart、xgboost、lightgbm等，温习一下主要的实现原理,keypoint，这里对公式啥的就简单的表示一下。之前的文章中提到了决策树，决策树的目标是又多种定义方式，比如信息增益、信息增益率或者gini系数，决策树是单颗树，而boosting是用多个弱分类器来拟合最后的得分，即F(x) = f1(x)+f2(x)+">
     
-        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+        <link rel="alternate" type="application/atom+xml" title="璀璨星河，伴我同行" href="/atom.xml">
     
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
@@ -170,7 +170,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gbdt"><span class="post-toc-number">1.</span> <span class="post-toc-text">gbdt</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lambdamart"><span class="post-toc-number">2.</span> <span class="post-toc-text">lambdamart</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#xgboost"><span class="post-toc-number">3.</span> <span class="post-toc-text">xgboost</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Light-GBM"><span class="post-toc-number">4.</span> <span class="post-toc-text">Light GBM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#特点"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">特点</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gbdt"><span class="post-toc-number">1.</span> <span class="post-toc-text">gbdt</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lambdamart"><span class="post-toc-number">2.</span> <span class="post-toc-text">lambdamart</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#xgboost"><span class="post-toc-number">3.</span> <span class="post-toc-text">xgboost</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Light-GBM"><span class="post-toc-number">4.</span> <span class="post-toc-text">Light GBM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#特点"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">特点</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gbdt里的目标逼近"><span class="post-toc-number">5.</span> <span class="post-toc-text">gbdt里的目标逼近</span></a></li></ol>
         </nav>
     </aside>
 
@@ -206,6 +206,7 @@
 <li>GOSS: 单边采样，相对于列采样，效果更好？ada的思想，对拟合不好的样本加大其对应梯度的权重</li>
 <li>EFB: exclusive feature bundling，互斥的特征捆绑，降低特征维度，（不采用PCA的原因是PCA是有损的。。。）， EFB可以比较精细的控制，如果完全互斥，则肯定对精度无损，如何获取互斥特征，采用图着色法，相同颜色的节点(特征)则可以绑定</li>
 </ol>
+<h2 id="gbdt里的目标逼近"><a href="#gbdt里的目标逼近" class="headerlink" title="gbdt里的目标逼近"></a>gbdt里的目标逼近</h2><p>$F(m)=F(m-1)+f(x)$，如何通过优化$f(x)$来让$F(m)$逼近真实的目标<code>y</code>？<br>首先定义损失函数，最简单的就是$loss=|y-F(m-1)|$，由于绝对值不好求导，所以一般转为最小二乘法的形式，即$loss=(y-F(m-1))^2$，通过改变自变量$F(m-1)$来获得目标<code>loss</code>的极值，肯定是要对自变量求导，用负梯度作为方向来更新自变量，所以<br>$$f(x)=\vartheta_{F(m-1)}loss$$<br>这里有个问题，最小二乘法可以用牛顿求解么？可以先看一个例子 $y=x^2$，初始<code>x=2</code>，求<code>y</code>极值对应<code>x</code>的变化，$loss=0-x^2$，$g1=-2x$，如果按照这个更新，step2中，$x=2+2<em>(-2)=-2$，可以看到一阶的倒数可能方向是ok的，但是步子容易迈得太大，需要<code>learning rate</code>的控制，如果进一步使用牛顿法呢？<br>$$x=x-\frac{g1}{g2}$$<br>$$g2=\vartheta_{x}g1=-2$$<br>这样$x=2-(-2</em>2)/(-2)=0$，似乎更好一些？我是认为牛顿法适用于所有类型的<code>loss</code>，而并非简单地就不好使。好了，下面开始说二分类的目标，要复杂一些。<br>先直接贴结论:<br>$$f(x)=-g1=\frac{2y}{1+e^{-2yF(m-1)}}$$ 而叶子节点的值为<br>$$\gamma_{jm}=-\frac{g1}{g2}=\frac{\sum_{x_i\in{Rjm}}f(x_i)}{\sum_{x_i\in{Rjm}f(x_i)(2-f(x_i))}}$$</p>
 
         </div>
 
@@ -214,7 +215,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-02T00:20:08.000Z" itemprop="dateUpdated">2019-11-02 08:20:08</time>
+    Last updated: <time datetime="2020-08-01T01:02:00.000Z" itemprop="dateUpdated">2020-08-01 09:02:00</time>
 </span><br>
 
 
@@ -250,7 +251,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — 璀璨星河，伴我同行&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -260,7 +261,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — 璀璨星河，伴我同行&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -270,7 +271,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting tree总结》 — Hexo&url=http://yoursite.com/2019/10/15/boosting_tree/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting tree总结》 — 璀璨星河，伴我同行&url=http://yoursite.com/2019/10/15/boosting_tree/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -409,7 +410,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — 璀璨星河，伴我同行&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -419,7 +420,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/15/boosting_tree/&title=《boosting tree总结》 — 璀璨星河，伴我同行&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -429,7 +430,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting tree总结》 — Hexo&url=http://yoursite.com/2019/10/15/boosting_tree/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting tree总结》 — 璀璨星河，伴我同行&url=http://yoursite.com/2019/10/15/boosting_tree/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>

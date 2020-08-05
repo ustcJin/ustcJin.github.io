@@ -14,23 +14,50 @@
     
     
     
-    <title>EM算法 | 璀璨星河，伴我同行</title>
+    <title>svm | 璀璨星河，伴我同行</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
-    <meta name="description" content="EM算法和最大似然的区别MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则$$MLE = arg \max_{p} p^{9}(1-p)$$如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些$$log(p^9(1-p)) = 9logp + log">
+    <meta name="keywords" content="it">
+    <meta name="description" content="几个问题
+什么是超平面
+法向量？向量相乘?
+点到超平面距离?
+如何把$y_i*(w*x_i+b)$强制置为1?
+
+
+超平面就是原来的空间减少一个维度的平面, 超平面用$w^T*x+b=0$表示
+
+点到超平面的距离点$x_0$投影到超平面上的点为$x_1$，可知$w*x_1+b=0$,法向量和垂直向量是平行关系，论述中$x_0, x_1, w$均为N维向量, d为所求的距离易知，两点的连线$\vec">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EM算法">
-<meta property="og:url" content="http://yoursite.com/2019/11/04/EM/index.html">
+<meta property="og:title" content="svm">
+<meta property="og:url" content="http://yoursite.com/2020/07/06/svm/index.html">
 <meta property="og:site_name" content="璀璨星河，伴我同行">
-<meta property="og:description" content="EM算法和最大似然的区别MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则$$MLE = arg \max_{p} p^{9}(1-p)$$如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些$$log(p^9(1-p)) = 9logp + log">
-<meta property="og:updated_time" content="2019-12-25T15:09:38.000Z">
+<meta property="og:description" content="几个问题
+什么是超平面
+法向量？向量相乘?
+点到超平面距离?
+如何把$y_i*(w*x_i+b)$强制置为1?
+
+
+超平面就是原来的空间减少一个维度的平面, 超平面用$w^T*x+b=0$表示
+
+点到超平面的距离点$x_0$投影到超平面上的点为$x_1$，可知$w*x_1+b=0$,法向量和垂直向量是平行关系，论述中$x_0, x_1, w$均为N维向量, d为所求的距离易知，两点的连线$\vec">
+<meta property="og:updated_time" content="2020-07-20T15:06:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EM算法">
-<meta name="twitter:description" content="EM算法和最大似然的区别MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则$$MLE = arg \max_{p} p^{9}(1-p)$$如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些$$log(p^9(1-p)) = 9logp + log">
+<meta name="twitter:title" content="svm">
+<meta name="twitter:description" content="几个问题
+什么是超平面
+法向量？向量相乘?
+点到超平面距离?
+如何把$y_i*(w*x_i+b)$强制置为1?
+
+
+超平面就是原来的空间减少一个维度的平面, 超平面用$w^T*x+b=0$表示
+
+点到超平面的距离点$x_0$投影到超平面上的点为$x_1$，可知$w*x_1+b=0$,法向量和垂直向量是平行关系，论述中$x_0, x_1, w$均为N维向量, d为所求的距离易知，两点的连线$\vec">
     
         <link rel="alternate" type="application/atom+xml" title="璀璨星河，伴我同行" href="/atom.xml">
     
@@ -125,7 +152,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">EM算法</div>
+        <div class="flex-col header-title ellipsis">svm</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -147,11 +174,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">EM算法</h1>
+        <h1 class="title">svm</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-11-04T12:50:14.000Z" itemprop="datePublished" class="page-time">
-  2019-11-04
+                <time datetime="2020-07-06T14:28:04.000Z" itemprop="datePublished" class="page-time">
+  2020-07-06
 </time>
 
 
@@ -170,18 +197,18 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#EM算法和最大似然的区别"><span class="post-toc-number">1.</span> <span class="post-toc-text">EM算法和最大似然的区别</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原理逼近"><span class="post-toc-number">2.</span> <span class="post-toc-text">原理逼近</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#几个问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">几个问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#点到超平面的距离"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">点到超平面的距离</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#求最优解"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">求最优解</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为何要设置support-vec上的点的-y-w-x-b-1"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">为何要设置support vec上的点的$y*(w*x+b)=1$?</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#拉格朗日乘子？KKT条件？"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">拉格朗日乘子？KKT条件？</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-EM"
+<article id="post-svm"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">EM算法</h1>
+        <h1 class="post-card-title">svm</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-11-04 20:50:14" datetime="2019-11-04T12:50:14.000Z"  itemprop="datePublished">2019-11-04</time>
+            <time class="post-time" title="2020-07-06 22:28:04" datetime="2020-07-06T14:28:04.000Z"  itemprop="datePublished">2020-07-06</time>
 
             
 
@@ -194,8 +221,20 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="EM算法和最大似然的区别"><a href="#EM算法和最大似然的区别" class="headerlink" title="EM算法和最大似然的区别"></a>EM算法和最大似然的区别</h1><p>MLE = Max Likelihood Estimation，最大似然估计，这个可以解一般的问题，比如投硬币10次，9次朝上，1次朝下，问硬币朝上的概率是多少？则<br>$$<br>MLE = arg \max_{p} p^{9}(1-p)<br>$$<br>如何求最大值，对参数求导=0即可，这个不好算，一般最大似然会取Log，这样求导会方便一些<br>$$<br>log(p^9(1-p)) = 9logp + log(1-p)<br>$$<br>很容易得到p=0.9时，最大似然成立。<br>有时候的问题这么直接求解解不了，还有一个隐含变量，比如男女测身高估计正态分布的参数，或者两个隐蔽测试估计每个硬币的上下的概率，可以看到升高的<br>case里，需要知道是男是女，硬币的case里需要知道选取的哪个硬币，这些隐变量有了才能列出似然函数，然而多一个参数显然就不好解了，这个时候就需要用<br>到EM算法，通过迭代的方法，不断逼近真实的分布。</p>
-<h1 id="原理逼近"><a href="#原理逼近" class="headerlink" title="原理逼近"></a>原理逼近</h1><p>$$<br>\theta = \max_{\theta} L(\theta) = \max_{\theta} log(P(x^{i}|\theta))<br>$$<br>增加了隐变量后$\theta$后，似然函数变为<br>$$<br>\theta, z = \max_{\theta,z} L(\theta, z) = \max_{\theta,z} \sum_{i=1}^{m} log \sum_{z^{(i)}}P(x^{i},z^{i}|\theta)<br>$$<br>引入一个未知的新的分布$Q_i(z^i)$, 即关于隐变量z的分布，则上面的目标变为<br>$$<br>\sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>然后引入凸函数的Jsen不等式，即f(x)满足 f’’(x) &gt;= 0，即为严格凸函数，有不等式如下<br>$$<br>E[f(x)] &gt;= f(E(x))<br>$$<br>则<br>$$<br>L(\theta,z) = \sum_{i=1}^{m} log \sum_{z^{i}} Q_i(z^i) \frac{P(x^i,z^i|\theta)}{Q_i(z^i)} \\<br>\geq \sum_{i=1}^{m} \sum_{z^{i}} Q_i(z^i) log \frac{P(x^i,z^i|\theta)}{Q_i(z^i)}<br>$$<br>这样，$L(\theta,z)$就有了一个下界，我们的任务先固定$\theta$来找一个合适的$Q$，整体的思路就是先让下界=L,然后固定Q，在去优化$\theta$让下界最大化。<br>Jsen不等式成立的条件就是f(x)式常数，于是<br>$$<br>\frac{P(x^i,z^i|\theta)}{Q_i(z^i)} = c \\<br>P(x^i,z^i|\theta) = c Q_i(z^i) \\<br>\sum_{z} P(x^i,z^i|\theta) = c \sum_{z} Q_i{z^i} \\<br>\sum_{z} P(x^i,z^i|\theta) = c \\<br>Q_i(z^i) = \frac{P(x^i,z^i|\theta)} {c} = \frac{P(x^i,z^i|\theta)} {\sum_{z} P(x^i,z^i|\theta)} \\<br>= \frac{P(x^i,z^i|\theta)} {P(x^i|\theta)} \\<br>= P(z^i|x^i,\theta)<br>$$<br>即通过将下界=L找的Q就是基于x和$\theta$的分布,这个公式推导就是证明了Q的确定就是通过x和$\theta$的分布来确定的，这个值让下确界等于目标L，然后M步再固定Q取优化这个下确界就行了，当然是可以证明每次迭代都会比上一次更好，这里不赘述了。</p>
+            <h1 id="几个问题"><a href="#几个问题" class="headerlink" title="几个问题"></a>几个问题</h1><ul>
+<li>什么是超平面</li>
+<li>法向量？向量相乘?</li>
+<li>点到超平面距离?</li>
+<li>如何把$y_i*(w*x_i+b)$强制置为1?</li>
+</ul>
+<blockquote>
+<p>超平面就是原来的空间减少一个维度的平面, 超平面用$w^T*x+b=0$表示</p>
+</blockquote>
+<h2 id="点到超平面的距离"><a href="#点到超平面的距离" class="headerlink" title="点到超平面的距离"></a>点到超平面的距离</h2><p>点$x_0$投影到超平面上的点为$x_1$，可知$w*x_1+b=0$,法向量和垂直向量是平行关系，论述中$x_0, x_1, w$均为<code>N</code>维向量, <code>d</code>为所求的距离<br>易知，两点的连线$\vec{x_0x_1}$垂直于平面，即和法向量平行，单位法向量可表示为<br>$$\vec{I} = \frac{w}{|w|}$$ 即有<br>$$\vec{x_0x_1}=\vec{I}*d$$<br>$$=\frac{w}{|w|}*d$$，故有<br>$$|w*\vec{x_0x_1}|=|w*\frac{w}{|w|}*d|=|\frac{w_1^2+w_2^2+…+w_n^2}{|w|}*d|=|w|d$$<br>$$w*\vec{x_0x_1}=w^1(x_0^1-x_1^1)+w^2(x_0^2-x_1^2)+…+w^N(x_0^N-x_1^N)$$<br>$$=w^1x_0^1+w^2x_0^2+…+w^Nx_0^N-(w^1x_1^1+w^2x_1^2+…+w^Nx_1^N)$$<br>$$=w*x_0+b$$<br>$$|w|d=|w*x_0+b|$$ 得出 $$d=\frac{|w*x_0+b|}{|w|}$$<br>这个求得就是集合距离，而非函数距离，函数距离是分子，调节$w,b$可以无限大，没有意义，所以要加<code>w</code>的<code>L2</code>正则项作为分母。</p>
+<h2 id="求最优解"><a href="#求最优解" class="headerlink" title="求最优解"></a>求最优解</h2><p>只分析support vector上的点，负例取<code>-1</code>, 正例取<code>+1</code>，所以 $d=y*\frac{w*x_0+b}{|w|}$，如何$\max{d}$?，超平面通过调整$w$和$b$可将support vector上的点的函数值变为<code>1</code>和<code>-1</code>，这样问题变为求<br>$$\min{\frac{1}{|w|}}$$ 且满足条件，对所有的样本$x$满足<br>$$y*(w*x+b)&gt;=1$$</p>
+<h2 id="为何要设置support-vec上的点的-y-w-x-b-1"><a href="#为何要设置support-vec上的点的-y-w-x-b-1" class="headerlink" title="为何要设置support vec上的点的$y*(w*x+b)=1$?"></a>为何要设置support vec上的点的$y*(w*x+b)=1$?</h2><p>目标是<br>$$Obj=\max{\frac{1}{|w|}}\min{y_i*(w*x_i+b)}, i \in {1,2,…,n}$$<br>可以做到让<br>$\min{y_i*(w*x_i+b)}, i \in {1,2,…,n} = 1$ ？可见对<code>w</code>做限制皆可，即上面的限制条件，如果控制<code>|w|</code>不变，则原来的目标仍然不能简化(max, min)，且有两个变量，而如果按照上面的设置(即最小的函数距离设置为1)，则完全可以做到。</p>
+<h2 id="拉格朗日乘子？KKT条件？"><a href="#拉格朗日乘子？KKT条件？" class="headerlink" title="拉格朗日乘子？KKT条件？"></a>拉格朗日乘子？KKT条件？</h2><p>上述条件可整理如下<br>$$Obj=\min{\frac{1}{2}*|w|^2}$$<br>$$s.t.  w*x_i+b=1;i=0,1,…,n$$<br>引入拉个朗日乘子$\alpha$<br>$$Objx=\frac{1}{2}*|w|^2-\sum^n_{i=1}{\alpha*(w*x_i+b-1)}; m=1,2,…,m$$<br>由于$w*x_i+b&gt;=1$, 所以<br>$$\max{Objx} = \frac{1}{2}*|w|^2$$ 即$\alpha$满足<br>引入拉格朗日乘子是将目标变成无约束条件</p>
+<p>$$<br>\alpha  =<br>\begin{cases}<br>= 0 &amp; w*x_i+b&gt;1 \newline<br>\gt 0 &amp; w*x_i+b=1<br>\end{cases}<br>$$<br>不在support vector上点的$\alpha$都等于0，支持向量上的$\alpha$大于0, 于是可得<br>$$<br>Obj=\min{\max{Objx}}<br>$$<br>可以转成对偶问题，即最小的最大值能否转化为最大的最小值？答案是强对偶条件下是等价的，而一般的凸问题优化都是满足强对偶条件的。然后用KKT条件求解，极值点在<code>w</code>和<code>b</code>求导=0处，联立可以求$\alpha$的范围</p>
 
         </div>
 
@@ -204,12 +243,12 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-12-25T15:09:38.000Z" itemprop="dateUpdated">2019-12-25 23:09:38</time>
+    Last updated: <time datetime="2020-07-20T15:06:47.000Z" itemprop="dateUpdated">2020-07-20 23:06:47</time>
 </span><br>
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/11/04/EM/" target="_blank" rel="external">http://yoursite.com/2019/11/04/EM/</a>
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/07/06/svm/" target="_blank" rel="external">http://yoursite.com/2020/07/06/svm/</a>
         
     </div>
     
@@ -230,6 +269,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
+
 
             
 <div class="page-share-wrap">
@@ -238,7 +279,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/EM/&title=《EM算法》 — 璀璨星河，伴我同行&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/06/svm/&title=《svm》 — 璀璨星河，伴我同行&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -248,22 +289,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/EM/&title=《EM算法》 — 璀璨星河，伴我同行&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/06/svm/&title=《svm》 — 璀璨星河，伴我同行&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/11/04/EM/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/06/svm/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《EM算法》 — 璀璨星河，伴我同行&url=http://yoursite.com/2019/11/04/EM/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《svm》 — 璀璨星河，伴我同行&url=http://yoursite.com/2020/07/06/svm/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/11/04/EM/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/06/svm/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -283,21 +324,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2020/07/06/svm/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">svm</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2019/10/15/boosting_tree/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/04/EM/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">boosting tree总结</h4>
+        <h4 class="title">EM算法</h4>
       </a>
     </div>
   
@@ -397,7 +431,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/EM/&title=《EM算法》 — 璀璨星河，伴我同行&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/06/svm/&title=《svm》 — 璀璨星河，伴我同行&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -407,22 +441,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/EM/&title=《EM算法》 — 璀璨星河，伴我同行&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/06/svm/&title=《svm》 — 璀璨星河，伴我同行&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/11/04/EM/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/06/svm/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《EM算法》 — 璀璨星河，伴我同行&url=http://yoursite.com/2019/11/04/EM/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《svm》 — 璀璨星河，伴我同行&url=http://yoursite.com/2020/07/06/svm/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/11/04/EM/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/06/svm/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -433,7 +467,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABx0lEQVR42u3awQqDQAxF0f7/T1voqiAd7kvGKOXOqojW4yZMXub1wuv4rF+/v6+cnzrfs35qw5IrV26beyzXmVj7gPV/EoNcuXLnuaR48ReQT13f8/O6XLlyH8YlpYpfkStX7n9wSZNTo8iVK/eZXLJNISWMb2gu79XkypXb4PYD0/7v0XxXrly5jakEKV6dAUn8drly5Y5weZzRaldwRILKnFy5cge5vO3hzUn6SaTRkitX7tXcWitS2/qsn0VHPeTKlTvC7TcntWCUD2OC6ESuXLmbuLUX8zCU4IIxjFy5cke4JLbgham4NQENWJDlyJUrdxM3fQ0vPf0ARa5cuXdxeVvSiUc3t0xy5cq9jNvfrHBKJxCRK1fuXVweW/AX8LEKSUTlypU7w02PW/HCR5olvm2SK1fuJDcdZqQjEP4BqETKlSt3kJtGqLWIJD79IVeu3Fu5fKWtTlrCipNYuXLlbuV2Zpp800PKJSmdcuXKneSm7U0aiJBYhLdDcuXKneTy7Ui6SWodwFqPUuTKlfsA7q4RC2+u4hNkcuXKvYmbHsOqHeOQK1fuE7hpceFBJy9z6E65cuWOcNP2Y2/hI/fLlSt3kPsGIm++VddQfXQAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABx0lEQVR42u3aSW7DMAwF0N7/0u4JJH9SQ13gcWUkjvWSBcEhPz9xPIMYvTv67OiVzYGLi7vMfaaRHzl/wvyLJQZcXNz73FHGmN8zp4+u5/e/2HBxcT/JTdLTPJHlPwcuLu5/4VYPy8sjXFzcr3GT5mdesswLoD/o1XBxcRe4+ZTy3PWR+S4uLm6L+xQjKUGS8uVpBS4u7h1unlCSoicpfaqJDBcX9z43eVx16NlLf8kwBRcX9w43ejs+LCFWocPfGBcX9yK3l5J60OaiBRcX9yI3GXbkA5Hel0yGLLi4uHe4vcf1Fqt5MVRYt+Di4m7lJsVNr0GqjlmjcgcXF/cKN29O9i5dkvsL6QwXF3crdyVV5a1OtYR6ybu4uLiHubt6inKZEsfLkhUXF/cit1fEVBcq1bUrLi7ufW614clLk7y5Ki9ZcXFxD3OTFFMdd/aisFLFxcU9wH2KkaSwXvpr7n5xcXEPcKvJZe+AIy+kyifi4uIuc1eSV29p2nsOLi7ufW5SjvRao0IfliRBXFzcT3JXWqnq4LUwNcHFxf0Ad57mVharL6fj4uJe5OZ/rqqCkuvCnbi4uFe46+POanuz989buLi4W7m/tIZSwZJrnjUAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
